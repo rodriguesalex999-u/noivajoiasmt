@@ -459,9 +459,11 @@ h1 em{font-style:italic;display:block;font-weight:600}
 /* catálogo destacado no hero */
 .hero-cat{margin-top:20px}
 .cat-card-shell{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
-.cat-card-shell .prod.cat-card{flex:1 1 320px;max-width:480px;margin:0}
+.cat-card-shell .prod.cat-card{max-width:none;margin:0}
 .cat-card-shell .prod.cat-card .prod-cta{
   animation:pulseBtn 1.8s ease-in-out infinite;
   box-shadow:0 0 0 0 rgba(201,167,91,.38),0 10px 22px -12px rgba(30,166,90,.85),inset 0 1px 0 rgba(255,255,255,.2);
