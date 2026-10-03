@@ -1232,10 +1232,10 @@ const PRODUTOS = [
    ========================================================================== */
 const COLECOES = [
   {
-    nome: 'Par de Aliança para namoro e compromisso (Cor Prata)',
+    nome: 'Aliança pra namoro',
     previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/par-alianca-chanfrada-escovada-com-anel-solitario-cor-prata-399-99.webp',
-    selo: 'Catálogo Prata',
-    descricao: 'Prata 925 nos modelos liso, chanfrado, escovado, com friso e com anel solitário. Toque para abrir a lista inteira e ver o preço de cada par.',
+    selo: 'Aliança pra namoro',
+    descricao: '',
     tags: ['Prata 925', 'Namoro e compromisso'],
     itens: [
       {
@@ -1314,10 +1314,10 @@ const COLECOES = [
     ]
   },
   {
-    nome: 'Alianças Banhadas a Ouro 18k',
+    nome: 'Aliança de casamento',
     previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp',
-    selo: 'Catálogo Ouro',
-    descricao: 'Banhadas a ouro 18k: clássicas, chanfradas, quadradas, com friso, inglês, coração, com solitário e kits completos. Toque para ver todos os modelos e preços.',
+    selo: 'Aliança de casamento',
+    descricao: '',
     tags: ['Banhado a Ouro 18k', 'Casamento e noivado'],
     itens: [
       {
@@ -1534,8 +1534,8 @@ const COLECOES = [
   {
     nome: 'Solitários Cor Dourada',
     previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-brilho-intenso-cor-dourada-1.webp',
-    selo: 'Catálogo Solitários',
-    descricao: 'Anéis solitários na cor dourada: americanos, brilho intenso, ouro rose, francês, luminese e mais. Toque para ver todos os modelos e preços.',
+    selo: 'Solitário',
+    descricao: '',
     tags: ['Cor Dourada', 'Solitários'],
     itens: [
       {
@@ -1615,8 +1615,8 @@ const COLECOES = [
   {
     nome: 'Solitários Cor Prata',
     previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-prata-anel-solitario-cor-prata-coracao-vazado-pedra-cristal-1.webp',
-    selo: 'Catálogo Solitários',
-    descricao: 'Anéis solitários na cor prata: coração vazado, coração linda flor com pedra azul, e pedra cristal. Toque para ver todos os modelos e preços.',
+    selo: 'Solitário',
+    descricao: '',
     tags: ['Cor Prata', 'Solitários'],
     itens: [
       {
@@ -1769,12 +1769,6 @@ const COLECOES = [
     const body = el('div', 'prod-body');
     body.appendChild(el('h4', 'prod-name', p.nome));
     if (p.descricao) body.appendChild(el('p', 'prod-desc', p.descricao));
-
-    if (p.tags && p.tags.length) {
-      const tags = el('div', 'prod-tags');
-      p.tags.forEach(t => tags.appendChild(el('span', 'prod-tag', t)));
-      body.appendChild(tags);
-    }
 
     /* preço */
     const price = el('div', 'prod-price');
@@ -2035,6 +2029,7 @@ const itemCard = (p) => {
   /* abre e fecha */
   let focoAntes = null;
   let travouEm = 0;
+  let modalAberto = false;
 
   const abrir = (c) => {
     focoAntes = document.activeElement;
@@ -2048,6 +2043,8 @@ const itemCard = (p) => {
     document.documentElement.style.setProperty('--lock-top', (-travouEm) + 'px');
     document.documentElement.classList.add('lock');
     modal.hidden = false;
+    modalAberto = true;
+    history.pushState({ modal: true }, '', '#catalogo');
     const x = modal.querySelector('.modal-x');
     if (x) x.focus();
     modal.querySelector('.modal-body').scrollTop = 0;
@@ -2056,11 +2053,18 @@ const itemCard = (p) => {
   const fechar = () => {
     if (modal.hidden) return;
     modal.hidden = true;
+    modalAberto = false;
     document.documentElement.classList.remove('lock');
     document.documentElement.style.removeProperty('--lock-top');
     window.scrollTo(0, travouEm);
     if (focoAntes && focoAntes.focus) focoAntes.focus();
   };
+
+  window.addEventListener('popstate', (e) => {
+    if (modalAberto && e.state && e.state.modal) {
+      fechar();
+    }
+  });
 
   modal.addEventListener('click', e => {
     if (e.target.closest('[data-close]')) fechar();
