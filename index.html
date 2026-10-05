@@ -2031,6 +2031,23 @@ const itemCard = (p) => {
   let travouEm = 0;
   let modalAberto = false;
 
+  const ROTAS = {
+    '/prata': 0,
+    '/aliancabanhadas': 1,
+    '/solitariocordourado': 2,
+    '/solitariocorprata': 3
+  };
+  const ROTAS_REVERSE = Object.fromEntries(Object.entries(ROTAS).map(([k, v]) => [v, k]));
+
+  function abrirPorRota(path) {
+    const idx = ROTAS[path];
+    if (idx !== undefined && COLECOES[idx]) {
+      abrir(COLECOES[idx]);
+      return true;
+    }
+    return false;
+  }
+
   const abrir = (c) => {
     focoAntes = document.activeElement;
     modalH.textContent = c.nome;
@@ -2044,7 +2061,15 @@ const itemCard = (p) => {
     document.documentElement.classList.add('lock');
     modal.hidden = false;
     modalAberto = true;
-    history.pushState({ modal: true }, '', '#catalogo');
+    
+    const idx = COLECOES.indexOf(c);
+    const rota = ROTAS_REVERSE[idx];
+    if (rota) {
+      history.pushState({ modal: true, rota }, '', rota);
+    } else {
+      history.pushState({ modal: true }, '', '#catalogo');
+    }
+    
     const x = modal.querySelector('.modal-x');
     if (x) x.focus();
     modal.querySelector('.modal-body').scrollTop = 0;
@@ -2058,13 +2083,20 @@ const itemCard = (p) => {
     document.documentElement.style.removeProperty('--lock-top');
     window.scrollTo(0, travouEm);
     if (focoAntes && focoAntes.focus) focoAntes.focus();
+    history.pushState(null, '', '/');
   };
 
   window.addEventListener('popstate', (e) => {
-    if (modalAberto && e.state && e.state.modal) {
+    if (modalAberto) {
       fechar();
+    } else if (e.state && e.state.rota) {
+      abrirPorRota(e.state.rota);
     }
   });
+
+  if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+    abrirPorRota(window.location.pathname);
+  }
 
   modal.addEventListener('click', e => {
     if (e.target.closest('[data-close]')) fechar();
@@ -2085,8 +2117,7 @@ const itemCard = (p) => {
     }
   });
 
-
-  /* ---------- links do WhatsApp fora do catálogo ---------- *//* ---------- links do WhatsApp fora do catálogo ---------- */
+  /* ---------- links do WhatsApp fora do catálogo ---------- */
   const msgs = {
     topo: `Olá! Vim pelo site da ${CONFIG.empresa}. Quero conhecer as alianças de vocês.`,
     hero: 'Olá! Vim pelo site da ' + CONFIG.empresa + '. ðŸ‘‹ Quero conhecer as alianças e semijoias de vocês.',
