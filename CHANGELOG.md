@@ -395,3 +395,8 @@ depois: 5 cards no hero, 21 itens da moeda antiga, zero erro de console além do
 ## 2026-10-06
 
 **Mensagem de WhatsApp enxuta** — todos os CTAs (produto, coleção, modal e CTA final) trocam 'Minha cidade é:' por 'Consegue me entregar agora ?', deixando a mensagem mais curta e direta.
+
+## 2026-10-06
+
+**Imagem de compartilhamento (og.png)** — gerada a partir de 
+oivas_joias_mt.jpg (crop central 1200×630). Resolve o preview ao compartilhar o site no WhatsApp/Instagram; meta tags og:image/twitter:image já apontavam para ela.
