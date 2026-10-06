@@ -190,3 +190,203 @@ Arquivos principais atualizados:
 13c813c havia revertido o fix de encoding; substituído todas as ocorrências de
 mojibake `â€` por em-dash real `—`. Site ao vivo em
 `https://noivajoiasmt.vercel.app/` com caracteres corretos.
+
+## 2026-10-03
+
+**Agente gerente adicionado ao fluxo do projeto** — introduzido processo de revisão
+sênior obrigatória após cada execução de agente/IA.
+
+Adicionado:
+- Seção 11 no `AGENTS.md` com perfil do gerente, checklist de revisão (14 itens),
+  comportamento de aprovação/rejeição e gatilho de acionamento automático.
+- Regra: nenhuma mudança no projeto é considerada concluída até passar pela revisão
+  do `gerente`, que aprova (`APROVADO`) ou rejeita com motivo (`REJEITADO` + instruções
+  de correção).
+- Escopo: acompanha todas as automações do projeto, não uma só.
+
+Motivo: reduzir retrabalho, garantir que mudanças respeitem o `AGENTS.md` e o design
+system, e catching de erros antes que cheguem ao site/produção.
+
+Nota de segurança: como o projeto roda localmente, não há risco de vazamento externo
+de dados. O gerente existe para evitar alterações incorretas no próprio repositório.
+
+## 2026-10-05
+
+**Catálogo PDF de Solitários (4 páginas, 11 anéis)** — novo catálogo a partir das 2
+categorias de solitários do site. Gerado por script, sem digitação manual de card.
+
+Adicionado:
+- `PDFs/Noiva-Joias-MT-Catalogo-Solitario-e-Aparadores-v1.pdf` — 4 páginas A4 exatas,
+  12,8 MB: p1 e p2 com os 8 **Solitários Cor Dourada**, p3 com os 3 **Solitários
+  Cor Prata** + banner "sem garantia", p4 com Sr. Fernandes + "Como pedir" em 3
+  passos + CTA final.
+- `PDFs/catalogo-aliancas-solitarioeaparadores.html` — HTML fonte (identidade visual
+  igual aos catálogos de prata/ouro).
+- `PDFs/build_catalog_solitarios.py` — script gerador. **Lê os produtos direto do
+  `index.html`** (as 2 coleções de `COLECOES`) e nunca escreve no site: mudar preço,
+  foto ou nome no site e rodar de novo atualiza o PDF.
+
+Corrigido (bug herdado do template dos catálogos):
+- **Conteúdo cortado.** Com 4 slots por página o card não cabia na folha e o
+  `.page{overflow:hidden}` cortava o rodapé dos produtos em silêncio — o catálogo de
+  prata publicado (v5) já sofre disso na página 1. Resolvido com
+  `grid-template-rows:repeat(2,minmax(0,1fr))` + tipografia/espacamentos menores,
+  **sem mudar o grid (continua 2 col × 4 slots)** e **sem mexer na foto** ( segue 10/9).
+- **Metade da página de fechamento vazia.** `.page-inner` não ocupava a folha, então o
+  rodapé subia no meio da página.
+- **Pricing divergente do site.** O script antigo arredondava a parcela para inteiro
+  (`2x de R$ 124,00`); agora usa a mesma conta do site (`2x de R$ 124,50`).
+- `build_catalog_solitarios.py` tem trava que **falha o build** se qualquer imagem
+  quebrar ou se qualquer card estourar a folha — clipping não passa mais em silêncio.
+
+Verificado: 4 páginas, A4 210×297mm exato nas 4, 11/11 produtos no texto extraído,
+zero erro de console, zero imagem quebrada, zero overflow, telefone e CNPJ em
+algarismos lining, `CONFIG`/identidade conferidos.
+
+## 2026-10-05
+
+**Catálogo PDF de Alianças de Moeda Antiga (8 páginas, 27 peças)** — novo catálogo a
+partir da lista de 27 modelos de moeda antiga comum (4mm a 8mm).
+
+Adicionado:
+- `PDFs/Noiva-Joias-MT-Catalogo-Aliancas-Moeda-Antiga-v1.pdf` — 8 páginas A4 exatas,
+  30,5 MB: páginas 1 a 6 com 4 produtos cada, página 7 com 3 produtos + o banner de
+  manutenção, página 8 com Sr. Fernandes + tabela de preços + "como pedir" + CTA.
+- `PDFs/catalogo-aliancas-moeda-antiga.html` — HTML fonte (mesma identidade visual).
+- `PDFs/build_catalog_moeda_antiga.py` — script gerador (baixa as imagens do PostImages,
+  normaliza em webp 1000×1000 e embute em base64, então o HTML roda offline).
+- `PDFs/pasted-context-moeda-antiga.txt` — a lista do fornecedor em arquivo próprio.
+- `PDFs/img/moeda-antiga/` — as 27 imagens webp.
+
+Conteúdo:
+- **27 peças**, ordenadas do maior para o menor preço: 15× R$ 489,99 · 6× R$ 589,99 ·
+  5× R$ 689,99 · 1× R$ 900,00 (Aliança Bulgari, com selo "Destaque").
+- **Parcelamento 2x sem juros em todos os modelos**, parcela arredondada para baixo em
+  centavos (R$ 244,99 / R$ 294,99 / R$ 344,99 / R$ 450,00) — nunca R$ 245,00.
+
+Aviso do produto (o ponto central deste catálogo):
+- **Em todo card:** "OBS: pode escurecer e manchar · precisa de manutenção".
+- **Banner na página 7:** "Antes de comprar — Moeda antiga escurece e pode manchar o
+  dedo", explicando que para restaurar a cor é só manutenção com **pasta de dente** ou
+  produto específico, e sugerindo aliança banhada a quem não quer manter.
+- **Na página final:** parágrafo "Sobre a manutenção" com o mesmo conteúdo.
+- Os dois modelos com ressalva própria no nome (solitário e aparador vendidos
+  separados) não repetem o aviso de manutenção, para não confundir as duas coisas.
+
+Refatorado:
+- **`PDFs/catalogo_base.py`** — novo módulo com o que é comum a todos os catálogos:
+  identidade visual, `CSS_AJUSTES`, card/banner/página, download de imagem, montagem do
+  HTML e o `build_pdf()` com as travas. O fix do clipping passa a existir em **um lugar
+  só** (antes estava copiado dentro de cada script — o tipo de coisa que fica para trás
+  em silêncio). `build_catalog_solitarios.py` foi refeito em cima da base e continua
+  gerando PDF idêntico (4 p, 12,8 MB, verificado).
+
+Nomes limpos: sufixo redundante "- Moeda Antiga" removido (o cabeçalho da página já
+diz) e o erro de digitação do fornecedor "ALIANA" → "ALIANÇA".
+
+Verificado: 8 páginas, A4 210×297mm exato nas 8, 27/27 produtos no texto extraído,
+zero erro de console, zero imagem quebrada, zero overflow, nenhum parcelamento
+arredondado para cima (0 ocorrências de R$ 245,00 / 295,00 / 345,00).
+
+Ponto de atenção para o dono: a peça "Moeda 8mm Com Pedra Quadrado c/ Friso"
+(R$ 489,99) veio com uma foto de **kit**, com preços gravados na imagem
+("Par de Alianças 489.99 / Anel Solitario 99.99 / Unidade Aparador 49.99"), enquanto
+o nome do produto é só a aliança. A foto é do fornecedor — precisa ser trocada para
+não confundir o cliente sobre o que está incluso.
+
+## 2026-10-06
+
+**Categoria Moeda Antiga no site (21 peças) + revisão do catálogo PDF** — o dono
+revisou o catálogo, pediu ajustes e a categoria foi criada no site com as fotos no R2.
+
+Ajustes pedidos e aplicados (nos dois lugares: PDF **e** site):
+- **6 peças removidas** do catálogo: Aliança Bulgari (R$ 900), MOEDA C/ GRAVAÇÃO EXTERNA
+  8MM, MOEDA C/ INICIAL 8MM, MOEDA CORAÇÃO 6MM, MOEDA ESCOVADA CENTRAL 6MM e Moeda
+  Antiga C/ Gravação Quadrada 8mm. O catálogo foi de 27 → 21 peças.
+- **10 fotos trocadas** pelas versões que estavam na pasta Downloads: chanfrada 6mm,
+  chanfrada c/ pedra 6mm, chanfrada 4mm lisa, quadrada 6mm, quadrada 8mm, clássica
+  6mm, clássica fina 4mm, friso lateral central c/ pedras, friso lateral 8mm e
+  "8mm com pedra quadrado c/ friso". Todas convertidas para webp 1000×1000 q90 com
+  corte ao quadrado (nenhuma das originais era quadrada — cortar, não esticar).
+- **MOEDA CLÁSSICA 6MM** passou a se chamar **MOEDA CLÁSSICA 6MM VALOR DO PAR**.
+- **ALIANÇA DE MOEDA ANTIGA CONCOVA 8MM** perdeu o "(NÃO ACOMPANHA APARADOR)" do
+  título: a foto não tem aparador, então a ressalva só confundia.
+- **ALIANÇA MOEDA ANTIGA FRISO LATERAL 8MM** perdeu o "(SOLITÁRIO VENDIDO SEPARADO)"
+  do título, porque o anel não acompanha mais.
+- **MOEDA FRISO LATERAL CENTRAL C/ PEDRAS 8MM** subiu para R$ 689,99.
+
+Texto do solitário reescrito (não é mais um produto desta categoria):
+- Antes o catálogo dizia que um modelo vinha "com anel solitário incluso". Errado —
+  não vem, e isso levantava uma pergunta que o cliente não precisava fazer.
+- Agora: a aliança é **moeda antiga** e o anel solitário é **outro material**
+  (liga metálica nobre, banhada a ouro), **vendido separado**, **opcional**,
+  a partir de **R$ 99,99**, descrito como o mais em conta e o **mais vendido**,
+  e que "fica lindo com qualquer par de aliança de moeda antiga".
+
+Infraestrutura:
+- **21 fotos no Cloudflare R2** (`moeda-antiga/`), verificadas uma a uma por URL
+  pública (21/21 respondendo 200).
+- O token do Cloudflare que estava na máquina estava **inválido** (`code 9109`) e o
+  OAuth do wrangler **expirado** (27/09). Auditei o projeto inteiro — nunca houve
+  token commitado, nem no histórico do git — e criei um token novo com o **menor
+  privilégio possível**: `Object Read & Write` só no bucket `etevalda`.
+  Aprendi no caminho que esse preset **não** serve para subir objeto pela REST API
+  (403): o caminho que funciona é o **S3 API** (Access Key ID + Secret), como o
+  `guia-capacidades-ia_fotos_links.md` já avisava.
+- **`PDFs/upload_r2.py`** — sobe no R2 o que está no manifesto (credencial só do
+  ambiente, nunca de arquivo).
+- **`PDFs/gerar_colecao_site.py`** — gera o bloco `COLECOES` do `index.html` a
+  partir do mesmo manifesto do PDF. Motivo: 21 itens com preço, parcela e URL de
+  imagem digitados à mão erram; agora o site nasce da mesma fonte que gerou a figura.
+- **`PDFs/img/moeda-antiga/manifest.json`** — contrato entre PDF, R2 e site.
+- HTML do PDF passou de base64 (2.357 KB) para URL do R2 (**37 KB**).
+
+Site:
+- Nova coleção **"Alianças de Moeda Antiga"** no hero (5º card) com 21 itens.
+- Rota **`/moedaantiga`** criada, igual às outras 4.
+- Cada item no modal mostra o aviso de manutenção da moeda antiga.
+
+Verificado no navegador: zero erro de console, 21/21 itens com foto, 21/21 notas de
+manutenção, 21/21 botões de WhatsApp para `wa.me/556592942810` com mensagem
+preenchida, preços R$ 489,99 / 589,99 / 689,99 e parcela 2x correta (344,99), nenhuma
+imagem da moeda antiga quebrada.
+
+Detalhe: a foto com a marca de um **concorrente** ("Etevalda Alianças", dentro da
+caixa) era justamente a do Friso Lateral Central — que foi trocada por outra. Resolveu
+sozinho, mas fica registrado porque `AGENTS.md` proíbe usar marca de terceiro.
+
+## 2026-10-06 (documentação)
+
+**`AGENTS.md` estava incompleto** — o dono perguntou se qualquer IA ligada ao projeto
+saberia o que fazer. Auditei e achei lacunas reais; a mais séria era que **não havia
+documentação nenhuma de como criar uma categoria no site**: a seção 4 explicava só o
+array `PRODUTOS`. Uma IA nova não saberia que `COLECOES` gera o card do hero, o modal
+e a rota.
+
+Adicionado em `AGENTS.md`:
+- **Seção 4b — Como adicionar uma categoria (coleção)**: o schema do `COLECOES`, o
+  que cada campo faz, quando `nota` é obrigatória, a tabela das 5 categorias e rotas
+  atuais, e o aviso de que **`ROTAS` é por índice** — inserir coleção no meio quebra
+  as rotas seguintes.
+- **Seção 4c — Imagens**: onde as fotos moram (R2), a base URL, e a regra que mais
+  custou tempo descobrir: **sempre central crop, nunca esticar** — `resize((1000,1000))`
+  direto deforma foto não quadrada. Também: transparência sobre o preto do projeto, e
+  nada de marca de terceiro na foto.
+- **Identidade (seção 1)**: hospedagem Vercel, URL de produção e bucket do R2, mais o
+  alerta de que **commitar publica o site na hora**.
+- **Fluxo completo lista → PDF → R2 → site**: a ordem real das 6 operações e o motivo
+  de pular etapa fazer figura e site divergirem.
+- **Inventário dos 4 PDFs** e **bugs conhecidos nos scripts antigos**: o ouro achata a
+  foto, arredonda a parcela para inteiro, o prata r2 tem 1 imagem quebrada, e prata v5
+  + ouro v2 têm conteúdo cortado na página 1.
+- **Checklists** (seção 5 e a do gerente) com os itens de categoria e de PDF.
+- Seção 7 com os arquivos que existem hoje e o aviso de que `pasted-context-1.txt` é a
+  fonte do catálogo ouro e não deve ser sobrescrito.
+- `PDFs/LEIAME.md`: regra de upload no R2 pelo S3 API (o que funciona e o que dá 403),
+  e as regras de negócio passaram a **apontar** para o `AGENTS.md` em vez de duplicar.
+
+Nada disso mudou comportamento do site — é documentação, e o site foi testado de novo
+depois: 5 cards no hero, 21 itens da moeda antiga, zero erro de console além do
+`pushState` de `file://` (origem nula, não é bug).
+
+
