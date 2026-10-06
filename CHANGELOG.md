@@ -390,3 +390,8 @@ depois: 5 cards no hero, 21 itens da moeda antiga, zero erro de console além do
 `pushState` de `file://` (origem nula, não é bug).
 
 
+
+
+## 2026-10-06
+
+**Mensagem de WhatsApp enxuta** — todos os CTAs (produto, coleção, modal e CTA final) trocam 'Minha cidade é:' por 'Consegue me entregar agora ?', deixando a mensagem mais curta e direta.
