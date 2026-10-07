@@ -404,3 +404,7 @@ oivas_joias_mt.jpg (crop central 1200×630). Resolve o preview ao compartilhar o
 ## 2026-10-06
 
 **Mensagem de produto sem saudação** — os CTAs de produto (catálogo, coleção e modal) removem a linha 'Olá! Vim pelo site da Noiva Joias MT. 👋'; a mensagem passa a começar direto em 'Quero este modelo: ...'. CTAs gerais (topo/hero/final/footer/dock) mantêm a saudação.
+
+## 2026-10-06
+
+**Saudação removida de todos os CTAs** — topo, hero, final, footer e dock também perdem a linha 'Olá! Vim pelo site da Noiva Joias MT. 👋'; todos os botões de WhatsApp agora mandam mensagem direta, sem saudação.
