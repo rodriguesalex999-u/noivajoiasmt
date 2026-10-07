@@ -2046,7 +2046,6 @@ const COLECOES = [
 
     /* botão WhatsApp com a mensagem já pronta */
     const msg =
-      'Olá! Vim pelo site da ' + CONFIG.empresa + '. 👋\n' +
       'Quero este modelo: ' + p.nome + '\n' +
       'Valor: ' + brl.format(p.preco) + '\n' +
       'Consegue me entregar agora ?';
@@ -2271,7 +2270,6 @@ const itemCard = (p) => {
     if (p.nota) body.appendChild(el('p', 'mi-note', p.nota));
 
     const msg =
-      'Olá! Vim pelo site da ' + CONFIG.empresa + '. 👋\n' +
       'Quero este modelo: ' + p.nome + '\n' +
       'Valor: ' + brl.format(p.preco) + '\n' +
       'Consegue me entregar agora ?';
@@ -2742,8 +2740,7 @@ const itemCard = (p) => {
     const notaHtml = product.nota ? '<p class="modal-note">' + product.nota + '</p>' : '';
     const descricaoHtml = product.descricao ? '<p class="modal-desc">' + product.descricao + '</p>' : '';
 
-    const msg = 'Olá! Vim pelo site da ' + CONFIG.empresa + '. 👋\n' +
-      'Quero este modelo: ' + product.nome + '\n' +
+    const msg = 'Quero este modelo: ' + product.nome + '\n' +
       'Valor: ' + brl.format(product.preco) + '\n' +
       'Consegue me entregar agora ?';
 

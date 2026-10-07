@@ -400,3 +400,7 @@ depois: 5 cards no hero, 21 itens da moeda antiga, zero erro de console além do
 
 **Imagem de compartilhamento (og.png)** — gerada a partir de 
 oivas_joias_mt.jpg (crop central 1200×630). Resolve o preview ao compartilhar o site no WhatsApp/Instagram; meta tags og:image/twitter:image já apontavam para ela.
+
+## 2026-10-06
+
+**Mensagem de produto sem saudação** — os CTAs de produto (catálogo, coleção e modal) removem a linha 'Olá! Vim pelo site da Noiva Joias MT. 👋'; a mensagem passa a começar direto em 'Quero este modelo: ...'. CTAs gerais (topo/hero/final/footer/dock) mantêm a saudação.
