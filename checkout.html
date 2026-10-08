@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Noiva Joias MT</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0907;--bg-2:#141110;--gold:#c9a75b;--gold-light:#f0dca4;--cream:#f6f1e6;--muted:#9c9384;--line:rgba(201,167,91,.22);--font-display:"Cormorant Garamond",Georgia,serif;--font-body:"Jost",ui-sans-serif,system-ui,sans-serif;--shell:720px;font-variant-numeric:lining-nums}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--cream);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.shell{max-width:var(--shell);margin:0 auto;padding:40px 22px;width:100%}
+.card-checkout{border:1px solid var(--line);border-radius:24px;padding:32px;background:rgba(20,17,16,.9);box-shadow:0 30px 60px -40px rgba(0,0,0,.95)}
+h2{font-family:var(--font-display);font-size:2rem;font-weight:600;text-align:center;margin-bottom:8px;letter-spacing:.08em}
+.sub{font-size:.9rem;color:var(--muted);text-align:center;margin-bottom:28px}
+.item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.item img{width:80px;height:80px;border-radius:14px;object-fit:cover;flex-shrink:0;border:1px solid var(--line);background:#0f0d0c}
+.item-info{flex:1 1 auto;min-width:0}
+.item-info h3{font-family:var(--font-display);font-size:1.15rem;font-weight:600;margin-bottom:4px;line-height:1.25}
+.item-info p{font-size:.8rem;color:var(--muted);line-height:1.4}
+.item-price{margin-left:auto;flex:0 0 auto;padding-left:10px;font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--gold);white-space:nowrap}
+/* em tela estreita o preço desce para baixo: sem isso o nome do
+   produto fica espremido numa coluna de 4 palavras */
+@media(max-width:420px){
+  .item{flex-wrap:wrap}
+  .item-info{flex:1 1 calc(100% - 96px)}
+  .item-price{margin-left:0;padding-left:0;flex:1 1 100%;margin-top:6px;font-size:1.5rem}
+}
+.shipping{margin:24px 0;padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(201,167,91,.06)}
+.shipping-badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:6px}
+.shipping-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#1ea65a;box-shadow:0 0 8px #1ea65a}
+.shipping h4{font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:8px}
+.shipping p{font-size:.85rem;color:var(--muted);line-height:1.6}
+.cta-mp{display:block;width:100%;text-align:center;padding:18px 24px;border-radius:14px;background:linear-gradient(135deg,#009ee3 0%,#007bb4 100%);color:#fff;font-weight:600;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;box-shadow:0 12px 28px -14px rgba(0,158,227,.8);transition:filter .2s,transform .1s;margin-top:8px}
+.cta-mp:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.cta-mp:active{transform:translateY(0) scale(.99)}
+.note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:20px;opacity:.8}
+.note b{color:var(--cream);font-weight:500}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="card-checkout">
+    <h2>Checkout</h2>
+    <p class="sub">Noiva Joias MT · Pagamento seguro pelo Mercado Pago</p>
+
+    <div class="item" id="checkoutItem">
+      <img id="checkoutImg" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp" alt="Produto">
+      <div class="item-info">
+        <h3 id="checkoutName">Par de Aliança com Anel Solitário Quadrado 8mm</h3>
+        <p id="checkoutDesc">Banhado a ouro 18k · Frete grátis · Entrega hoje</p>
+      </div>
+      <div class="item-price" id="checkoutPrice">R$ 399,99</div>
+    </div>
+
+    <div class="shipping">
+      <div class="shipping-badge">FRETE GRÁTIS</div>
+      <h4>Entrega hoje</h4>
+      <p>Entregamos em <b>Cuiabá, Rondonópolis e Sinop</b>. Você só paga na entrega. Sem cadastro, sem boleto antecipado.</p>
+    </div>
+
+    <a class="cta-mp" id="checkoutBtn" href="#" target="_blank" rel="noopener noreferrer">
+      Pagar com Mercado Pago — Frete Grátis
+    </a>
+
+<p class="note">
+      Pagamento processado na plataforma oficial do Mercado Pago (Pix, cartão de crédito ou débito).
+      <b>Frete grátis</b> para Cuiabá, Rondonópolis e Sinop. Você só paga na entrega.
+    </p>
+  </div>
+</div>
+
+<script>
+/* Checkout dinâmico — lê o produto da URL ou usa padrão */
+const params = new URLSearchParams(window.location.search);
+const nome = params.get('nome') || 'Aliança Banhada a Ouro';
+const preco = parseFloat(params.get('preco') || '399.99');
+const img = params.get('img') || 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp';
+const desc = params.get('desc') || 'Banhado a ouro 18k';
+
+const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+document.getElementById('checkoutName').textContent = nome;
+document.getElementById('checkoutPrice').textContent = brl.format(preco);
+document.getElementById('checkoutDesc').textContent = desc + ' · Frete grátis · Entrega hoje';
+document.getElementById('checkoutImg').src = img;
+document.getElementById('checkoutImg').alt = nome;
+
+/* O botão pede a preferência ao /api/checkout (serverless, na Vercel).
+   O Access Token NUNCA vem para o navegador — só o link do checkout. */
+document.getElementById('checkoutBtn').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const btn = this;
+  const textoOriginal = btn.textContent;
+  btn.textContent = 'Abrindo o checkout…';
+  btn.style.opacity = '.7';
+  btn.style.pointerEvents = 'none';
+
+  const produto = {
+    nome: document.getElementById('checkoutName').textContent,
+    preco: (document.getElementById('checkoutPrice').textContent.match(/[\d.,]+/) || ['0'])[0],
+    qtd: 1
+  };
+  produto.preco = produto.preco.replace(/[^0-9.,]/g, '');
+
+  fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(produto)
+  })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, dados: d }; }); })
+    .then(function (r) {
+      if (r.ok && r.dados.checkout_url) {
+        window.location.href = r.dados.checkout_url;
+        return;
+      }
+      // Falhou: mostra o motivo e leva o cliente para o WhatsApp,
+      // que é o caminho de venda que já funciona no site.
+      var msg = r.dados.erro || r.dados.detalhe || 'Checkout indisponivel no momento';
+      btn.textContent = textoOriginal;
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = '';
+      window.alert(msg + '\n\nVoce tambem pode pedir pelo WhatsApp: (65) 9294-2810');
+    })
+    .catch(function () {
+      btn.textContent = textoOriginal;
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = '';
+      window.alert('Sem conexao com o checkout. Pede pelo WhatsApp: (65) 9294-2810');
+    });
+});
+</script>
+</body>
+</html>

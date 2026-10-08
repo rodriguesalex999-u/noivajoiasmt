@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Compra Confirmada — Noiva Joias MT</title>
+<style>
+:root{--bg:#0b0907;--gold:#c9a75b;--cream:#f6f1e6;--green:#1ea65a;--font-display:"Cormorant Garamond",serif;--font-body:"Jost",sans-serif;--shell:720px;font-variant-numeric:lining-nums}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--cream);font-family:var(--font-body);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 22px}
+.card{max-width:var(--shell);margin:0 auto;padding:48px 32px;border:1px solid rgba(201,167,91,.22);border-radius:24px;background:rgba(20,17,16,.85);box-shadow:0 30px 60px -40px rgba(0,0,0,.95);text-align:center}
+h1{font-family:var(--font-display);font-size:clamp(1.8rem,6vw,3rem);font-weight:600;letter-spacing:-.01em;line-height:1.1;margin-bottom:12px}
+h1 .gold{color:var(--gold);font-style:italic}
+p{font-size:1rem;color:#9c9384;line-height:1.7;margin-bottom:28px}
+.badge{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:24px}
+.badge::before{content:"✓";width:28px;height:28px;border-radius:50%;background:rgba(30,166,90,.15);border:1px solid rgba(30,166,90,.3);display:grid;place-items:center;font-size:.9rem;color:var(--green);font-weight:700}
+.note{font-size:.78rem;color:rgba(156,147,132,.5);margin-top:28px;letter-spacing:.06em}
+.note b{color:var(--cream);font-weight:500}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">Compra Confirmada</div>
+  <h1>Obrigado pela compra,<br><span class="gold">Noiva Joias MT</span></h1>
+  <p>Seu pedido foi confirmado pelo Mercado Pago com <b>frete grátis</b>. Entregaremos em <b>Cuiabá, Rondonópolis ou Sinop</b> conforme combinado. Você só paga na entrega.</p>
+  <p class="note">Esta página confirma a compra para fins de rastreamento. <b>Se você não fez uma compra real, pode ignorar esta página.</b></p>
+</div>
+
+<script>
+/* Quando esta página carrega = compra confirmada = dispara Purchase real */
+if (window.fbqTrackRich) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const nome = urlParams.get('nome') || 'Aliança Noiva Joias MT';
+  const preco = parseFloat(urlParams.get('preco') || '399.99');
+  const quantidade = parseInt(urlParams.get('q') || '1');
+
+  window.fbqTrackRich('Purchase', {
+    content_ids: ['noiva_joias_mt_' + Date.now()],
+    content_name: nome,
+    content_category: 'aliancas',
+    content_type: 'product',
+    value: preco * quantidade,
+    currency: 'BRL',
+    product_name: nome,
+    quantity: quantidade,
+    custom_data: {
+      frete_gratis: true,
+      delivery_cities: 'Cuiabá, Rondonópolis, Sinop',
+      payment_on_delivery: true,
+      payment_gateway: 'mercado_pago',
+      purchase_confirmed: true,
+      site_version: 'noiva_joias_mt_v2'
+    }
+  });
+
+  console.log('✅ Purchase event disparado no Facebook Pixel — Compra confirmada:', nome, 'R$', preco);
+}
+</script>
+</body>
+</html>

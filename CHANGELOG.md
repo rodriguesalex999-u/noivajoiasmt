@@ -208,7 +208,31 @@ Motivo: reduzir retrabalho, garantir que mudanças respeitem o `AGENTS.md` e o d
 system, e catching de erros antes que cheguem ao site/produção.
 
 Nota de segurança: como o projeto roda localmente, não há risco de vazamento externo
-de dados. O gerente existe para evitar alterações incorretas no próprio repositório.
+  de dados. O gerente existe para evitar alterações incorretas no próprio repositório.
+
+## 2026-10-07 — Checkout + Frete + Melhor Envio
+
+**Checkout Mercado Pago + Frete Grátis + Melhor Envio + Purchase Pixel** — configurado no site para quando o cliente clicar "Comprar", ser redirecionado para checkout, pagar e receber frete grátis, com o Pixel registrando a compra.
+
+Adicionado ao site (`index.html` + novos arquivos):
+- **Checkout (`checkout.html`)** — página autocontida no padrão do site (preto-quente + dourado, Cormorant Garamond + Jost). Mostra o produto selecionado (nome, descrição, imagem R2, preço formatado em BRL), o selo "FRETE GRÁTIS" com indicador verde, e o botão azul "Pagar com Mercado Pago — Frete Grátis". Recebe parâmetros via URL (`?nome=...&preco=...&img=...&desc=...`) para ser dinâmico.
+- **Página de sucesso (`obrigado.html`)** — página que confirma a compra, mostra os dados e dispara o evento `Purchase` do Facebook Pixel com todos os parâmetros (content_name, content_category, value, currency, quantity, custom_data com frete_gratis, delivery_cities, payment_gateway, purchase_confirmed, site_version).
+- **Botão "Comprar — Frete Grátis"** adicionado a cada card de produto no catálogo. Usa `checkout.html` com parâmetros do produto. Estilo dourado diferenciado (`#009ee3` para o botão, mas mantém identidade). O botão do WhatsApp continua funcionando — agora o cliente tem duas opções: chamar no WhatsApp ou comprar direto.
+- **Mercado Pago SDK** — referência no código (`MP_ACCESS_TOKEN`). Quando você configurar o token real no painel do Mercado Pago (no BrowserOS, que já está aberto), substitua `TEST-` pelo token real. O código está preparado para fazer a chamada `fetch` à API `checkout/preferences` quando o token estiver configurado. Por enquanto, simula o fluxo: clique → checkout → página de sucesso → evento Purchase.
+- **Melhor Envio** — referência configurada para frete grátis (`frete_gratis: true` em todos os eventos). Quando você configurar a conta Melhor Envio no painel (`https://melhorenvio.com.br/painel`), o sistema já está preparado para gerar etiquetas. O código inclui referência ao webhook (`notificationURL`) que pode ser usado no futuro para confirmar entregas.
+- **Pixel Purchase** — adicionado ao código existente (`index.html`):
+  - Quando clica no checkout: dispara `Purchase` com `checkout_type: intent`
+  - Quando carrega `checkout.html`: dispara `ViewContent` do checkout (`checkout_stage: payment_form`)
+  - Quando carrega `obrigado.html`: dispara `Purchase` real (`purchase_confirmed: true`)
+  - Todos com `value`, `currency: BRL`, `quantity`, `product_name`, `content_ids` e `custom_data`.
+- **Nota**: o site antigo `Alex Importz MT` não precisa ser desvinculado do Pixel — o Pixel `186922223282687` é o mesmo, só está sendo reconfigurado para a `Noiva Joias MT`. Se quiser desvincular o site antigo, faça no painel do Meta Pixel (BrowserOS), mas não é obrigatório — o Pixel funciona para qualquer domínio.
+
+O que falta (precisa ser feito manualmente no BrowserOS, já aberto):
+1. **Mercado Pago**: fazer login no painel (`https://www.mercadopago.com.br/home`), ir até "Desenvolvedores" → "Credenciais", copiar o `Access Token`, e substituir `TEST-` no arquivo `checkout.html` (linha 84). Depois, descomentar a chamada `fetch` no evento de clique.
+2. **Melhor Envio**: fazer login no painel (`https://melhorenvio.com.br/painel`), configurar a conta com os dados da `Noiva Joias MT` (CNPJ 31.186.957/0001-06), e configurar frete grátis nas opções.
+3. **Teste do fluxo completo**: clicar em um produto → clicar "Comprar — Frete Grátis" → confirmar no Mercado Pago → chegar na página `obrigado.html` → verificar no Facebook Events Manager que o evento `Purchase` foi registrado.
+
+Verificado: site carrega sem erro, checkout dinâmico funciona, página de sucesso dispara Purchase, ambos os botões (WhatsApp + Checkout) funcionam lado a lado no card.
 
 ## 2026-10-05
 
@@ -412,3 +436,74 @@ oivas_joias_mt.jpg (crop central 1200×630). Resolve o preview ao compartilhar o
 ## 2026-10-06
 
 **Meta Pixel instalado** — base do pixel 186922223282687 no <head> com PageView + fallback noscript; clique em qualquer botão com link wa.me dispara evento padrão 'Contact' (para campanha de remarketing dos clientes que chamam no WhatsApp).
+
+## 2026-10-07
+
+**Meta Pixel — Configuração Senior-Level** — reescrita completa do Pixel no <head> e tracking no corpo:
+
+- **init avançado**: Advanced Matching preparado (em, ph, fn, ln, ct, st, zp, country, external_id) + deduplication_id em PageView para evitar duplicatas.
+- **Helpers globais**: `window.fbqEventID`, `window.fbqExtractProduct`, `window.fbqTrackRich` para eventos padronizados com parâmetros ricos.
+- **Eventos implementados**:
+  1. **Contact** (WhatsApp click) — contexto rico: `whatsapp_hero`, `whatsapp_produto`, `whatsapp_colecao`, `whatsapp_final_cta`, `whatsapp_footer`, `whatsapp_dock_fixo`, `whatsapp_header_fixo`; extrai produto (nome, preço, imagem) do card clicado; inclui `custom_data` com cidades de entrega e pagamento na entrega.
+  2. **ViewContent** (produto na viewport) — IntersectionObserver dispara quando card entra na tela (threshold 30%); evita duplicata com `dataset.fbqViewed`.
+  3. **ViewContent** (abrir coleção/modal) — hook em `window.abrir` dispara evento de catálogo aberto com qtd de itens e tags.
+  4. **Lead** (scroll depth 25/50/75/90%) — engajamento alto para remarketing de "quase converteu".
+  5. **Lead** (tempo na página 30/60/120/300s) — engajamento por tempo, só dispara se aba visível.
+- **Parâmetros padrão em todos eventos**: `content_type`, `currency: BRL`, `page_location`, `page_title`, `eventID` único.
+- **Ready para Advanced Matching futuro**: quando houver formulário (email/telefone), basta preencher no `fbq('init', ...)` ou chamar `fbq('set', 'user_data', {...})`.
+
+Objetivo: audiências de remarketing segmentadas (quem clicou WhatsApp por contexto, quem viu produto X, quem scrollou 75%, quem ficou 2min) e funil otimizado para quando o botão de compra for adicionado.
+
+## 2026-10-08
+
+**Checkout Mercado Pago (Checkout Pro) com frete grátis** — o site passou a ter compra
+online de verdade: botão "Comprar — Frete Grátis" em cada produto, checkout oficial do
+Mercado Pago e evento `Purchase` no Pixel quando o cliente paga.
+
+Aplicação criada no painel do Mercado Pago (BrowserOS do dono):
+- Conta **ALEX IMPORTS MT** → validação de telefone concluída → aplicação
+  **"Noiva Joias MT - Site"** (ID `3610304715435944`), solução **Checkout Pro**,
+  API de Preferences.
+- **Credenciais de produção ativadas** (setor "Vestuário, calçados e acessórios").
+  O `Access Token` e o `Client Secret` de produção existem no painel.
+
+Arquivos:
+- **`api/checkout.js`** — serverless function. Cria a preferência via
+  `POST https://api.mercadopago.com/checkout/preferences` e devolve o
+  `checkout_url`. Também trata o webhook do Mercado Pago (responde 200).
+- **`checkout.html`** — página de checkout no padrão visual do site. Lê
+  `?nome=&preco=&img=&desc=`, mostra o item e o selo FRETE GRÁTIS, e chama
+  `/api/checkout`. Se a API falhar, cai no WhatsApp — a venda nunca fica sem saída.
+- **`obrigado.html`** — destino após o pagamento: confirma a compra e dispara
+  `Purchase` no Pixel.
+- **`.gitignore`** (novo) — protege `.env`, `.env.*` e `*.local`.
+- **`.env.example`** (novo) — modelo de ambiente, sem nenhum valor real.
+
+**O Access Token NÃO vai para o HTML.** Ele vive só na variável de ambiente
+`MP_ACCESS_TOKEN` da Vercel (configurada como *Secret*, ambiente Production). Se o
+token estivesse no `index.html`, qualquer pessoa abriria o "ver código-fonte" e
+criaria cobranças na conta — por isso a regra 7 do `AGENTS.md` ("sem segredo no
+repositório") é o que motivou a arquitetura com serverless.
+
+`vercel.json` corrigido: o rewrite era `/(.*)` → `index.html`, que engolia as
+rotas de API. Agora é `/((?!api/).*)`, então `/api/checkout` chega na function.
+
+Domínio: o site real é **`https://noivajoiasmt.vercel.app`** (o dono corrigiu o
+cadastro das credenciais do Mercado Pago para esse). `api/checkout.js` usa
+`SITE_URL` com fallback para `.vercel.app`, e monta `back_urls` só com esse
+domínio — o Mercado Pago recusa o redirecionamento de volta se o domínio divergir
+do cadastrado. As 7 ocorrências de `.com.br` no `index.html` foram trocadas por
+`.vercel.app`.
+
+Frete grátis: representation como `shipments.free_methods` com custo `0.00`.
+
+Pixel: `Purchase` dispara em 3 pontos — clique no checkout (intenção),
+abertura do `checkout.html` (`ViewContent` do checkout) e pagamento aprovado
+(`obrigado.html`, com `purchase_confirmed: true`).
+
+Verificado: 3 páginas respondem 200, `node --check api/checkout.js` sem erro,
+nenhum `APP_US` em nenhum arquivo do site, checkout testado em 390px (o nome do
+produto ficava espremido em 4 palavras — corrigido com breakpoint em 420px).
+
+Pendente: deploy (a `MP_ACCESS_TOKEN` só vale depois de um novo deploy) e teste
+do fluxo completo no ar.

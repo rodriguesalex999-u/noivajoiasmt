@@ -7,22 +7,22 @@
 <meta name="description" content="Alianças e semijoias da Noiva Joias MT. Entrega hoje em Cuiabá, Rondonópolis e Sinop — você só paga na entrega. Fale agora no WhatsApp.">
 <meta name="theme-color" content="#0B0907">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://noivajoiasmt.com.br/">
+<link rel="canonical" href="https://noivajoiasmt.vercel.app/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Noiva Joias MT">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Noiva Joias MT — Alianças que marcam histórias">
 <meta property="og:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop. Fale agora no WhatsApp.">
-<meta property="og:url" content="https://noivajoiasmt.com.br/">
-<meta property="og:image" content="https://noivajoiasmt.com.br/og.png">
+<meta property="og:url" content="https://noivajoiasmt.vercel.app/">
+<meta property="og:image" content="https://noivajoiasmt.vercel.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Noiva Joias MT — alianças que marcam histórias">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Noiva Joias MT — Alianças que marcam histórias">
 <meta name="twitter:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop.">
-<meta name="twitter:image" content="https://noivajoiasmt.com.br/og.png">
+<meta name="twitter:image" content="https://noivajoiasmt.vercel.app/og.png">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0907'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3.4'%3E%3Ccircle cx='24' cy='40' r='14'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3Cpath d='M32 6l7 8-7 8-7-8z' fill='%23F0DCA4'/%3E%3C/svg%3E">
 
@@ -36,9 +36,9 @@
   "@type": "JewelryStore",
   "name": "Noiva Joias MT",
   "description": "Alianças e semijoias com entrega hoje e pagamento na entrega em Cuiabá, Rondonópolis e Sinop, Mato Grosso.",
-  "url": "https://noivajoiasmt.com.br/",
+  "url": "https://noivajoiasmt.vercel.app/",
   "telephone": "+556592942810",
-  "image": "https://noivajoiasmt.com.br/og.png",
+  "image": "https://noivajoiasmt.vercel.app/og.png",
   "priceRange": "$$$",
   "currenciesAccepted": "BRL",
   "paymentAccepted": "Pix, Cartão de crédito, Cartão de débito, Dinheiro na entrega",
@@ -675,7 +675,7 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
 }
 </style>
 
-<!-- Meta Pixel -->
+<!-- Meta Pixel — Noiva Joias MT (senior config) -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -685,8 +685,63 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '186922223282687');
-fbq('track', 'PageView');
+
+/* Configuração avançada do Pixel */
+fbq('init', '186922223282687', {
+  em: '',           // email (quando disponível via formulário futuro)
+  ph: '',           // telefone (quando disponível)
+  fn: '',           // primeiro nome
+  ln: '',           // último nome
+  ct: '',           // cidade
+  st: '',           // estado
+  zp: '',           // CEP
+  country: 'BR',    // país
+  external_id: ''   // ID interno do cliente (futuro CRM)
+}, {
+  // Configurações de processamento
+  processSingleEvents: true,
+  useImageOnly: false
+});
+
+/* PageView automático + deduplication_id para evitar duplicatas */
+fbq('track', 'PageView', {}, {eventID: 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)});
+
+/* Função helper para gerar eventID único */
+window.fbqEventID = function(prefix) {
+  return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+};
+
+/* Helper para extrair dados do produto do contexto do clique */
+window.fbqExtractProduct = function(element) {
+  const card = element.closest('.prod, .mi, .cat-card');
+  if (!card) return null;
+  
+  const nameEl = card.querySelector('.prod-name, .mi-name, .modal-h');
+  const priceEl = card.querySelector('.prod-price-val, .mi-price-val');
+  const imgEl = card.querySelector('.prod-img, .mi-media img, .modal-main-media img');
+  
+  return {
+    name: nameEl ? nameEl.textContent.trim() : null,
+    price: priceEl ? parseFloat(priceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.')) : null,
+    image: imgEl ? imgEl.src : null,
+    category: card.classList.contains('cat-card') ? 'colecao' : 'produto'
+  };
+};
+
+/* Helper para trackear eventos padrão com parâmetros ricos */
+window.fbqTrackRich = function(eventName, customParams, eventID) {
+  if (!window.fbq) return;
+  
+  const baseParams = {
+    content_type: 'product',
+    currency: 'BRL',
+    page_location: window.location.href,
+    page_title: document.title,
+    ...customParams
+  };
+  
+  fbq('track', eventName, baseParams, {eventID: eventID || window.fbqEventID(eventName)});
+};
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=186922223282687&ev=PageView&noscript=1"
@@ -1944,13 +1999,212 @@ const COLECOES = [
   const waLink = (msg) =>
     'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg);
 
-  /* ---------- Meta Pixel: clique em qualquer botão de WhatsApp vira evento Contact ---------- */
+  /* ---------- Meta Pixel: Eventos Senior-Level ---------- */
+  
+  // 1) WhatsApp Click → Contact (lead qualificado)
   document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[href*="wa.me"]');
+    const a = e.target.closest('a[href*="wa.me"], button[data-wa]');
     if (a && window.fbq) {
-      fbq('track', 'Contact', { content_name: 'Clique WhatsApp', content_category: 'whatsapp' });
+      const isProdCard = a.closest('.prod, .mi');
+      const isCollectionCard = a.closest('.cat-card-shell .prod-cta');
+      const isHero = a.closest('[data-wa="hero"]');
+      const isFinal = a.closest('[data-wa="final"]');
+      const isFooter = a.closest('[data-wa="footer"]');
+      const isDock = a.closest('[data-wa="dock"]');
+      const isTopo = a.closest('[data-wa="topo"]');
+      
+      // Extrai produto do card
+      const product = window.fbqExtractProduct ? window.fbqExtractProduct(a) : null;
+      
+      // Determina contexto
+      let context = 'geral';
+      let contentName = 'WhatsApp Click';
+      let value = null;
+      
+      if (isProdCard && product) {
+        context = 'produto';
+        contentName = product.name;
+        value = product.price;
+      } else if (isCollectionCard) {
+        context = 'colecao';
+        contentName = 'Ver Catálogo Coleção';
+      } else if (isHero) {
+        context = 'hero';
+        contentName = 'WhatsApp Hero';
+      } else if (isFinal) {
+        context = 'final_cta';
+        contentName = 'WhatsApp Final CTA';
+      } else if (isFooter) {
+        context = 'footer';
+        contentName = 'WhatsApp Footer';
+      } else if (isDock) {
+        context = 'dock_fixo';
+        contentName = 'WhatsApp Dock';
+      } else if (isTopo) {
+        context = 'header_fixo';
+        contentName = 'WhatsApp Header';
+      }
+      
+      // Extrai valor do link se houver
+      if (!value && a.href && a.href.includes('Valor:')) {
+        const match = a.href.match(/Valor:\s*([\d,.]+)/);
+        if (match) value = parseFloat(match[1].replace(',', '.'));
+      }
+      
+      // Evento Contact (padrão do Facebook para iniciar conversa)
+      window.fbqTrackRich('Contact', {
+        content_name: contentName,
+        content_category: 'whatsapp_' + context,
+        content_type: isProdCard ? 'product' : 'service',
+        value: value,
+        currency: value ? 'BRL' : undefined,
+        product_name: product?.name || contentName,
+        product_category: context,
+        custom_data: {
+          whatsapp_context: context,
+          product_price: value,
+          delivery_cities: CONFIG.cidades.join(','),
+          payment_on_delivery: true
+        }
+      });
     }
   });
+
+  // 2) ViewContent quando produto entra na viewport (IntersectionObserver)
+  if ('IntersectionObserver' in window) {
+    const viewContentObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.fbqViewed) {
+          entry.target.dataset.fbqViewed = 'true';
+          const product = window.fbqExtractProduct ? window.fbqExtractProduct(entry.target) : null;
+          if (product && product.price) {
+            window.fbqTrackRich('ViewContent', {
+              content_name: product.name,
+              content_category: 'produto',
+              content_type: 'product',
+              value: product.price,
+              currency: 'BRL',
+              product_name: product.name,
+              custom_data: { delivery_cities: CONFIG.cidades.join(',') }
+            });
+          }
+          viewContentObserver.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -50% 0px', threshold: 0.3 });
+    
+    // Observar cards de produto após renderização
+    setTimeout(() => {
+      document.querySelectorAll('.prod, .mi').forEach(card => viewContentObserver.observe(card));
+    }, 1000);
+  }
+
+  // 3) Abrir coleção (modal) → ViewContent de catálogo
+  const originalAbrir = window.abrir;
+  if (originalAbrir) {
+    window.abrir = function(colecao) {
+      if (window.fbqTrackRich) {
+        window.fbqTrackRich('ViewContent', {
+          content_name: 'Catálogo: ' + colecao.nome,
+          content_category: 'colecao',
+          content_type: 'product_group',
+          product_category: colecao.nome,
+          custom_data: { 
+            collection_items: colecao.itens.length,
+            collection_tags: (colecao.tags || []).join(',')
+          }
+        });
+      }
+      return originalAbrir.apply(this, arguments);
+    };
+  }
+
+  // 4) Scroll depth → Lead (engajamento alto)
+  let maxScroll = 0;
+  const scrollMilestones = [25, 50, 75, 90];
+  window.addEventListener('scroll', () => {
+    const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    if (scrollPct > maxScroll) {
+      maxScroll = scrollPct;
+      scrollMilestones.forEach(m => {
+        if (maxScroll >= m && !window['fbq_scroll_' + m]) {
+          window['fbq_scroll_' + m] = true;
+          window.fbqTrackRich('Lead', {
+            content_name: 'Scroll ' + m + '%',
+            content_category: 'engajamento',
+            value: m,
+            custom_data: { scroll_depth: m }
+          });
+        }
+      });
+    }
+  }, { passive: true });
+
+  // 5) Tempo na página → Lead (engajamento por tempo)
+  [30, 60, 120, 300].forEach(sec => {
+    setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        window.fbqTrackRich('Lead', {
+          content_name: 'Tempo ' + sec + 's',
+          content_category: 'engajamento_tempo',
+          value: sec,
+          custom_data: { time_on_page: sec }
+        });
+      }
+    }, sec * 1000);
+  });
+
+  // 6) Checkout / Compra → Purchase (quando clica no checkout)
+  document.addEventListener('click', (e) => {
+    const checkoutBtn = e.target.closest('a[href*="checkout.html"]');
+    if (checkoutBtn && window.fbq) {
+      // Extrai o nome e preço do produto do contexto (se estiver em um card)
+      const card = checkoutBtn.closest('.prod, .mi');
+      const productName = card ? card.querySelector('.prod-name, .mi-name')?.textContent?.trim() || 'Produto Checkout' : 'Produto Checkout';
+      const productPriceEl = card ? card.querySelector('.prod-price-val, .mi-price-val') : null;
+      const priceText = productPriceEl ? productPriceEl.textContent : null;
+      const priceValue = priceText ? parseFloat(priceText.replace(/[^\d,.]/g, '').replace(',', '.')) : null;
+
+      // Evento Purchase (intenção de compra — checkout iniciado)
+      window.fbqTrackRich('Purchase', {
+        content_name: 'Checkout Iniciado: ' + productName,
+        content_category: 'checkout',
+        content_type: 'product',
+        value: priceValue,
+        currency: priceValue ? 'BRL' : undefined,
+        product_name: productName,
+        custom_data: {
+          checkout_source: 'mercado_pago',
+          frete_gratis: true,
+          delivery_cities: CONFIG.cidades.join(','),
+          payment_method: 'mercado_pago',
+          checkout_type: 'intent'
+        }
+      });
+    }
+  });
+
+  // 7) Quando a página de checkout carrega (verifica se é checkout.html) — dispara evento de visualização de checkout
+  if (window.location.pathname.includes('checkout')) {
+    // A página checkout.html já foi criada. Quando carregada, dispara ViewContent do checkout.
+    if (window.fbqTrackRich) {
+      const checkoutName = document.getElementById('checkoutName')?.textContent || 'Checkout';
+      const checkoutPriceText = document.getElementById('checkoutPrice')?.textContent || '';
+      const checkoutPrice = checkoutPriceText ? parseFloat(checkoutPriceText.replace(/[^\d,.]/g, '').replace(',', '.')) : 0;
+      window.fbqTrackRich('ViewContent', {
+        content_name: 'Checkout: ' + checkoutName,
+        content_category: 'checkout',
+        content_type: 'service',
+        value: checkoutPrice,
+        currency: 'BRL',
+        custom_data: {
+          frete_gratis: true,
+          payment_gateway: 'mercado_pago',
+          checkout_stage: 'payment_form'
+        }
+      });
+    }
+  }
 
   /* imagem que não existe â†’ placeholder dourado (a página nunca fica quebrada) */
   const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23141110'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3' opacity='.5'%3E%3Ccircle cx='170' cy='215' r='58'/%3E%3Ccircle cx='230' cy='215' r='58'/%3E%3C/g%3E%3Cpath d='M200 104l20 22-20 22-20-22z' fill='none' stroke='%23F0DCA4' stroke-width='2.5' opacity='.75'/%3E%3Ctext x='200' y='330' fill='%239C9384' font-family='Jost,sans-serif' font-size='15' letter-spacing='3' text-anchor='middle'%3EFOTO DO PRODUTO%3C/text%3E%3C/svg%3E";
@@ -2082,6 +2336,20 @@ const COLECOES = [
     cta.rel = 'noopener noreferrer';
     cta.setAttribute('aria-label', 'Pedir ' + p.nome + ' pelo WhatsApp');
     body.appendChild(cta);
+
+    /* botão de checkout (Mercado Pago) — frete grátis */
+    const checkoutLink = 'checkout.html?nome=' + encodeURIComponent(p.nome) +
+      '&preco=' + p.preco +
+      '&img=' + encodeURIComponent(p.imagem) +
+      '&desc=' + encodeURIComponent(p.descricao || '');
+    const ctaCheckout = el('a', 'prod-cta',
+      '<span style="font-weight:600;">Comprar — Frete Grátis</span>');
+    ctaCheckout.href = checkoutLink;
+    ctaCheckout.style.background = 'linear-gradient(135deg,#009ee3 0%,#007bb4 100%)';
+    ctaCheckout.style.marginTop = '8px';
+    ctaCheckout.style.fontSize = '.68rem';
+    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' com frete grátis');
+    body.appendChild(ctaCheckout);
 
     card.appendChild(body);
     catalogo.appendChild(card);
@@ -2597,7 +2865,7 @@ const itemCard = (p) => {
 
   /* ---------- dados estruturados dos produtos (Google) ----------
      Lista única com os produtos do catálogo e os itens de cada coleção. */
-  const url = 'https://noivajoiasmt.com.br/';
+  const url = 'https://noivajoiasmt.vercel.app/';
   const todosOsItens = PRODUTOS
     .concat.apply(PRODUTOS, COLECOES.map(c => c.itens))
     .filter(p => p && p.preco != null);
