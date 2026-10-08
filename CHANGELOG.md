@@ -507,3 +507,65 @@ produto ficava espremido em 4 palavras — corrigido com breakpoint em 420px).
 
 Pendente: deploy (a `MP_ACCESS_TOKEN` só vale depois de um novo deploy) e teste
 do fluxo completo no ar.
+
+## 2026-10-08 (2) — Checkout com escolha de entrega
+
+O checkout deixou de ser "tudo igual": agora o cliente escolhe **como quer receber**,
+e cada caminho mostra preço, prazo e aviso próprios. Motivo: o dono realised que
+"frete grátis" sozinho não dizia **onde** o frete era grátis nem **quando** a entrega
+acontecia — o mesmo site oferecia entrega hoje e 3 dias, e o cliente não sabia qual
+escolher.
+
+Regras definidas com o dono:
+
+| Situação | Frete | Prazo | Onde paga |
+|---|---|---|---|
+| **Site** — Cuiabá, Rondonópolis ou Sinop | Grátis | 3 dias úteis | Site |
+| **Site** — qualquer outra cidade/estado do Brasil | Grátis | 4 a 7 dias úteis (aprox.) | Site |
+| **WhatsApp** — Cuiabá, Rondonópolis ou Sinop | R$ 14,99 | mesmo dia | Na entrega |
+| **Site — Sedex a Cobrar** (fora das 3 cidades) | R$ 44,99 | 4 a 7 dias úteis | Frete no site; **produto** ao retirar na agência dos Correios |
+
+O dono confirmou na conversa: a taxa da entrega hoje é **R$ 14,99** (havia dito
+"15 BRL" uma vez, mas R$ 14,99 foi o valor repetido) e **fora das três cidades não
+se mostra taxa nenhuma** — ou o cliente usa o site, ou éDispatcher pessoalmente.
+
+`checkout.html` reescrito como pergunta em 2 passos:
+1. **"Você é de Cuiabá, Rondonópolis ou Sinop?"**
+   - Sim → passo 2: *quer receber hoje?* → botão verde vai para o WhatsApp com a
+     mensagem já montada (produto, valor, taxa de R$ 14,99, total na entrega e o
+     aviso de que frete grátis é só no site); ou *não tenho pressa* → compra no
+     site com frete grátis e 3 dias úteis.
+   - Não → passo 2: **tradicional** (recebe no endereço, frete grátis) ou
+     **Sedex a Cobrar** (paga só R$ 44,99 de frete e o produto ao retirar).
+2. Resumo com produto, frete, prazo e total, aviso em vermelho na modalidade
+   Sedex, botão do Mercado Pago e campo **Acompanhar meu pedido**.
+
+`api/checkout.js`:
+- **O frete é calculado no servidor**, não no navegador: o valor que chega do
+  cliente é ignorado de propósito (`const frete = modalidade === 'sedex' ? 44.99 : 0`).
+  Sem isso, qualquer um manipularia o preço pelo devtools.
+- No Sedex a Cobrar o frete vira **item separado** na preferência — é isso que o
+  cliente está comprando agora. Soma conferida: produto 255,00 + frete 44,99 =
+  299,99.
+- `metadata` volta no webhook com `regiao`, `modalidade`, `frete`, `prazo` e
+  `produto` — é daí que sai a etiqueta e a mensagem de WhatsApp.
+- Novo ramo `consultar`: dado um código de pagamento, consulta
+  `/v1/payment_methods/{id}` e traduz o status (aprovado, em análise, recusado…).
+
+`obrigado.html` reescrito: muda conforme a modalidade (no Sedex o título vira
+"Frete pago — pedido reservado" e o passo 3 é "você retira na agência"), mostra o
+resumo, os 3 passos do que acontece agora, botão de **rastreio** e WhatsApp com
+produto, valor do produto, frete, modalidade, prazo e código do pagamento já
+escritos.
+
+Pixel: `Purchase` agora leva `modalidade`, `regiao`, `prazo`, `frete`,
+`valor_produto`, `pagamento_agora` e `payment_id` — dá para criar público de
+remarketing de "comprou no site com frete grátis" separado de "Sedex a cobrar".
+
+Bug corrigido durante o teste: `.opts{display:grid}` vencia o atributo `[hidden]`
+do HTML por especificidade, então os passos 2 e 3 apareciam todos de uma vez.
+Adicionado `[hidden]{display:none !important}` nas duas páginas.
+
+Verificado: as duas modalidades aceitas pela API real do Mercado Pago (HTTP 201,
+soma de itens confere), fluxo dos dois caminhos clicado no navegador em 390px sem
+erro de console, totals corretos (R$ 299,99 no tradicional, R$ 344,98 no Sedex).

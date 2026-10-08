@@ -8,89 +8,383 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0907;--bg-2:#141110;--gold:#c9a75b;--gold-light:#f0dca4;--cream:#f6f1e6;--muted:#9c9384;--line:rgba(201,167,91,.22);--font-display:"Cormorant Garamond",Georgia,serif;--font-body:"Jost",ui-sans-serif,system-ui,sans-serif;--shell:720px;font-variant-numeric:lining-nums}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--cream);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.shell{max-width:var(--shell);margin:0 auto;padding:40px 22px;width:100%}
-.card-checkout{border:1px solid var(--line);border-radius:24px;padding:32px;background:rgba(20,17,16,.9);box-shadow:0 30px 60px -40px rgba(0,0,0,.95)}
-h2{font-family:var(--font-display);font-size:2rem;font-weight:600;text-align:center;margin-bottom:8px;letter-spacing:.08em}
-.sub{font-size:.9rem;color:var(--muted);text-align:center;margin-bottom:28px}
-.item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
-.item img{width:80px;height:80px;border-radius:14px;object-fit:cover;flex-shrink:0;border:1px solid var(--line);background:#0f0d0c}
-.item-info{flex:1 1 auto;min-width:0}
-.item-info h3{font-family:var(--font-display);font-size:1.15rem;font-weight:600;margin-bottom:4px;line-height:1.25}
-.item-info p{font-size:.8rem;color:var(--muted);line-height:1.4}
-.item-price{margin-left:auto;flex:0 0 auto;padding-left:10px;font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--gold);white-space:nowrap}
-/* em tela estreita o preço desce para baixo: sem isso o nome do
-   produto fica espremido numa coluna de 4 palavras */
-@media(max-width:420px){
-  .item{flex-wrap:wrap}
-  .item-info{flex:1 1 calc(100% - 96px)}
-  .item-price{margin-left:0;padding-left:0;flex:1 1 100%;margin-top:6px;font-size:1.5rem}
+:root{
+  --bg:#0b0907;--bg-2:#141110;--gold:#c9a75b;--gold-light:#f0dca4;--gold-deep:#8a6a22;
+  --cream:#f6f1e6;--muted:#9c9384;--line:rgba(201,167,91,.22);--line-strong:rgba(201,167,91,.45);
+  --green:#1ea65a;--green-deep:#157a41;--azul:#009ee3;
+  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --shell:720px;--r-lg:22px;--r-md:16px;--r-sm:999px;
+  --ease:cubic-bezier(.22,.8,.28,1);
+  /* Cormorant usa algarismos oldstyle (2, 4, 7, 9 descem): preço e prazo
+     ficariam ilegíveis. lining-nums é obrigatório aqui. */
+  font-variant-numeric:lining-nums;
 }
-.shipping{margin:24px 0;padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(201,167,91,.06)}
-.shipping-badge{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:6px}
-.shipping-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:#1ea65a;box-shadow:0 0 8px #1ea65a}
-.shipping h4{font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:8px}
-.shipping p{font-size:.85rem;color:var(--muted);line-height:1.6}
-.cta-mp{display:block;width:100%;text-align:center;padding:18px 24px;border-radius:14px;background:linear-gradient(135deg,#009ee3 0%,#007bb4 100%);color:#fff;font-weight:600;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;box-shadow:0 12px 28px -14px rgba(0,158,227,.8);transition:filter .2s,transform .1s;margin-top:8px}
-.cta-mp:hover{filter:brightness(1.08);transform:translateY(-1px)}
-.cta-mp:active{transform:translateY(0) scale(.99)}
-.note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:20px;opacity:.8}
-.note b{color:var(--cream);font-weight:500}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* display:grid flex etc. VENCEM o [hidden] do HTML por especificidade.
+   Sem este !important, as etapas do passo 2 e 3 apareceriam todas de
+   uma vez. */
+[hidden]{display:none !important}
+body{
+  background:var(--bg);color:var(--cream);font-family:var(--font-body);font-size:16px;
+  line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  min-height:100vh;padding:28px 16px 64px;
+}
+.shell{max-width:var(--shell);margin:0 auto}
+
+/* fundo: mesmo brilho radial do site */
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58% 38% at 50% -6%,rgba(201,167,91,.20) 0%,transparent 68%),
+    radial-gradient(42% 30% at 8% 24%,rgba(138,106,34,.14) 0%,transparent 70%),
+    linear-gradient(#0d0b09 0%,#0b0907 42%,#100d0b 100%);
+}
+
+.card{position:relative;z-index:1;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 24px;background:rgba(20,17,16,.86);box-shadow:0 30px 60px -40px rgba(0,0,0,.95)}
+h1{font-family:var(--font-display);font-size:clamp(1.9rem,7vw,2.5rem);font-weight:600;letter-spacing:.06em;text-align:center;margin-bottom:6px}
+.sub{font-size:.86rem;color:var(--muted);text-align:center;margin-bottom:26px;line-height:1.6}
+
+/* ---------- item ---------- */
+.item{display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.item img{width:74px;height:74px;border-radius:13px;object-fit:cover;flex-shrink:0;border:1px solid var(--line);background:#0f0d0c}
+.item-info{flex:1 1 auto;min-width:0}
+.item-info h2{font-family:var(--font-display);font-size:1.12rem;font-weight:600;line-height:1.25;margin-bottom:3px;text-align:left;letter-spacing:0}
+.item-info p{font-size:.78rem;color:var(--muted);line-height:1.4}
+.item-price{flex:0 0 auto;padding-left:10px;font-family:var(--font-display);font-size:1.32rem;font-weight:600;color:var(--gold);white-space:nowrap}
+@media(max-width:430px){
+  .item{flex-wrap:wrap}
+  .item-info{flex:1 1 calc(100% - 89px)}
+  .item-price{flex:1 1 100%;margin-top:8px;padding-left:0;font-size:1.5rem}
+}
+
+/* ---------- pergunta da região ---------- */
+.pergunta{margin:28px 0 6px;font-family:var(--font-display);font-size:1.3rem;font-weight:600;text-align:center;line-height:1.25}
+.pergunta span{display:block;font-family:var(--font-body);font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.dica{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:18px;line-height:1.6}
+
+/* ---------- opções ---------- */
+.opts{display:grid;gap:10px}
+.opt{
+  display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;
+  padding:16px 17px;border:1px solid var(--line);border-radius:var(--r-md);
+  background:rgba(11,9,7,.5);color:var(--cream);cursor:pointer;
+  font-family:var(--font-body);transition:border-color .18s,background .18s,transform .18s var(--ease);
+}
+.opt:hover{border-color:var(--line-strong);background:rgba(201,167,91,.07);transform:translateY(-1px)}
+.opt:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.opt[aria-pressed="true"]{border-color:var(--gold);background:rgba(201,167,91,.12);box-shadow:0 0 0 1px var(--gold) inset}
+.opt-dot{flex:0 0 auto;width:20px;height:20px;margin-top:2px;border-radius:999px;border:1.6px solid var(--line-strong);display:grid;place-items:center}
+.opt[aria-pressed="true"] .opt-dot{border-color:var(--gold);background:var(--gold-grad,var(--gold))}
+.opt[aria-pressed="true"] .opt-dot::after{content:"";width:7px;height:7px;border-radius:999px;background:#0b0907}
+.opt-b{flex:1 1 auto;min-width:0}
+.opt-t{display:block;font-size:.95rem;font-weight:500;line-height:1.35;margin-bottom:3px}
+.opt-d{display:block;font-size:.79rem;color:var(--muted);line-height:1.55}
+.opt-p{flex:0 0 auto;padding-left:10px;text-align:right}
+.opt-p b{display:block;font-family:var(--font-display);font-size:1.22rem;font-weight:600;color:var(--gold);white-space:nowrap}
+.opt-p small{display:block;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.gratis b{color:var(--green)}
+.gratis small{color:var(--green)}
+
+/* ---------- resumo ---------- */
+.resumo{margin:22px 0 0;padding:18px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(201,167,91,.05)}
+.resumo-l{display:flex;justify-content:space-between;gap:12px;font-size:.87rem;color:var(--muted);padding:5px 0}
+.resumo-l b{color:var(--cream);font-weight:500}
+.resumo-l.total{border-top:1px solid var(--line);margin-top:9px;padding-top:13px;font-size:1rem;color:var(--cream)}
+.resumo-l.total b{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--gold)}
+.aviso{margin:16px 0 0;padding:15px 17px;border:1px solid rgba(200,16,46,.35);border-left:3px solid rgba(200,16,46,.75);border-radius:12px;background:rgba(200,16,46,.07)}
+.aviso-t{font-size:.8rem;color:#ff8a9c;font-weight:600;margin-bottom:5px;letter-spacing:.04em}
+.aviso p{font-size:.8rem;color:var(--muted);line-height:1.6}
+
+/* ---------- botões ---------- */
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  min-height:54px;margin-top:20px;padding:0 22px;border-radius:14px;
+  font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  text-decoration:none;transition:filter .18s,transform .18s var(--ease);border:0;
+}
+.cta-azul{color:#fff;background:linear-gradient(135deg,var(--azul) 0%,#007bb4 100%);box-shadow:0 12px 28px -14px rgba(0,158,227,.85),inset 0 1px 0 rgba(255,255,255,.2)}
+.cta-azul:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.cta-wa{color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);box-shadow:0 12px 28px -14px rgba(30,166,90,.9),inset 0 1px 0 rgba(255,255,255,.2)}
+.cta-wa:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.cta[disabled]{opacity:.45;pointer-events:none}
+.cta-minor{margin-top:11px}
+
+/* ---------- rastreio ---------- */
+.acompanhar{margin-top:22px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(11,9,7,.45)}
+.acompanhar-t{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.acompanhar input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:rgba(11,9,7,.75);color:var(--cream);font-family:var(--font-body);font-size:.9rem}
+.acompanhar input::placeholder{color:rgba(156,147,132,.6)}
+.acompanhar input:focus{outline:none;border-color:var(--gold)}
+.acompanhar button{margin-top:9px;width:100%;min-height:46px}
+.acompanhar-status{margin-top:11px;font-size:.82rem;line-height:1.6;color:var(--muted)}
+.acompanhar-status b{color:var(--cream);font-weight:500}
+
+.voltar{margin-top:14px;width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--muted);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.voltar:hover{border-color:var(--line-strong);color:var(--cream)}
+
+.rodape{margin-top:22px;text-align:center;font-size:.73rem;color:rgba(156,147,132,.75);line-height:1.7}
+.rodape b{color:var(--cream);font-weight:500}
+
+@media(prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
+<div class="bg-glow" aria-hidden="true"></div>
 <div class="shell">
-  <div class="card-checkout">
-    <h2>Checkout</h2>
-    <p class="sub">Noiva Joias MT · Pagamento seguro pelo Mercado Pago</p>
+  <div class="card">
 
-    <div class="item" id="checkoutItem">
+    <h1>Como você quer receber?</h1>
+    <p class="sub">Escolha abaixo. O frete grátis vale para <b>todo o Brasil</b> quando você compra aqui no site.</p>
+
+    <!-- ---------- produto ---------- -->
+    <div class="item">
       <img id="checkoutImg" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp" alt="Produto">
       <div class="item-info">
-        <h3 id="checkoutName">Par de Aliança com Anel Solitário Quadrado 8mm</h3>
-        <p id="checkoutDesc">Banhado a ouro 18k · Frete grátis · Entrega hoje</p>
+        <h2 id="checkoutName">Aliança Banhada a Ouro</h2>
+        <p id="checkoutDesc">Banhado a ouro 18k</p>
       </div>
       <div class="item-price" id="checkoutPrice">R$ 399,99</div>
     </div>
 
-    <div class="shipping">
-      <div class="shipping-badge">FRETE GRÁTIS</div>
-      <h4>Entrega hoje</h4>
-      <p>Entregamos em <b>Cuiabá, Rondonópolis e Sinop</b>. Você só paga na entrega. Sem cadastro, sem boleto antecipado.</p>
+    <!-- ---------- 1) é da região? ---------- -->
+    <p class="pergunta" id="perguntaRegiao"><span>Passo 1</span>Você é de Cuiabá, Rondonópolis ou Sinop?</p>
+    <p class="dica" id="dicaRegiao">A gente entrega <b>hoje mesmo</b> nessas três cidades. Se você não é delas, escolha a segunda opção.</p>
+
+    <div class="opts" id="optsRegiao">
+      <button type="button" class="opt" data-regiao="local" aria-pressed="false">
+        <span class="opt-dot" aria-hidden="true"></span>
+        <span class="opt-b">
+          <span class="opt-t">Sim, sou de uma dessas três cidades</span>
+          <span class="opt-d">Se quiser receber <b>hoje na sua casa</b>, chame no WhatsApp: a taxa de entrega é R$ 14,99 e você só paga na hora da entrega. Se não tem pressa, compre aqui no site com <b>frete grátis</b> e receba em 3 dias úteis.</span>
+        </span>
+      </button>
+      <button type="button" class="opt" data-regiao="fora" aria-pressed="false">
+        <span class="opt-dot" aria-hidden="true"></span>
+        <span class="opt-b">
+          <span class="opt-t">Não, sou de outra cidade ou outro estado</span>
+          <span class="opt-d">Você pode comprar aqui mesmo no site com <b>frete grátis</b> para todo o Brasil. Enviamos pelos Correios e o prazo é de <b>4 a 7 dias úteis</b>, aproximadamente.</span>
+        </span>
+      </button>
     </div>
 
-    <a class="cta-mp" id="checkoutBtn" href="#" target="_blank" rel="noopener noreferrer">
-      Pagar com Mercado Pago — Frete Grátis
-    </a>
+    <!-- ---------- 2a) região: receber hoje no WhatsApp ---------- -->
+    <p class="pergunta" id="perguntaHoje" hidden><span>Passo 2</span>Quer receber <em>hoje</em> na sua casa?</p>
+    <p class="dica" id="dicaHoje">Recebendo hoje você paga só a taxa de entrega, no momento em que a peça chega.</p>
 
-<p class="note">
-      Pagamento processado na plataforma oficial do Mercado Pago (Pix, cartão de crédito ou débito).
-      <b>Frete grátis</b> para Cuiabá, Rondonópolis e Sinop. Você só paga na entrega.
-    </p>
+    <div class="opts" id="optsHoje" hidden>
+      <a class="cta cta-wa" id="btnHoje" href="#" target="_blank" rel="noopener noreferrer">
+        Sim, quero receber hoje — taxa de R$ 14,99
+      </a>
+      <a class="cta cta-azul cta-minor" id="btnHojeSite" href="#" role="button">
+        Não tenho pressa — comprar no site, frete grátis
+      </a>
+      <button type="button" class="voltar" data-voltar="regiao">← Trocar a resposta do passo 1</button>
+    </div>
+
+    <!-- ---------- 2b) fora: como quer pagar ---------- -->
+    <p class="pergunta" id="perguntaFora" hidden><span>Passo 2</span>Como você quer fazer o pagamento?</p>
+    <p class="dica" id="dicaFora">Nas duas opções o <b>frete é grátis</b>. A diferença é quando e onde você paga.</p>
+
+    <div class="opts" id="optsFora" hidden>
+      <button type="button" class="opt" data-pagamento="tradicional" aria-pressed="false">
+        <span class="opt-dot" aria-hidden="true"></span>
+        <span class="opt-b">
+          <span class="opt-t">Quero receber no meu endereço</span>
+          <span class="opt-d">Você paga o produto agora por Pix ou cartão e a encomenda chega na sua casa. <b>Frete grátis.</b> Prazo de 4 a 7 dias úteis.</span>
+        </span>
+        <span class="opt-p gratis"><b>Grátis</b><small>frete</small></span>
+      </button>
+      <button type="button" class="opt" data-pagamento="sedex" aria-pressed="false">
+        <span class="opt-dot" aria-hidden="true"></span>
+        <span class="opt-b">
+          <span class="opt-t">Quero pagar só o frete e pagar o produto ao retirar</span>
+          <span class="opt-d"><b>Sedex a Cobrar:</b> você paga <b>apenas R$ 44,99 de frete</b> aqui no site. A encomenda vai pelos Correios e você <b>retira na agência</b> e paga o <b>valor do produto</b> ao atendente, que repassa para a Noiva Joias MT. Nossos atendentes te ligam antes para confirmar a medida do seu dedo.</span>
+        </span>
+        <span class="opt-p"><b>R$ 44,99</b><small>só o frete</small></span>
+      </button>
+      <button type="button" class="voltar" data-voltar="regiao">← Trocar a resposta do passo 1</button>
+    </div>
+
+    <!-- ---------- 3) resumo + pagamento ---------- -->
+    <div id="pagamento" hidden>
+      <div class="resumo">
+        <div class="resumo-l"><span id="rsProduto">Produto</span><b id="rsProdutoVal">—</b></div>
+        <div class="resumo-l"><span id="rsFrete">Frete</span><b id="rsFreteVal">—</b></div>
+        <div class="resumo-l"><span id="rsPrazo">Prazo de entrega</span><b id="rsPrazoVal">—</b></div>
+        <div class="resumo-l total"><span>Total agora</span><b id="rsTotal">—</b></div>
+      </div>
+
+      <div class="aviso" id="aviso" hidden>
+        <div class="aviso-t">Você receberá apenas o frete agora</div>
+        <p>Ao pagar R$ 44,99 você quita somente o envio. O <b>valor do produto</b> será pago na agência dos Correios, ao retirar a encomenda. Nossos atendentes entram em contato para confirmar a medida do seu dedo antes de postar.</p>
+      </div>
+
+      <a class="cta cta-azul" id="checkoutBtn" href="#" role="button">Pagar com Mercado Pago</a>
+      <p class="rodape" id="rodapeTexto">Depois do pagamento você volta para cá e nosso time confirma a medida do seu dedo e o envio.</p>
+
+      <!-- ---------- rastreio ---------- -->
+      <div class="acompanhar">
+        <div class="acompanhar-t">Acompanhar meu pedido</div>
+        <input id="codigoRastreio" type="text" inputmode="numeric" placeholder="Cole aqui o código do seu pedido" autocomplete="off">
+        <button type="button" class="cta cta-minor" id="btnRastreio" style="background:rgba(201,167,91,.12);border:1px solid var(--line-strong);color:var(--gold)">Consultar</button>
+        <div class="acompanhar-status" id="statusRastreio"></div>
+      </div>
+    </div>
+
   </div>
+  <p class="rodape">Noiva Joias MT · CNPJ 31.186.957/0001-06 · Cuiabá · Rondonópolis · Sinop</p>
 </div>
 
 <script>
-/* Checkout dinâmico — lê o produto da URL ou usa padrão */
+/* ==========================================================================
+   1) DADOS DO PRODUTO — vêm da URL (o card do site monta o link)
+   ========================================================================== */
 const params = new URLSearchParams(window.location.search);
-const nome = params.get('nome') || 'Aliança Banhada a Ouro';
-const preco = parseFloat(params.get('preco') || '399.99');
-const img = params.get('img') || 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp';
-const desc = params.get('desc') || 'Banhado a ouro 18k';
+const nome    = params.get('nome') || 'Aliança Banhada a Ouro';
+const img     = params.get('img')  || 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp';
+const desc    = params.get('desc') || 'Banhado a ouro 18k';
+const preco   = (params.get('preco') || '399.99').replace(',', '.');
+const valor   = parseFloat(preco) || 0;
+
+/* ==========================================================================
+   2) REGRAS DE ENTREGA  —  tudo que muda no futuro fica aqui
+   ========================================================================== */
+const ENTREGA = {
+  taxaHoje:     14.99,   // WhatsApp, entrega hoje nas 3 cidades
+  freteSedex:   44.99,   // Sedex a Cobrar: só o frete, pago no site
+  prazoLocal:   '3 dias úteis',       // compra no site, região das 3 cidades
+  prazoFora:    '4 a 7 dias úteis',   // compra no site, resto do Brasil (aprox.)
+  whatsapp:     '556592942810'
+};
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
 document.getElementById('checkoutName').textContent = nome;
-document.getElementById('checkoutPrice').textContent = brl.format(preco);
-document.getElementById('checkoutDesc').textContent = desc + ' · Frete grátis · Entrega hoje';
+document.getElementById('checkoutDesc').textContent = desc;
+document.getElementById('checkoutPrice').textContent = brl.format(valor);
 document.getElementById('checkoutImg').src = img;
 document.getElementById('checkoutImg').alt = nome;
 
-/* O botão pede a preferência ao /api/checkout (serverless, na Vercel).
-   O Access Token NUNCA vem para o navegador — só o link do checkout. */
-document.getElementById('checkoutBtn').addEventListener('click', function (e) {
+/* ==========================================================================
+   3) NAVEGAÇÃO ENTRE OS PASSOS
+   ========================================================================== */
+const el = id => document.getElementById(id);
+let escolha = { regiao: null, pagamento: null };
+
+function mostrar(id) { el(id).hidden = false; }
+function esconder(id) { el(id).hidden = true; }
+
+function passos() {
+  // limpa tudo antes de mostrar o passo certo
+  ['perguntaHoje','dicaHoje','optsHoje','perguntaFora','dicaFora','optsFora','pagamento']
+    .forEach(esconder);
+  ['perguntaRegiao','dicaRegiao','optsRegiao']
+    .forEach(mostrar);
+
+  if (escolha.regiao === 'local') {
+    mostrar('perguntaHoje'); mostrar('dicaHoje'); mostrar('optsHoje');
+  } else if (escolha.regiao === 'fora') {
+    mostrar('perguntaFora'); mostrar('dicaFora'); mostrar('optsFora');
+  }
+}
+
+function marcar(container, valorAtributo, valor) {
+  el(container).querySelectorAll('.opt').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.dataset[valorAtributo] === valor));
+  });
+}
+
+/* ---------- região ---------- */
+el('optsRegiao').addEventListener('click', function (e) {
+  const botao = e.target.closest('.opt');
+  if (!botao) return;
+  escolha.regiao = botao.dataset.regiao;
+  escolha.pagamento = null;
+  marcar('optsRegiao', 'regiao', escolha.regiao);
+  passos();
+});
+
+/* ---------- voltar ---------- */
+document.querySelectorAll('[data-voltar]').forEach(b => {
+  b.addEventListener('click', function () {
+    escolha.regiao = null;
+    escolha.pagamento = null;
+    marcar('optsRegiao', 'regiao', null);
+    marcar('optsFora', 'pagamento', null);
+    passos();
+  });
+});
+
+/* ---------- passarinho: eu quero receber hoje (WhatsApp) ---------- */
+el('btnHoje').addEventListener('click', function (e) {
+  e.preventDefault();
+  const msg =
+    'Olá! Sou de ' + (escolha.regiao === 'local' ? 'Cuiabá / Rondonópolis / Sinop' : 'Mato Grosso') +
+    ' e quero RECEBIR HOJE.\n\n' +
+    'Produto: ' + nome + '\n' +
+    'Valor do produto: ' + brl.format(valor) + '\n' +
+    'Taxa de entrega (receber hoje): ' + brl.format(ENTREGA.taxaHoje) + '\n' +
+    'Total a pagar na entrega: ' + brl.format(valor + ENTREGA.taxaHoje) + '\n\n' +
+    'Estou ciente de que o frete grátis vale só para compras feitas no site, ' +
+    'com prazo de ' + ENTREGA.prazoLocal + '.\n' +
+    'Consigo receber hoje?';
+  window.open('https://wa.me/' + ENTREGA.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
+});
+
+/* ---------- passarinho: não tenho pressa, compro no site ---------- */
+el('btnHojeSite').addEventListener('click', function (e) {
+  e.preventDefault();
+  escolha.pagamento = 'tradicional';
+  // Na região das 3 cidades o prazo pelo site é 3 dias úteis.
+  montarPagamento({
+    frete: 0,
+    prazo: ENTREGA.prazoLocal,
+    aviso: false
+  });
+  mostrar('pagamento');
+});
+
+/* ---------- fora: tradicional ou sedex a cobrar ---------- */
+el('optsFora').addEventListener('click', function (e) {
+  const botao = e.target.closest('.opt');
+  if (!botao) return;
+  escolha.pagamento = botao.dataset.pagamento;
+  marcar('optsFora', 'pagamento', escolha.pagamento);
+
+  if (escolha.pagamento === 'tradicional') {
+    montarPagamento({ frete: 0, prazo: ENTREGA.prazoFora, aviso: false });
+  } else {
+    montarPagamento({ frete: ENTREGA.freteSedex, prazo: ENTREGA.prazoFora, aviso: true });
+  }
+  mostrar('pagamento');
+});
+
+/* ==========================================================================
+   4) RESUMO
+   ========================================================================== */
+function montarPagamento({ frete, prazo, aviso }) {
+  const total = valor + frete;
+  el('rsProduto').textContent = nome.length > 34 ? nome.slice(0, 33) + '…' : nome;
+  el('rsProdutoVal').textContent = brl.format(valor);
+  el('rsFreteVal').textContent = frete === 0 ? 'Grátis' : brl.format(frete);
+  el('rsFreteVal').style.color = frete === 0 ? 'var(--green)' : 'var(--cream)';
+  el('rsPrazoVal').textContent = prazo;
+  el('rsTotal').textContent = brl.format(total);
+  el('aviso').hidden = !aviso;
+  el('rodapeTexto').textContent = aviso
+    ? 'Depois do pagamento do frete, nossos atendentes entram em contato para confirmar a medida do seu dedo e postar a encomenda.'
+    : 'Depois do pagamento você volta para cá e nosso time confirma a medida do seu dedo e o envio.';
+
+  el('checkoutBtn').dataset.total = total.toFixed(2);
+  el('checkoutBtn').dataset.frete  = frete.toFixed(2);
+}
+
+/* ==========================================================================
+   5) PAGAMENTO — o botão pede a preferência ao /api/checkout.
+   O Access Token NUNCA vem para o navegador: só o link do checkout.
+   ========================================================================== */
+el('checkoutBtn').addEventListener('click', function (e) {
   e.preventDefault();
 
   const btn = this;
@@ -99,39 +393,67 @@ document.getElementById('checkoutBtn').addEventListener('click', function (e) {
   btn.style.opacity = '.7';
   btn.style.pointerEvents = 'none';
 
-  const produto = {
-    nome: document.getElementById('checkoutName').textContent,
-    preco: (document.getElementById('checkoutPrice').textContent.match(/[\d.,]+/) || ['0'])[0],
-    qtd: 1
-  };
-  produto.preco = produto.preco.replace(/[^0-9.,]/g, '');
-
   fetch('/api/checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(produto)
+    body: JSON.stringify({
+      nome,
+      preco: btn.dataset.total,
+      qtd: 1,
+      frete: btn.dataset.frete,
+      regiao: escolha.regiao,
+      pagamento: escolha.pagamento
+    })
   })
-    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, dados: d }; }); })
-    .then(function (r) {
+    .then(r => r.json().then(d => ({ ok: r.ok, dados: d })))
+    .then(r => {
       if (r.ok && r.dados.checkout_url) {
         window.location.href = r.dados.checkout_url;
         return;
       }
-      // Falhou: mostra o motivo e leva o cliente para o WhatsApp,
-      // que é o caminho de venda que já funciona no site.
-      var msg = r.dados.erro || r.dados.detalhe || 'Checkout indisponivel no momento';
       btn.textContent = textoOriginal;
       btn.style.opacity = '1';
       btn.style.pointerEvents = '';
-      window.alert(msg + '\n\nVoce tambem pode pedir pelo WhatsApp: (65) 9294-2810');
+      const msg = r.dados.erro || r.dados.detalhe || 'Checkout indisponível no momento';
+      window.alert(msg + '\n\nVocê também pode pedir pelo WhatsApp: (65) 9294-2810');
     })
-    .catch(function () {
+    .catch(() => {
       btn.textContent = textoOriginal;
-      btn.style.opacity = '1';
+      btn.style.opacity = '.7';
       btn.style.pointerEvents = '';
-      window.alert('Sem conexao com o checkout. Pede pelo WhatsApp: (65) 9294-2810');
+      btn.style.opacity = '1';
+      window.alert('Sem conexão com o checkout. Pede pelo WhatsApp: (65) 9294-2810');
     });
 });
+
+/* ==========================================================================
+   6) ACOMPANHAR PEDIDO
+   O Mercado Pago guarda o pagamento; o código do pedido é o
+   preference/external_reference. Como ainda não há banco de pedidos,
+   a consulta usa o código que o cliente cola e responde o que der.
+   ========================================================================== */
+el('btnRastreio').addEventListener('click', async function () {
+  const codigo = el('codigoRastreio').value.trim();
+  const saida = el('statusRastreio');
+  if (!codigo) { saida.textContent = 'Cole o código do pedido para consultar.'; return; }
+
+  saida.textContent = 'Consultando…';
+  try {
+    const r = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ consultar: codigo })
+    });
+    const d = await r.json();
+    saida.innerHTML = d.status
+      ? '<b>' + d.status + '</b>' + (d.detalhe ? ' — ' + d.detalhe : '')
+      : (d.erro || 'Não encontramos esse pedido. Confira o código ou chame no WhatsApp: (65) 9294-2810');
+  } catch (e) {
+    saida.textContent = 'Não conseguimos consultar agora. Chame no WhatsApp: (65) 9294-2810';
+  }
+});
+
+passos();
 </script>
 </body>
 </html>

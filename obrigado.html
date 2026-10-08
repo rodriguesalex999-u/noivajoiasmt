@@ -5,56 +5,250 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Compra Confirmada — Noiva Joias MT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0907;--gold:#c9a75b;--cream:#f6f1e6;--green:#1ea65a;--font-display:"Cormorant Garamond",serif;--font-body:"Jost",sans-serif;--shell:720px;font-variant-numeric:lining-nums}
+:root{
+  --bg:#0b0907;--gold:#c9a75b;--gold-light:#f0dca4;--cream:#f6f1e6;--muted:#9c9384;
+  --line:rgba(201,167,91,.22);--line-strong:rgba(201,167,91,.45);
+  --green:#1ea65a;--green-deep:#157a41;
+  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,sans-serif;
+  --shell:720px;--r-md:16px;--r-sm:999px;
+  --ease:cubic-bezier(.22,.8,.28,1);
+  font-variant-numeric:lining-nums;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--cream);font-family:var(--font-body);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 22px}
-.card{max-width:var(--shell);margin:0 auto;padding:48px 32px;border:1px solid rgba(201,167,91,.22);border-radius:24px;background:rgba(20,17,16,.85);box-shadow:0 30px 60px -40px rgba(0,0,0,.95);text-align:center}
-h1{font-family:var(--font-display);font-size:clamp(1.8rem,6vw,3rem);font-weight:600;letter-spacing:-.01em;line-height:1.1;margin-bottom:12px}
-h1 .gold{color:var(--gold);font-style:italic}
-p{font-size:1rem;color:#9c9384;line-height:1.7;margin-bottom:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:24px}
-.badge::before{content:"✓";width:28px;height:28px;border-radius:50%;background:rgba(30,166,90,.15);border:1px solid rgba(30,166,90,.3);display:grid;place-items:center;font-size:.9rem;color:var(--green);font-weight:700}
-.note{font-size:.78rem;color:rgba(156,147,132,.5);margin-top:28px;letter-spacing:.06em}
-.note b{color:var(--cream);font-weight:500}
+[hidden]{display:none !important}
+body{
+  background:var(--bg);color:var(--cream);font-family:var(--font-body);font-size:16px;
+  line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 18px 64px;
+}
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58% 38% at 50% -6%,rgba(201,167,91,.20) 0%,transparent 68%),
+    radial-gradient(46% 34% at 96% 72%,rgba(201,167,91,.10) 0%,transparent 72%),
+    linear-gradient(#0d0b09 0%,#0b0907 42%,#100d0b 100%);
+}
+.shell{position:relative;z-index:1;max-width:var(--shell);width:100%;margin:0 auto}
+.card{padding:38px 28px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(20,17,16,.86);box-shadow:0 30px 60px -40px rgba(0,0,0,.95);text-align:center}
+.badge{display:inline-flex;align-items:center;gap:9px;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:20px}
+.badge::before{content:"";width:26px;height:26px;border-radius:999px;background:rgba(30,166,90,.14);border:1px solid rgba(30,166,90,.34);display:grid;place-items:center;font-size:.82rem;color:var(--green);font-weight:700}
+h1{font-family:var(--font-display);font-size:clamp(1.8rem,6.6vw,2.7rem);font-weight:600;letter-spacing:-.01em;line-height:1.12;margin-bottom:12px}
+h1 em{display:block;font-style:italic;font-weight:600;color:var(--gold)}
+.lead{font-size:.96rem;color:var(--muted);line-height:1.7;max-width:44ch;margin:0 auto 26px}
+
+/* etapas do que acontece agora */
+.passos{margin:0 0 26px;padding:20px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(201,167,91,.05);text-align:left}
+.passos-t{font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:13px}
+.passo{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.passo:last-child{border-bottom:0}
+.passo-n{flex:0 0 auto;width:24px;height:24px;border-radius:999px;border:1px solid var(--line-strong);display:grid;place-items:center;font-family:var(--font-display);font-size:.8rem;color:var(--gold);font-weight:600}
+.passo-b b{display:block;font-size:.9rem;font-weight:500;margin-bottom:2px}
+.passo-b span{font-size:.82rem;color:var(--muted);line-height:1.55}
+
+.aviso{margin:0 0 22px;padding:16px 18px;border:1px solid rgba(200,16,46,.35);border-left:3px solid rgba(200,16,46,.75);border-radius:12px;background:rgba(200,16,46,.07);text-align:left}
+.aviso-t{font-size:.78rem;color:#ff8a9c;font-weight:600;margin-bottom:5px;letter-spacing:.04em}
+.aviso p{font-size:.85rem;color:var(--muted);line-height:1.62}
+
+.resumo{margin:0 0 22px;padding:17px 18px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(11,9,7,.4);text-align:left}
+.resumo-l{display:flex;justify-content:space-between;gap:14px;font-size:.88rem;color:var(--muted);padding:6px 0}
+.resumo-l b{color:var(--cream);font-weight:500}
+.resumo-l.total{border-top:1px solid var(--line);margin-top:8px;padding-top:13px;color:var(--cream)}
+.resumo-l.total b{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--gold)}
+.gr{color:var(--green)!important}
+
+.cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:54px;padding:0 22px;border:0;border-radius:14px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;text-decoration:none;transition:filter .18s,transform .18s var(--ease)}
+.cta-wa{color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);box-shadow:0 12px 28px -14px rgba(30,166,90,.9),inset 0 1px 0 rgba(255,255,255,.2)}
+.cta-wa:hover{filter:brightness(1.07);transform:translateY(-2px)}
+.cta-site{display:block;margin-top:11px;min-height:50px;line-height:50px;color:var(--gold);border:1px solid var(--line-strong);background:transparent}
+.cta-site:hover{background:rgba(201,167,91,.08)}
+
+.acompanhar{margin-top:24px;padding:18px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(11,9,7,.45);text-align:left}
+.acompanhar-t{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.acompanhar input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:rgba(11,9,7,.75);color:var(--cream);font-family:var(--font-body);font-size:.92rem}
+.acompanhar input::placeholder{color:rgba(156,147,132,.6)}
+.acompanhar input:focus{outline:none;border-color:var(--gold)}
+.acompanhar button{margin-top:9px;width:100%;min-height:46px;border:1px solid var(--line-strong);border-radius:12px;background:rgba(201,167,91,.12);color:var(--gold);font-family:var(--font-body);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.acompanhar button:hover{background:rgba(201,167,91,.2)}
+.acompanhar-status{margin-top:11px;font-size:.85rem;line-height:1.6;color:var(--muted)}
+.acompanhar-status b{color:var(--cream);font-weight:500}
+.rodape{margin-top:22px;font-size:.74rem;color:rgba(156,147,132,.7);line-height:1.7}
+.rodape b{color:var(--cream);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="badge">Compra Confirmada</div>
-  <h1>Obrigado pela compra,<br><span class="gold">Noiva Joias MT</span></h1>
-  <p>Seu pedido foi confirmado pelo Mercado Pago com <b>frete grátis</b>. Entregaremos em <b>Cuiabá, Rondonópolis ou Sinop</b> conforme combinado. Você só paga na entrega.</p>
-  <p class="note">Esta página confirma a compra para fins de rastreamento. <b>Se você não fez uma compra real, pode ignorar esta página.</b></p>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="shell">
+  <div class="card">
+
+    <div class="badge" id="badge">Pagamento aprovado</div>
+    <h1>Obrigado pela compra!<em>Noiva Joias MT</em></h1>
+    <p class="lead" id="lead">Já recebemos o seu pedido.</p>
+
+    <div class="aviso" id="aviso" hidden>
+      <div class="aviso-t">Você pagou apenas o frete</div>
+      <p>O pagamento de R$ 44,99 quita somente o envio. O <b>valor do produto</b> será pago na agência dos Correios, no momento em que você retirar a encomenda. Tenha o valor do produto em mãos.</p>
+    </div>
+
+    <div class="resumo" id="resumo">
+      <div class="resumo-l"><span id="rsProduto">Produto</span><b id="rsProdutoVal">—</b></div>
+      <div class="resumo-l"><span>Frete</span><b id="rsFrete" class="gr">Grátis</b></div>
+      <div class="resumo-l"><span>Pagamento agora</span><b id="rsTotal">—</b></div>
+      <div class="resumo-l"><span>Prazo de entrega</span><b id="rsPrazo">—</b></div>
+    </div>
+
+    <div class="passos">
+      <div class="passos-t">O que acontece agora</div>
+      <div class="passo">
+        <span class="passo-n">1</span>
+        <span class="passo-b"><b>Confirmamos a medida do seu dedo</b><span>Um atendente entra em contato pelo WhatsApp para garantir o tamanho certo da aliança.</span></span>
+      </div>
+      <div class="passo">
+        <span class="passo-n">2</span>
+        <span class="passo-b"><b>Postamos o seu pedido</b><span>A encomenda segue pelos Correios e você recebe o código de rastreio aqui.</span></span>
+      </div>
+      <div class="passo">
+        <span class="passo-n">3</span>
+        <span class="passo-b"><b id="passo3-t">Você recebe</b><span id="passo3-d">Entrega no endereço que você informar.</span></span>
+      </div>
+    </div>
+
+    <a class="cta cta-wa" id="btnWa" href="#" target="_blank" rel="noopener noreferrer">
+      Falar no WhatsApp
+    </a>
+    <a class="cta cta-site" href="/">Voltar para o site</a>
+
+    <div class="acompanhar">
+      <div class="acompanhar-t">Acompanhar meu pedido</div>
+      <input id="codigo" type="text" inputmode="numeric" placeholder="Cole aqui o código do pagamento" autocomplete="off">
+      <button type="button" id="btnRastreio">Consultar</button>
+      <div class="acompanhar-status" id="status"></div>
+    </div>
+
+    <p class="rodape">Noiva Joias MT · CNPJ 31.186.957/0001-06 · <b>(65) 9294-2810</b></p>
+  </div>
 </div>
 
 <script>
-/* Quando esta página carrega = compra confirmada = dispara Purchase real */
-if (window.fbqTrackRich) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const nome = urlParams.get('nome') || 'Aliança Noiva Joias MT';
-  const preco = parseFloat(urlParams.get('preco') || '399.99');
-  const quantidade = parseInt(urlParams.get('q') || '1');
+/* ==========================================================================
+   Dados que chegam do Mercado Pago (ou da URL, para teste)
+   ========================================================================== */
+const q      = new URLSearchParams(window.location.search);
+const nome   = q.get('nome')   || 'Aliança Noiva Joias MT';
+const preco  = q.get('preco')  || '0';
+const region = q.get('regiao') || 'fora';
+const mod    = q.get('pagamento') || 'tradicional';
+const pagId  = q.get('payment_id') || q.get('preference_id') || '';
 
+const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const num = parseFloat(String(preco).replace(',', '.')) || 0;
+const FRETE_SEDEX = 44.99;
+
+const ehSedex   = mod === 'sedex';
+const prazoTxt  = region === 'local' ? '3 dias úteis' : '4 a 7 dias úteis';
+const valorProd = ehSedex ? Math.max(0, num - FRETE_SEDEX) : num;
+
+/* ---------- preenche a tela ---------- */
+document.getElementById('rsProduto').textContent = nome.length > 34 ? nome.slice(0, 33) + '…' : nome;
+document.getElementById('rsProdutoVal').textContent = brl.format(valorProd);
+
+const rsFrete = document.getElementById('rsFrete');
+if (ehSedex) {
+  rsFrete.textContent = brl.format(FRETE_SEDEX);
+  rsFrete.classList.remove('gr');
+  document.getElementById('aviso').hidden = false;
+} else {
+  rsFrete.textContent = 'Grátis';
+  rsFrete.classList.add('gr');
+}
+
+document.getElementById('rsTotal').textContent = brl.format(num);
+document.getElementById('rsPrazo').textContent = prazoTxt;
+
+if (ehSedex) {
+  document.getElementById('badge').textContent = 'Frete pago — pedido reservado';
+  document.getElementById('lead').textContent =
+    'Já reservamos o seu pedido. O valor do produto será pago quando você retirar na agência dos Correios.';
+  document.getElementById('passo3-t').textContent = 'Você retira na agência dos Correios';
+  document.getElementById('passo3-d').textContent =
+    'Leve o valor do produto e pague ao atendente, que repassa para a Noiva Joias MT.';
+} else {
+  document.getElementById('passo3-d').textContent =
+    region === 'local'
+      ? 'Entrega no seu endereço em Cuiabá, Rondonópolis ou Sinop.'
+      : 'Entrega no endereço que você informar, pelos Correios.';
+}
+
+/* ---------- WhatsApp com tudo já preenchido ---------- */
+const waMsg =
+  'Olá! Acabei de comprar no site da Noiva Joias MT.\n\n' +
+  'Produto: ' + nome + '\n' +
+  'Valor do produto: ' + brl.format(valorProd) + '\n' +
+  'Frete: ' + (ehSedex ? brl.format(FRETE_SEDEX) : 'Grátis') + '\n' +
+  'Pago agora: ' + brl.format(num) + '\n' +
+  'Modalidade: ' + (ehSedex ? 'Sedex a Cobrar (pago o produto ao retirar)' : 'Recebo no meu endereço') + '\n' +
+  'Prazo: ' + prazoTxt + '\n' +
+  (pagId ? 'Código do pagamento: ' + pagId + '\n' : '') +
+  '\nPodem me passar a medida do meu dedo?';
+document.getElementById('btnWa').href =
+  'https://wa.me/556592942810?text=' + encodeURIComponent(waMsg);
+
+if (pagId) document.getElementById('codigo').value = pagId;
+
+/* ==========================================================================
+   Rastreio
+   ========================================================================== */
+document.getElementById('btnRastreio').addEventListener('click', async function () {
+  const codigo = document.getElementById('codigo').value.trim();
+  const saida = document.getElementById('status');
+  if (!codigo) { saida.textContent = 'Cole o código do pagamento para consultar.'; return; }
+  saida.textContent = 'Consultando…';
+  try {
+    const r = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ consultar: codigo })
+    });
+    const d = await r.json();
+    saida.innerHTML = d.status
+      ? '<b>' + d.status + '</b>' + (d.detalhe ? ' — ' + d.detalhe : '')
+      : (d.erro || 'Não encontramos esse pedido. Chame no WhatsApp: (65) 9294-2810');
+  } catch (e) {
+    saida.textContent = 'Não conseguimos consultar agora. Chame no WhatsApp: (65) 9294-2810';
+  }
+});
+
+/* ==========================================================================
+   Pixel — Purchase confirmado
+   ========================================================================== */
+if (window.fbqTrackRich) {
   window.fbqTrackRich('Purchase', {
-    content_ids: ['noiva_joias_mt_' + Date.now()],
+    content_ids: ['noivajoias_' + (pagId || Date.now())],
     content_name: nome,
     content_category: 'aliancas',
     content_type: 'product',
-    value: preco * quantidade,
+    value: num,
     currency: 'BRL',
     product_name: nome,
-    quantity: quantidade,
+    quantity: 1,
+    num_items: 1,
     custom_data: {
-      frete_gratis: true,
-      delivery_cities: 'Cuiabá, Rondonópolis, Sinop',
-      payment_on_delivery: true,
+      frete: ehSedex ? FRETE_SEDEX : 0,
+      frete_gratis: !ehSedex,
+      modalidade: ehSedex ? 'sedex_a_cobrar' : 'tradicional',
+      regiao,
+      prazo: prazoTxt,
+      pagamento_agora: num,
+      valor_produto: valorProd,
       payment_gateway: 'mercado_pago',
-      purchase_confirmed: true,
-      site_version: 'noiva_joias_mt_v2'
+      payment_id: pagId || null,
+      purchase_confirmed: true
     }
   });
-
-  console.log('✅ Purchase event disparado no Facebook Pixel — Compra confirmada:', nome, 'R$', preco);
 }
 </script>
 </body>
