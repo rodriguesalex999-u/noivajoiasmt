@@ -408,3 +408,7 @@ oivas_joias_mt.jpg (crop central 1200×630). Resolve o preview ao compartilhar o
 ## 2026-10-06
 
 **Saudação removida de todos os CTAs** — topo, hero, final, footer e dock também perdem a linha 'Olá! Vim pelo site da Noiva Joias MT. 👋'; todos os botões de WhatsApp agora mandam mensagem direta, sem saudação.
+
+## 2026-10-06
+
+**Meta Pixel instalado** — base do pixel 186922223282687 no <head> com PageView + fallback noscript; clique em qualquer botão com link wa.me dispara evento padrão 'Contact' (para campanha de remarketing dos clientes que chamam no WhatsApp).

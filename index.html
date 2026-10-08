@@ -674,6 +674,24 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
   .rule::after{transform:none;opacity:.7}
 }
 </style>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '186922223282687');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=186922223282687&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 
 <body>
@@ -1925,6 +1943,14 @@ const COLECOES = [
   };
   const waLink = (msg) =>
     'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg);
+
+  /* ---------- Meta Pixel: clique em qualquer botão de WhatsApp vira evento Contact ---------- */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href*="wa.me"]');
+    if (a && window.fbq) {
+      fbq('track', 'Contact', { content_name: 'Clique WhatsApp', content_category: 'whatsapp' });
+    }
+  });
 
   /* imagem que não existe â†’ placeholder dourado (a página nunca fica quebrada) */
   const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23141110'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3' opacity='.5'%3E%3Ccircle cx='170' cy='215' r='58'/%3E%3Ccircle cx='230' cy='215' r='58'/%3E%3C/g%3E%3Cpath d='M200 104l20 22-20 22-20-22z' fill='none' stroke='%23F0DCA4' stroke-width='2.5' opacity='.75'/%3E%3Ctext x='200' y='330' fill='%239C9384' font-family='Jost,sans-serif' font-size='15' letter-spacing='3' text-anchor='middle'%3EFOTO DO PRODUTO%3C/text%3E%3C/svg%3E";
