@@ -2574,6 +2574,20 @@ const itemCard = (p) => {
     cta.setAttribute('aria-label', 'Pedir ' + p.nome + ' pelo WhatsApp');
     body.appendChild(cta);
 
+    /* botão de checkout (Mercado Pago) — frete grátis */
+    const checkoutLink = 'checkout.html?nome=' + encodeURIComponent(p.nome) +
+      '&preco=' + p.preco +
+      '&img=' + encodeURIComponent(p.imagem) +
+      '&desc=' + encodeURIComponent(p.descricao || '');
+    const ctaCheckout = el('a', 'mi-cta',
+      '<span style="font-weight:600;">Comprar — Frete Grátis</span>');
+    ctaCheckout.href = checkoutLink;
+    ctaCheckout.style.background = 'linear-gradient(135deg,#009ee3 0%,#007bb4 100%)';
+    ctaCheckout.style.marginTop = '8px';
+    ctaCheckout.style.fontSize = '.68rem';
+    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' com frete grátis');
+    body.appendChild(ctaCheckout);
+
     li.appendChild(body);
     return li;
   };

@@ -4,6 +4,14 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-08
+
+**CTA "Comprar — Frete Gráis" no modal de coleção** — os itens do modal (que abre
+clicando num card de coleção no hero) agora mostram, abaixo do "Quero este modelo",
+o mesmo botão azul "Comprar — Frete Gráis" que já existia no catálogo principal da
+homepage. Antes o modal tinha só o WhatsApp; agora o cliente pode escolher entre
+WhatsApp (entrega hoje, pago na hora) e checkout no site (frete grátis).
+
 ## 2026-09-30
 
 **Site criado do zero** — `index.html` único, autocontido, a partir da referência de
