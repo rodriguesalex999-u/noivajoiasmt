@@ -4,6 +4,29 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-09
+
+**Organização do projeto + `INDICE.md` (mapa de pastas)** — a raiz estava poluída
+com arquivos soltos e o dono pedia um jeito rápido de saber "o que tem em cada
+pasta". Nada foi deletado — os arquivos só mudaram de pasta.
+
+- **`INDICE.md` (novo)** — mapa do projeto: o que tem em cada pasta e um
+  "acesso rápido por assunto" (ex.: "pagamento/checkout → checkout.html +
+  api/checkout.js"). Não duplica regras; aponta para o `AGENTS.md`.
+- **`marketing/` (novo)** — Instagram e anúncios: `INSTAGRAM_DELETE_PROTOCOL.md`,
+  `PROMPT_INSTAGRAM_DELETE.md`, `instagram_delete_locks.json`.
+- **`operacoes/` (novo)** — backup e depuração: `index.html.backup`,
+  `facebook_ads_debug.html`.
+- **`r2-manutencao/` (novo)** — imagens e Cloudflare R2: `organize_r2.py`,
+  `guia-capacidades-ia_fotos_links.md`.
+- `AGENTS.md` seção 7 atualizada: lista `INDICE.md`, `api/` e as 3 pastas novas;
+  remove a linha fantasma do `guia-capacidades` (agora em `r2-manutencao/`).
+- Raiz ficou só com o essencial do site. Nenhum comportamento de página mudou.
+
+**`index.html` — Texto jurídico de IA no rodapé** — foi adicionado abaixo do copyright o texto "O presente canal de interação operacionaliza recurso de assistência algorítmica, cuja materialização visual deriva de espelhamento digital do gestor empresarial (Sr. Fernandes), nos termos do art. 37, § 1º, do Código de Defesa do Consumidor, afastando qualquer caracterização de publicidade enganosa ou abusiva. O WhatsApp (65) 9294-2810 é canal sujeito a alterações por plataforma de terceiros, sendo o cliente sempre informado de quaisquer mudanças." para afastar "propaganda enganosa". Além disso, acrescentada nota sobre o WhatsApp (65) 9294-2810 ser sujeito a alterações por plataforma de terceiros, informando que o cliente será sempre notificado de mudanças.
+
+---
+
 ## 2026-10-08
 
 **CTA "Comprar — Frete Gráis" no modal de coleção** — os itens do modal (que abre
