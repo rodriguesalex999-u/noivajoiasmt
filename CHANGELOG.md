@@ -4,6 +4,18 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-13 (manhã)
+
+**Foto do KIT CORDÃO PERUANO 5MM + PINGENTE substituída no R2 e catálogos**
+
+- Nova foto fornecida (PNG 1000×1000, 988 KB) processada: convertida para WebP q90 (77.8 KB), tratamento de borda preta aplicado (limiar 238 → preto 11,9,7 + borda forçada 4px), salva como `-v3`.
+- Chave R2 `elite18k/KIT-CORDAO-PERUANO-5MM-PINGENTE-BANHADO-A-OURO-1-v3.webp` sobrescrita (HTTP 200, 79.6 KB).
+- HTMLs já apontavam para `-v3` — site atualizado automaticamente.
+- 3 PDFs regenerados: KITS (24.2 MB), Pulseiras (16.6 MB), Pingentes (11.3 MB) — todos validados (zero erro, zero overflow).
+- Deploy automático via Vercel — site ao vivo com a nova foto.
+
+---
+
 ## 2026-10-09
 
 **`index.html` — Texto jurídico de IA + aviso de WhatsApp no rodapé** — foi adicionado abaixo do copyright o texto "O presente canal de interação operacionaliza recurso de assistência algorítmica, cuja materialização visual deriva de espelhamento digital do gestor empresarial (Sr. Fernandes), nos termos do art. 37, § 1º, do Código de Defesa do Consumidor, afastando qualquer caracterização de publicidade enganosa ou abusiva. O WhatsApp (65) 9294-2810 é canal sujeito a alterações por plataforma de terceiros, sendo o cliente sempre informado de quaisquer mudanças." para afastar "propaganda enganosa". Além disso, acrescentada nota sobre o WhatsApp (65) 9294-2810 ser sujeito a alterações por plataforma de terceiros, informando que o cliente será sempre notificado de mudanças.
