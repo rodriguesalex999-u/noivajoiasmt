@@ -306,6 +306,15 @@ h1 em{font-style:italic;display:block;font-weight:600}
   transition:border-color .18s,background .18s,transform .18s var(--ease);
 }
 .ghost:hover{border-color:var(--line-strong);background:rgba(201,167,91,.07);transform:translateY(-2px)}
+.masculino-btn{
+  font-weight:400;letter-spacing:.12em;font-size:.7rem;
+  color:rgba(156,147,132,.75);border-color:rgba(201,167,91,.14);
+  padding:8px 18px;min-height:38px;min-width:220px;
+}
+.masculino-btn:hover{
+  color:var(--cream);border-color:rgba(201,167,91,.28);
+  background:rgba(201,167,91,.04);transform:none;
+}
 
 /* régua dourada */
 .rule{position:relative;height:1px;width:156px;margin:36px auto;background:var(--line);overflow:hidden}
@@ -875,6 +884,14 @@ src="https://www.facebook.com/tr?id=186922223282687&ev=PageView&noscript=1"
         </span>
       </div>
     </section>
+
+    <!-- botão discreto para correntes e pulseiras masculinas -->
+    <div class="reveal d2" style="text-align:center;margin:42px 0 18px">
+      <a href="masculino.html" target="_blank" rel="noopener noreferrer"
+         class="ghost masculino-btn" aria-label="Abrir catálogo de correntes e pulseiras masculinas 18K em nova aba">
+        <span>Correntes e pulseiras masculinas 18K</span>
+      </a>
+    </div>
 
     <!-- ============ como funciona ============ -->
     <h2 class="sec-title reveal">Como funciona</h2>
@@ -1634,74 +1651,83 @@ const COLECOES = [
     itens: [
       {
         nome: 'Anel Solitário Americano Cor Dourada Com Pedra Cristal',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-americano-cor-dourada-com-pedra-cristal-1.webp',
         descricao: 'Anel solitário modelo americano com pedra cristal, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Americano', 'Cor Dourada', 'Pedra Cristal']
       },
       {
+        nome: 'Anel Solitário Cor Dourada Pedra Cristal',
+        preco: 99.99,
+        parcelas: 1,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-cor-dourada-pedra-cristal-1.webp',
+        descricao: 'Anel solitário com pedra cristal, cor dourada.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
+        tags: ['Cor Dourada', 'Pedra Cristal']
+      },
+      {
         nome: 'Anel Solitário Brilho Divino Cor Dourada Pedra Cristal',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-brilho-divino-cor-dourada-pedra-cristal-1.webp',
         descricao: 'Anel solitário brilho divino com pedra cristal, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Brilho Divino', 'Cor Dourada', 'Pedra Cristal']
       },
       {
         nome: 'Anel Solitário Brilho Intenso Cor Dourada',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-brilho-intenso-cor-dourada-1.webp',
         descricao: 'Anel solitário brilho intenso, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Brilho Intenso', 'Cor Dourada']
       },
       {
         nome: 'Anel Solitário Cor Ouro Rose Pedra Cristal Cravejado',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-cor-ouro-rose-pedra-cristal-cravejado-1.webp',
         descricao: 'Anel solitário cor ouro rose com pedra cristal cravejado.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Ouro Rose', 'Cor Dourada', 'Cravejado']
       },
       {
         nome: 'Anel Solitário Coração Central Pedra Cristal Cor Dourada',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-coracao-central-pedra-cristal-cor-dourada-1.webp',
         descricao: 'Anel solitário coração central com pedra cristal, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Coração Central', 'Cor Dourada', 'Pedra Cristal']
       },
       {
         nome: 'Anel Solitário Francês Cor Dourada',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-frances-cor-dourada-1.webp',
         descricao: 'Anel solitário modelo francês, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Francês', 'Cor Dourada']
       },
       {
         nome: 'Anel Solitário Linda Flor Cor Dourada Pedra Vermelha',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-linda-flor-cor-dourada-pedra-vermelha-1.webp',
         descricao: 'Anel solitário linda flor com pedra vermelha, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Linda Flor', 'Cor Dourada', 'Pedra Vermelha']
       },
       {
         nome: 'Anel Solitário Luminese Cor Dourada Cravejado',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-luminese-cor-dourada-cravejado-1.webp',
         descricao: 'Anel solitário luminese cravejado, cor dourada.',
-        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Luminese', 'Cor Dourada', 'Cravejado']
       }
     ]
@@ -1715,11 +1741,11 @@ const COLECOES = [
     itens: [
       {
         nome: 'Anel Solitário Cor Prata Coração Vazado Pedra Cristal',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-prata-anel-solitario-cor-prata-coracao-vazado-pedra-cristal-1.webp',
         descricao: 'Anel solitário coração vazado com pedra cristal, cor prata.',
-        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Coração Vazado', 'Cor Prata', 'Pedra Cristal']
       },
       {
@@ -1728,16 +1754,16 @@ const COLECOES = [
         parcelas: 1,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-prata-anel-solitario-cor-prata-pedra-cor-cristal.webp',
         descricao: 'Anel solitário com pedra cristal, cor prata.',
-        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Cor Prata', 'Pedra Cristal']
       },
       {
         nome: 'Anel Solitário Coração Linda Flor Cor Prata com Pedra Azul',
-        preco: 249.00,
+        preco: 249.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-prata-anel-solitario-coracao-linda-flor-cor-prata-com-pedra-azul-1.webp',
         descricao: 'Anel solitário coração linda flor com pedra azul, cor prata.',
-        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional.',
+        nota: 'Produto na cor prata não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Coração Linda Flor', 'Cor Prata', 'Pedra Azul']
       }
     ]
@@ -1982,6 +2008,873 @@ const COLECOES = [
         tags: ['8mm', 'Quadrada', 'Friso']
       }
     ]
+  },
+  {
+    nome: 'Correntes, Kits e Conjuntos 18K',
+    previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-7MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp',
+    selo: 'Correntes & Kits',
+    descricao: 'Correntes, kits e conjuntos masculinos banhados a ouro 18K. Entrega hoje em Cuiabá, Rondonópolis e Sinop — você confere a peça na mão e só então paga.',
+    tags: ['Banhado a Ouro 18K', 'Correntes', 'Kits', 'Conjuntos'],
+    itens: [
+      {
+            "nome": "Cordao 5Mm Piastrine Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-5MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao 5Mm Piastrine Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Balao 8Mm Banhado A Ouro 18K",
+            "preco": 254.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-BALAO-8MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Balao 8Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 1Mm Pingente Cruz Banhado A Ouro 18K",
+            "preco": 184.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-1MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 1Mm Pingente Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 1Mm Pingente Cruz Fio Banhado A Ouro 18K",
+            "preco": 184.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-1MM-PINGENTE-CRUZ-FIO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 1Mm Pingente Cruz Fio Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 2Mm Banhado A Ouro 18K",
+            "preco": 204.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-2MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 2Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 2Mm Pingente Jesus Cruz Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-2MM-PINGENTE-JESUS-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 2Mm Pingente Jesus Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 3Mm Banhado A Ouro 18K",
+            "preco": 204.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 5Mm Fecho Nossa Senhora Banhado A Ouro 18K",
+            "preco": 304.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-5MM-FECHO-NOSSA-SENHORA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 5Mm Fecho Nossa Senhora Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado 6Mm Banhado A Ouro 18K",
+            "preco": 304.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-6MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado 6Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado Alongado 3Mm Banhado A Ouro 18K",
+            "preco": 194.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-ALONGADO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado Alongado 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado Alongado 3Mm Pingente Cruz Banhado A Ouro 18K",
+            "preco": 204.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-ALONGADO-3MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado Alongado 3Mm Pingente Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Cadeado Duplo 3Mm Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-DUPLO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Cadeado Duplo 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao E Pulseira 3Mm Grumet Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-E-PULSEIRA-3MM-GRUMET-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao E Pulseira 3Mm Grumet Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Friso S 13Mm Banhado Ouro 18K",
+            "preco": 224.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-FRISO-S-13MM-BANHADO-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Friso S 13Mm Banhado Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Grumet 13Mm Fecho Santa Banhado A Ouro 18K",
+            "preco": 854.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-13MM-FECHO-SANTA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Grumet 13Mm Fecho Santa Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Grumet 7Mm Banhado A Ouro 18K",
+            "preco": 224.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-7MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Grumet 7Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Grumet Oca 750 15Mm Banhado A Ouro 18K",
+            "preco": 854.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-OCA-750-15MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Grumet Oca 750 15Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Lacraia 10Mm Banhado A Ouro 18K",
+            "preco": 204.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Lacraia 10Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Lacraia 5Mm Banhado A Ouro 18K",
+            "preco": 204.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-5MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Lacraia 5Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pitbull Pulseira 3Mm Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PITBULL-PULSEIRA-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pitbull Pulseira 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira 7Mm Piastrine Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-7MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira 7Mm Piastrine Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira Grumet Laminado 4Mm Pingente Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-GRUMET-LAMINADO-4MM-PINGENTE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira Grumet Laminado 4Mm Pingente Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira Lacraia 10Mm Banhado A Ouro 18K",
+            "preco": 219.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira Lacraia 10Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira Lacraia 6Mm Banhado A Ouro 18K",
+            "preco": 219.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-LACRAIA-6MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira Lacraia 6Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira Veneziana Banhado A Ouro 18K",
+            "preco": 194.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-VENEZIANA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira Veneziana Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Pulseira Veneziana Pingente Banhado A Ouro 18K",
+            "preco": 194.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-VENEZIANA-PINGENTE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Pulseira Veneziana Pingente Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 1Mm Banhado A Ouro 18K",
+            "preco": 189.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 1Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 1Mm Pingente Cruz Banhado A Ouro 18K",
+            "preco": 184.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 1Mm Pingente Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 1Mm Pingente Cruz Moldada Banhado A Ouro 18K",
+            "preco": 184.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-CRUZ-MOLDADA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 1Mm Pingente Cruz Moldada Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 1Mm Pingente Placa Cruz Banhado A Ouro 18K",
+            "preco": 184.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-PLACA-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 1Mm Pingente Placa Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 3Mm Banhado A Ouro 18K",
+            "preco": 189.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Tijolinho 6Mm Banhado A Ouro 18K",
+            "preco": 189.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-6MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Tijolinho 6Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Veneziana Pingente Cruz Inri Banhado A Ouro 18K",
+            "preco": 194.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-VENEZIANA-PINGENTE-CRUZ-INRI-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Veneziana Pingente Cruz Inri Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Cordao Veneziana Pingente Placa Cruz Banhado A Ouro 18K",
+            "preco": 194.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-VENEZIANA-PINGENTE-PLACA-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Cordao Veneziana Pingente Placa Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Kit Cordao Peruano 5Mm Pingente Banhado A Ouro",
+            "preco": 239.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-CORDAO-PERUANO-5MM-PINGENTE-BANHADO-A-OURO-1-v3.webp",
+            "descricao": "Kit Cordao Peruano 5Mm Pingente Banhado A Ouro. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Kit Friso Triplo 13Mm Banhado A Ouro 18K",
+            "preco": 854.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-FRISO-TRIPLO-13MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Kit Friso Triplo 13Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Kit Lacraia 5Mm Cordao Pulseira Pingente Cruz Cristo Banhado A Ouro",
+            "preco": 219.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-LACRAIA-5MM-CORDAO-PULSEIRA-PINGENTE-CRUZ-CRISTO-BANHADO-A-OURO-1-v3.webp",
+            "descricao": "Kit Lacraia 5Mm Cordao Pulseira Pingente Cruz Cristo Banhado A Ouro. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Kit Piastrine 3Mm Pingente Cruz Fio Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-PIASTRINE-3MM-PINGENTE-CRUZ-FIO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Kit Piastrine 3Mm Pingente Cruz Fio Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      }
+]
+  },
+  {
+    nome: 'Pulseiras Masculinas 18K',
+    previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-3MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp',
+    selo: 'Pulseiras',
+    descricao: 'Pulseiras masculinas banhadas a ouro 18K, diversos modelos e espessuras. Entrega hoje e pagamento na entrega.',
+    tags: ['Banhado a Ouro 18K', 'Pulseiras', 'Masculino'],
+    itens: [
+      {
+            "nome": "Pulseira 3Mm Piastrine Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-3MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira 3Mm Piastrine Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira 5Mm Piastrine Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-5MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira 5Mm Piastrine Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Balao 8Mm Banhado A Ouro 18K",
+            "preco": 289.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-BALAO-8MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Balao 8Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado 10Mm Banhada A Ouro 18K",
+            "preco": 244.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-10MM-BANHADA-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado 10Mm Banhada A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado 14Mm Banhada A Ouro 18K",
+            "preco": 244.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-14MM-BANHADA-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado 14Mm Banhada A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado 5Mm Banhada A Ouro 18K",
+            "preco": 244.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-5MM-BANHADA-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado 5Mm Banhada A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado Alongado 3Mm Banhado A Ouro 18K",
+            "preco": 244.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-ALONGADO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado Alongado 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado Alongado 5Mm Banhado A Ouro 18K",
+            "preco": 244.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-ALONGADO-5MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado Alongado 5Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado Duplo 5Mm Banhada A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-DUPLO-5MM-BANHADA-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado Duplo 5Mm Banhada A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Cadeado Quadruplo 16Mm Banhado A Ouro 18K",
+            "preco": 334.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-QUADRUPLO-16MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Cadeado Quadruplo 16Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Dubai 15Mm Fecho Especial Jacare Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-15MM-FECHO-ESPECIAL-JACARE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Dubai 15Mm Fecho Especial Jacare Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Dubai 15Mm Fecho Jesus Cristo Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-15MM-FECHO-JESUS-CRISTO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Dubai 15Mm Fecho Jesus Cristo Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Dubai 8Mm Banhado Ouro 18K",
+            "preco": 289.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-8MM-BANHADO-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Dubai 8Mm Banhado Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Dubai Supremo 22Mm Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-SUPREMO-22MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Dubai Supremo 22Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Elo Americano 13Mm Banhado A Ouro 18K",
+            "preco": 334.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-ELO-AMERICANO-13MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Elo Americano 13Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Friso S 13Mm Fecho 750 Banhado Ouro 18K",
+            "preco": 334.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-FRISO-S-13MM-FECHO-750-BANHADO-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Friso S 13Mm Fecho 750 Banhado Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Grumet 13Mm Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-13MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Grumet 13Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Grumet 15Mm Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-15MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Grumet 15Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Grumet 18Mm Banhado A Ouro 18K",
+            "preco": 404.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-18MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Grumet 18Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Grumet 3Mm Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Grumet 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Lacraia 10Mm Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Lacraia 10Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Lacraia 5Mm Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-5MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Lacraia 5Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Lacraia 6Mm Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-6MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Lacraia 6Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Tijolinho 1Mm Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-1MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Tijolinho 1Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Tijolinho 3Mm Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-3MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Tijolinho 3Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Tijolinho 6Mm Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-6MM-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pulseira Tijolinho 6Mm Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pulseira Tijolinho Duplo 10Mm Banhado A Ouro",
+            "preco": 334.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-DUPLO-10MM-BANHADO-A-OURO-1-v3.webp",
+            "descricao": "Pulseira Tijolinho Duplo 10Mm Banhado A Ouro. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      }
+]
+  },
+  {
+    nome: 'Pingentes Masculinos 18K',
+    previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ANJINHO-BANHADO-A-OURO-18K-1-v3.webp',
+    selo: 'Pingentes',
+    descricao: 'Pingentes masculinos banhados a ouro 18K. Diversos modelos: cruzes, crucifixos, medalhas e símbolos. Entrega hoje e pagamento na entrega.',
+    tags: ['Banhado a Ouro 18K', 'Pingentes', 'Masculino'],
+    itens: [
+      {
+            "nome": "Pingente Anjinho Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ANJINHO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Anjinho Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Coracao Relicario G Banhado A Ouro 18K",
+            "preco": 179.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CORACAO-RELICARIO-G-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Coracao Relicario G Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Crucifixo Classico Luxo Banhado Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUCIFIXO-CLASSICO-LUXO-BANHADO-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Crucifixo Classico Luxo Banhado Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Crucifixo Madeira Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUCIFIXO-MADEIRA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Crucifixo Madeira Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Cruz Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Inre Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-INRE-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Cruz Inre Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Jesus 3D M Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-JESUS-3D-M-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Cruz Jesus 3D M Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Lisa P Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-LISA-P-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Cruz Lisa P Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Pergaminho Banhado A Ouro 18K",
+            "preco": 174.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-PERGAMINHO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Cruz Pergaminho Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Cruz Placa P Bruto 040",
+            "preco": 179.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-PLACA-P-BRUTO-040-1-v3.webp",
+            "descricao": "Pingente Cruz Placa P Bruto 040. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Espirito Santo Liso Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ESPIRITO-SANTO-LISO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Espirito Santo Liso Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Face Cristo Desenhada Banhado A Ouro 18K",
+            "preco": 249.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FACE-CRISTO-DESENHADA-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Face Cristo Desenhada Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Ferradura De Cavalo M Bruto 151 Sem Banho",
+            "preco": 219.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FERRADURA-DE-CAVALO-M-BRUTO-151-SEM-BANHO-1-v3.webp",
+            "descricao": "Pingente Ferradura De Cavalo M Bruto 151 Sem Banho. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Fuzil G Banhado A Ouro 18K",
+            "preco": 254.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FUZIL-G-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Fuzil G Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Jesus Cristo P Banhado A Ouro 18K",
+            "preco": 214.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-JESUS-CRISTO-P-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Jesus Cristo P Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Nossa Senhora G Banhado A Ouro 18K",
+            "preco": 234.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-NOSSA-SENHORA-G-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Nossa Senhora G Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Pitbull Cravejado M Banhado A Ouro 18K",
+            "preco": 254.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-PITBULL-CRAVEJADO-M-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Pitbull Cravejado M Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Sou Grato Banhado A Ouro 18K",
+            "preco": 179.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-SOU-GRATO-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Sou Grato Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      },
+      {
+            "nome": "Pingente Zeus M Banhado A Ouro 18K",
+            "preco": 254.99,
+            "parcelas": 2,
+            "imagem": "https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ZEUS-M-BANHADO-A-OURO-18K-1-v3.webp",
+            "descricao": "Pingente Zeus M Banhado A Ouro 18K. Entrega hoje e pagamento na entrega.",
+            "tags": [
+                  "Banhado a Ouro 18K"
+            ]
+      }
+]
   },
 ];
 
@@ -2604,7 +3497,10 @@ const itemCard = (p) => {
     '/aliancabanhadas': 1,
     '/solitariocordourado': 2,
     '/solitariocorprata': 3,
-    '/moedaantiga': 4
+    '/moedaantiga': 4,
+    '/correnteskits': 5,
+    '/pulseiras': 6,
+    '/pingentes': 7
   };
   const ROTAS_REVERSE = Object.fromEntries(Object.entries(ROTAS).map(([k, v]) => [v, k]));
 

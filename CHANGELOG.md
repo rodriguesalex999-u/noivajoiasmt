@@ -6,6 +6,195 @@ Formato: data curta · o que mudou · por quê.
 
 ## 2026-10-09
 
+**`index.html` — Texto jurídico de IA + aviso de WhatsApp no rodapé** — foi adicionado abaixo do copyright o texto "O presente canal de interação operacionaliza recurso de assistência algorítmica, cuja materialização visual deriva de espelhamento digital do gestor empresarial (Sr. Fernandes), nos termos do art. 37, § 1º, do Código de Defesa do Consumidor, afastando qualquer caracterização de publicidade enganosa ou abusiva. O WhatsApp (65) 9294-2810 é canal sujeito a alterações por plataforma de terceiros, sendo o cliente sempre informado de quaisquer mudanças." para afastar "propaganda enganosa". Além disso, acrescentada nota sobre o WhatsApp (65) 9294-2810 ser sujeito a alterações por plataforma de terceiros, informando que o cliente será sempre notificado de mudanças.
+
+**`masculino.html` (novo) + botão no rodapé do site** — página dedicada às coleções masculinas 18K (Correntes, Pulseiras, Pingentes), separada do catálogo de alianças para evitar canibalização de foco. Um botão discreto "Correntes e pulseiras masculinas 18K" foi adicionado no final do site (após a última coleção de alianças). Ao clicar, abre `masculino.html` em nova aba. A nova página contém:
+- 3 cards de coleção (Correntes 16 modelos, Pulseiras 27 modelos, Pingentes 19 modelos)
+- Cada card abre um modal interno com todos os produtos
+- Cada produto tem CTA "Quero este modelo" (WhatsApp) + "Comprar — Frete Grális" (Mercado Pago)
+- Botão "Voltar ao site principal" no canto superior
+- Total: 62 produtos importados dos catálogos PDF existentes
+
+---
+
+## 2026-10-12 (noite 2)
+
+**Fotos Elite 18K: migração completa para `-v3` — 84/84 imagens corrigidas, -v2 apagadas, catálogos atualizados**
+
+- Diagnóstico inicial: 81/84 imagens -v2 já estavam 1000×1000 com 0% branco na borda; 3 tinham branco residual (CORDAO-TIJOLINHO-3MM 0.0088%, PINGENTE-CRUCIFIXO-CLASSICO-LUXO 0.11%, PULSEIRA-5MM-PIASTRINE 0.0017%).
+- As 3 problemáticas foram baixadas do R2, re-processadas com borda preta (limiar 238 → preto do catálogo 11,9,7 + borda forçada 60px), e publicadas como `-v3`.
+- As outras 81 foram copiadas server-side -v2 → -v3 (já estavam corretas).
+- **Todas as 84 chaves `-v2` apagadas do R2** — bucket limpo.
+- `SUFIXO_FOTO` atualizado de `-v2` para `-v3` em `build_catalog_categoria.py` e `ajustes_elite18k.py`.
+- 3 catálogos HTML regenerados (`catalogo-kits-conjuntos.html`, `catalogo-pulseira-masculina.html`, `catalogo-pingente-masculino.html`) — todos apontam para `-v3`, zero `-v2` sobrando.
+- Verificação final: **84/84 imagens -v3 respondem 200, todas 1000×1000, 0% branco na borda de 6%**; 3/3 HTMLs OK.
+- **PDFs gerados** para as 3 categorias (após ajuste fino de `gap:1.4mm` / `padding-top:1mm` no `.cat-grid` para caber 38 produtos da KITS):
+  - `Catalogo-Correntes-Kits-Conjuntos-18K.pdf`: 11 páginas, 24.1 MB
+  - `Catalogo-Pulseiras-Masculinas-18K.pdf`: 8 páginas, 16.6 MB
+  - `Catalogo-Pingentes-Masculinos-18K.pdf`: 6 páginas, 11.3 MB
+- Todos os PDFs passaram nas travas: zero imagem quebrada, zero overflow, zero erro de console.
+
+---
+
+## 2026-10-12 (noite 3)
+
+**Precificação competitiva aplicada aos 84 produtos Elite 18K — +50 BRL sobre maior concorrente**
+
+- Auditoria completa nos 2 concorrentes (`importcoinjoias.com.br` e `diamonds01.com.br`): mapeados preços promocionais de produtos equivalentes (correntes, pulseiras, pingentes, kits).
+- Regra: **Nosso preço = Maior preço promocional concorrente + 50 BRL**, arredondado SEMPRE PARA CIMA para facilitar troco (terminando em ,99 com preferência para final 4 ou 9 — ex: 214,99; 254,99; 404,99).
+- Sistema de override implementado em `ajustes_elite18k.py` (`PRECO_OVERRIDE` + `aplicar_override_precos`) — garante que futuros cadastros passem pelo mesmo filtro automaticamente.
+- 84 preços recalculados e aplicados nas 3 categorias:
+  - **KITS + CORRENTES (38)**: de R$ 184,99 (kits simples) até R$ 854,99 (grumet 13mm/15mm + friso triplo)
+  - **PULSEIRAS (27)**: de R$ 214,99 (lacraia/grumet 3-7mm) até R$ 404,99 (grumet 13-18mm, dubai supreme, elo americano 13mm, friso S 13mm, tijolinho duplo 10mm)
+  - **PINGENTES (19)**: de R$ 174,99 (cruzes simples/anjinho) até R$ 254,99 (fuzil, pitbull, zeus, face cristo)
+- 3 catálogos HTML regenerados com novos preços; 3 PDFs regenerados e validados (zero erro, zero overflow, zero imagem quebrada).
+- Arquivo `precos_calculados.json` salvo com detalhes de cada produto (concorrente usado, base +50, preço final).
+
+---
+
+## 2026-10-12 (noite 4)
+
+**index.html: 3 novas coleções Elite 18K integradas ao site principal — após Moeda Antiga**
+
+- Adicionadas ao array `COLECOES` do `index.html` (logo após "Alianças de Moeda Antiga"):
+  1. **Correntes, Kits e Conjuntos 18K** — 38 produtos (correntes soltas + kits correntes+pingente/pulseira)
+  2. **Pulseiras Masculinas 18K** — 27 produtos (grumet, cadeado, lacraia, tijolinho, dubai, friso, elo americano, piastrine)
+  3. **Pingentes Masculinos 18K** — 19 produtos (cruzes, crucifixos, medalhas, símbolos religiosos)
+- Total: **84 produtos** com preços competitivos (+50 BRL sobre maior concorrente, arredondados p/ troco fácil)
+- Cada coleção tem card de prévia na home (grid 2x2 no hero) — ao clicar "Ver Catálogo", abre modal interno com todos os itens
+- Cada item no modal tem: foto R2 (-v3), nome, preço competitivo, parcelamento 2x, CTA "Quero este modelo" (WhatsApp preenchido)
+- Imagens apontam para R2 com sufixo `-v3` (borda preta, 1000x1000, sem franja branca)
+- Mantido padrão visual do site: preto-quente + dourado, Cormorant Garamond + Jost, modal com focus trap e scroll lock
+
+---
+
+## 2026-10-12 (noite)
+
+**Fotos Elite 18K: mantida a versão `-v2` após duas tentativas que foram revertidas**
+
+- O dono aprovou a versão `-v2` (moldura branca pintada de preto, peça intacta). Ela **continua no ar** e os 3 catálogos apontam para ela: 84/84 URLs respondendo 200.
+- **Tentativa 1 — corte da moldura:** as fotos encolheram e ficaram **esticadas** ao voltar para 1000×1000. Revertida.
+- **Tentativa 2 — reconstrução `-v3` do zero:** baixando as fotos puras do fornecedor, descobriu-se que o fundo branco **não é moldura, é o cenário real do produto** (corrente mostrada na mão, busto ou prateleira do fornecedor — até 58% da área). Pintar esse branco de preto destrói a foto. Revertida; os 77 arquivos `-v3` foram movidos para `img/elite18k/_DESCARTADO/`.
+- **Aprendizado registrado:** não tratar "fundo branco" como defeito. Se um dia o dono quiser o produto recortado sobre preto, isso exige remoção de fundo por IA (tipo remove.bg), não flood-fill de pixels brancos.
+
+---
+
+## 2026-10-12 (tarde 2)
+
+**Borda branca das fotos Elite 18K corrigida nas 3 categorias**
+
+- Medido antes de mexer: **81 das 84 imagens** tinham tarja branca do fornecedor (até 45,4% da área) — o branco destoava do fundo preto do catálogo.
+- Cada foto teve branco/quase-branco (limiar 238) trocado pelo preto do catálogo **(11, 9, 7)** e a borda externa (4 px) reforçada em preto puro. **18.407.127 pixels** convertidos no total.
+- **Nenhum link foi apagado nem recriado.** As fotos foram sobrescritas no **mesmo endereço** do R2 — a URL pública não muda, o HTML não muda e não houve janela em que algum card pudesse quebrar. (O dono havia sugerido apagar/recriar links; sobrescrever é equivalente e sem risco de janela quebrada.)
+- Verificação feita baixando de volta do R2: **84/84** respondem, todas 1000×1000, **0 canto branco**, branco residual máximo **0,01%**.
+- Novo script `fixar_borda_preta.py` (tem `--seco`) para reprocessar quando entra foto nova do fornecedor.
+
+---
+
+## 2026-10-12 (tarde)
+
+**Ajustes pedidos na KITS + arredondamento de todos os preços Elite 18K**
+
+- **Troca:** `KIT CADEADO 4MM CORDAO PULSEIRA E PINGENTE CRUZ FIO` saiu e entrou `KIT PIASTRINE 3MM PINGENTE CRUZ FIO BANHADO A OURO 18K` (mesmo custo, R$ 359,99). As fotos antigas tinham **logomarca do fornecedor** — as novas vieram do Downloads do dono, sem logo, 1000×1000 webp.
+- **Remoção:** `KIT GRUMET 15MM CORDÃO + PULSEIRA` — o dono não tem mais esse produto.
+- **Inclusão:** `CORDÃO GRUMET OCA 750 15MM - BANHADO A OURO 18K`, criado a partir da página do fornecedor (custo R$ 242,78 → **R$ 729,99**). Foto baixada do CDN da loja e convertida.
+- **Fotos trocadas** do `KIT FRISO TRIPLO 13MM` (mesma chave R2, foto nova sobrescreve a antiga com logo).
+- **Arredondamento em TODOS os 84 produtos:** sempre pra cima, no próximo múltiplo de 10, tirando o centavo (357→359,99 · 441→449,99 · 750→759,99). Regra isolada em `ajustes_elite18k.py`, num lugar só, caso o dono queira mudar.
+- 5 imagens subidas no R2 e **4 arquivos antigos apagados** (as 2 do kit trocado + as 2 do kit removido) — já não existem no Cloudflare.
+- Novo arquivo `ajustes_elite18k.py` separa as decisões de comercial da fonte: o `PRODUTOS_COMPRADOS_Valdicleia.md` continua sendo o histórico de pedidos, sem reescrita.
+
+---
+
+## 2026-10-12
+
+**Catálogos Elite 18K passam de 4 para 3 categorias** — decisão do dono:
+
+- Categoria **CORRENTE deixou de existir**: corrente solta não vende, então foi para dentro de **KITS**, junto das combinações.
+- **KITS** = 38 produtos (22 combinações já prontas + 16 correntes) · **PULSEIRA** = 27 (só pulseira) · **PINGENTE** = 19 (só pingente). Total 84 — igual à fonte, nada descartado.
+- `catalogo-kits-conjuntos.html` reconstruído com os 38; `catalogo-pulseira-masculina.html` (27) e `catalogo-pingente-masculino.html` (19) conferidos. As 84 imagens respondem 200 no R2.
+- Bug corrigido em `build_catalog_kits_corrente.py`: `print("Categorias: %s" + " + ".join(...))` somava string com lista e quebrava o build com TypeError.
+- `catalogo-corrente-masculina.html` **saiu de circulação** (dono autorizou): conferido item a item — os 16 produtos dele estão todos nos 38 da KITS, zero perdidos e zero extras. Movido para `PDFs/_ARQUIVADO/`.
+- `CORRENTE` removida do `INFO` de `build_catalog_categoria.py`: o build genérico agora só aceita `PULSEIRA` e `PINGENTE`, então ninguém recria por engano o catálogo de 4 categorias. O build da KITS segue funcionando (38 produtos, 11 páginas).
+
+**Zendesk: o "erro 401" não existia** — era falso alarme, nada foi quebrado:
+
+- A rota `/api/luiz/tickets` **nunca chama a API do Zendesk**: ela lê `INDEX_PENDENTES.md` + `TICKETS_PENDENTES/` do disco. Testada agora: **HTTP 200, 5 tickets**.
+- O 401 vinha de um teste manual em `webcontinentalmarketplace.zendesk.com/api/v2/tickets.json` usando **e-mail+senha** em Basic Auth. A API do Zendesk não aceita senha — exige **API token** (`email/token:TOKEN`). O navegador abre o Zendesk pelo link `window.open` e a sessão vem do login salvo, então nunca passou pela API.
+- A credencial `rodriguesalex999@gmail.com / Al14659832--` (`PORTAL_BASIC`, `servidor.py:67`) é do **Portal WebContinental**, não do Zendesk — e está correta: testada, **HTTP 200**.
+
+---
+
+## 2026-10-10
+
+**Ajustes de texto na story da moeda antiga** — revisão do dono:
+
+- Selo do topo: "NÃO É COMBINAÇÃO" → **"100% MOEDA ANTIGA · LEGÍTIMA"** (a palavra "combinação" quebrava a confiança; o dono pediu "legítima").
+- Subtítulo: **"Eternas pra sempre · com garantia de 3 meses"** (evita repetir "100% moeda antiga", que o selo acima já diz).
+- Parágrafo do rodapé ganhou em **negrito**: *"As alianças da foto acima são moeda antiga COMUM, sem forro interno."* — para o cliente não achar que as fotos mostram a versão com forro.
+- Caixa do forro interno reescrita: *"Por fora e por dentro é toda moeda antiga: não tem forro. Caso você queira, temos a opção com forro interno — R$ 590 o par, somente na Clássica 4mm."*
+- `story_base.py` — `aviso` ficou opcional (a mensagem foi fundida no parágrafo, para caber).
+
+**Story da moeda antiga comum + nomes de arquivo padronizados** — quarta arte
+de stories (linha moeda antiga). Aqui o produto é o único que **não** deve ser
+vendido empolgado: a arte vende a legitimidade (100% autêntica, não é
+combinação, para a vida toda) e assume a manutenção na mesma tela, porque é
+melhor o cliente ler isso antes de comprar do que voltar depois. Assumi também
+a opção de forro interno, que só existe na Clássica 4mm.
+
+- **`scripts/build_story_moeda_antiga.py` (novo)** + **`FOTOs/fotosmaisvendidasaliancamoedaantigacomum.webp` (novo, ~196 KB)** — 6 produtos, sendo 2 com selo "Mais vendida".
+- **`story_base.py`** —layout virou configurável por campanha (`card_h`, `alt_foto`, `rodape_y`) e ganhou `rodape_caixas` (chamada destacada, usada aqui para o forro interno). Corrigido o cálculo de altura da caixa: a última linha saía cortada.
+- **Nomes de saída padronizados** — `build_story_ouro.py` e `build_story_solitarios.py` passaram a gravar nos nomes que o dono já usava (`fotosmaisvendidasaliancasbanhadasaouro.webp`, `fotosanelsolitariocbaeinterior.webp`); as duas cópias com o nome antigo foram removidas (hash MD5 idêntico ao do arquivo novo, ou seja, nada se perdeu). Agora há 1 arquivo por campanha em `FOTOs`.
+
+**Texto de garantia (aliança x solitário) + solitários de R$ 249,00 → R$ 249,99** —
+o dono pediu duas coisas: explicar que o par de aliança tem garantia de 3 meses e
+que o solitário é vendido sem garantia *justamente por isso* (valor simbólico,
+opcional, compre ciente), e corrigir o preço dos solitários de 249,00 para
+249,99. A garantia de 3 meses **não existia escrita em nenhum material do
+projeto** — entrou com a formulação do dono.
+
+- **`index.html`** — 10 preços `249.00` → `249.99` (8 dourada + 2 prata); a nota de todos os 12 cards ganhou a frase "O par de aliança, diferente, tem garantia de 3 meses".
+- **`PDFs/build_catalog_solitarios.py`** — bloco "Sobre a garantia" reescrito (passa a comparar aliança × solitário e a dizer que o anel pode durar anos ou não durar); OBS de cada card ganhou "a aliança tem 3 meses"; tabela de valores com 249,99 / 2x de 124,99. PDF reconstruído: 4 páginas, sem corte.
+- **`scripts/build_story_solitarios.py`** — 6º slot da grade virou o cartão de garantia "O solitário não tem garantia"; linha do rodapé com a comparação; preços 249,99.
+
+**Story dos solitários + anel de R$ 99,99 cor dourada no site e no PDF** — o
+dono pediu uma terceira arte de stories (linha solitários, com os dois anéis de
+R$ 99,99 marcados como "Mais vendido") e lembrou que tinha esquecido de
+colocar o anel novo no catálogo.
+
+- **`scripts/build_story_solitarios.py` (novo)** + **`FOTOs/story-solitarios-mais-vendidos.webp` (novo, ~145 KB)** — 5 solitários + o 6º slot da grade virou o aviso "Solitário é opcional".
+- **`story_base.py`** — ganhou selo "Mais vendido" por card (`BANNER` + 6º campo opcional do produto).
+- **`index.html`** — entrou "Anel Solitário Cor Dourada Pedra Cristal" (R$ 99,99) na coleção *Solitários Cor Dourada* (8 → 9). **A foto ainda não está no R2**: enquanto não subir `PDFs/img/solitario-dourada-anel-solitario-cor-dourada-pedra-cristal-1.webp` com esse nome no bucket, o card do site fica sem imagem.
+- **`PDFs/build_catalog_solitarios.py`** — paginação por contagem (a de antes fixava 8 produtos e o 9º sumiria); os dois anéis de R$ 99,99 ganharam selo "Mais vendido"; tabela de valores da página final passou a citar a pedra cristal nos dois acabamentos. PDF reconstruído: 4 páginas, sem imagem quebrada.
+
+**Story das alianças cor prata + layout virou base reaproveitável** — segunda
+arte de stories (9:16), agora da linha prata, com o argumento de venda certo
+para ela: não é prata pura nem 925, então não escurece e não pede limpeza
+constante. Aproveitada a ocasião para extrair o layout para `story_base.py`,
+como o dono pediu ("vai usar isso como base para gerar outras fotos").
+
+- **`scripts/story_base.py` (novo)** — paleta, fundo, cabeçalho, grade 2x3,
+  selo de preço, rodapé e contatos. Cada campanha é só o `StoryConfig`.
+- **`scripts/build_story_ouro.py`** — virou só conteúdo (o layout foi para a
+  base). Saída idêntica byte a byte, conferido com `ImageChops.difference`.
+- **`scripts/build_story_prata.py` (novo)** + **`FOTOs/fotosmaisvendidasaliancascorprata.webp` (novo, ~160 KB)** — os 6 produtos de prata com os valores do catálogo de prata (par de aparadores prata é R$ 99,99, não R$ 49,99).
+
+**Arte de stories das 6 alianças banhadas a ouro mais vendidas** — o dono
+pediu uma foto vertical (9:16, formato de celular) para mandar no WhatsApp, com
+a mesma identidade visual do catálogo PDF de ouro, os 6 produtos com foto +
+título + valor e o bloco de avisos no rodapé (liga metálica nobre, solitários e
+aparadores avulsos, entrega e pagamento na entrega, contato).
+
+- **`scripts/build_story_ouro.py` (novo)** — gerador da arte. Reusa a paleta do
+  catálogo (`--bg`, `--gold`, `--cream`, `--muted`) e as fotos em
+  `PDFs/img/produto-*.webp`. Saída 1080x1920 WebP.
+- **`FOTOs/story-aliancas-banhadas-ouro-6-mais-vendidas.webp` (novo)** — ~165 KB.
+  Ajustes pedidos na revisão: selo de preço sobre a foto reduzido à metade
+  (pesava demais sobre a imagem), borda do selo "MAIS VENDIDAS · NÃO FICAM
+  PRETAS" corrigida (o espaçamento entre letras não entrava na conta da
+  largura e o "PRETAS" vazava para fora) e o diferencial do rodapé em negrito.
+
+## 2026-10-09
+
 **Organização do projeto + `INDICE.md` (mapa de pastas)** — a raiz estava poluída
 com arquivos soltos e o dono pedia um jeito rápido de saber "o que tem em cada
 pasta". Nada foi deletado — os arquivos só mudaram de pasta.
