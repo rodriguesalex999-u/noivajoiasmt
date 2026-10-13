@@ -28,6 +28,23 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-13 (tarde)
+
+**Regra de entrega/pagamento atualizada nas 3 categorias Elite 18K — apenas Cuiabá + Correios**
+
+- Produtos das 3 categorias (Correntes/Kits, Pulseiras, Pingentes) são **estoque apenas em Cuiabá**.
+- Nova mensagem nos 3 PDFs e no site (modais das coleções):
+  - **Cuiabá/Várzea Grande**: entrega em mãos hoje + pagamento na hora.
+  - **Demais regiões (incl. Rondonópolis/Sinop)**: envio pelos Correios com 2 opções:
+    1. **Frete grátis** — paga online, recebe em casa.
+    2. **Sedex a Cobrar R$ 44,99** — paga o frete agora, produto ao retirar nos Correios (paga ao atendente, Correios repassa ao nosso CNPJ — contrato oficial, total segurança).
+- Textos aplicados nos 3 catálogos HTML (`catalogo-kits-conjuntos.html`, `catalogo-pulseira-masculina.html`, `catalogo-pingente-masculino.html`), nos 3 PDFs regenerados e nas descriptions das coleções no `index.html` (modais).
+- `build_card` em `catalogo_base.py` ganhou parâmetro `payment_label` para customização por catálogo.
+- 3 PDFs regenerados e validados (zero erro, zero overflow).
+- Deploy automático via Vercel.
+
+---
+
 ## 2026-10-09
 
 **`index.html` — Texto jurídico de IA + aviso de WhatsApp no rodapé** — foi adicionado abaixo do copyright o texto "O presente canal de interação operacionaliza recurso de assistência algorítmica, cuja materialização visual deriva de espelhamento digital do gestor empresarial (Sr. Fernandes), nos termos do art. 37, § 1º, do Código de Defesa do Consumidor, afastando qualquer caracterização de publicidade enganosa ou abusiva. O WhatsApp (65) 9294-2810 é canal sujeito a alterações por plataforma de terceiros, sendo o cliente sempre informado de quaisquer mudanças." para afastar "propaganda enganosa". Além disso, acrescentada nota sobre o WhatsApp (65) 9294-2810 ser sujeito a alterações por plataforma de terceiros, informando que o cliente será sempre notificado de mudanças.

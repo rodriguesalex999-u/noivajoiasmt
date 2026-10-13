@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noiva Joias MT — Catálogo Correntes, Kits e Conjuntos 18K</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0907; --bg-2:#141110; --bg-3:#1c1816;
+  --gold:#c9a75b; --gold-light:#f0dca4; --gold-deep:#8a6a22;
+  --cream:#f6f1e6; --muted:#9c9384;
+  --line:rgba(201,167,91,.22); --line-strong:rgba(201,167,91,.45);
+  --gold-grad:linear-gradient(100deg,var(--gold-light) 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  --font-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,sans-serif;
+  --r-lg:14px; --r-md:10px; --r-sm:999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{
+  background:var(--bg); color:var(--cream);
+  font-family:var(--font-body); font-size:13.5px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  font-variant-numeric:lining-nums;
+}
+
+/* ====== A4 pages ====== */
+.pages{max-width:210mm;margin:0 auto;padding:0}
+.page{
+  width:210mm; height:297mm;
+  padding:13mm; position:relative; overflow:hidden;
+  background:var(--bg);
+  page-break-after:always; break-after:page;
+  display:flex; flex-direction:column;
+}
+.page:last-child{page-break-after:auto}
+
+/* fundo com brilhos + ruído */
+.page::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(58% 38% at 50% -6%,rgba(201,167,91,.14) 0%,transparent 68%),
+    radial-gradient(42% 30% at 8% 24%,rgba(138,106,34,.09) 0%,transparent 70%),
+    radial-gradient(46% 34% at 96% 72%,rgba(201,167,91,.07) 0%,transparent 72%),
+    linear-gradient(#0d0b09,#0b0907 42%,#100d0b);
+}
+.page::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.page-inner{position:relative;z-index:2;display:flex;flex-direction:column;overflow:hidden}
+
+/* gold text */
+.gold-text{color:var(--gold)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .gold-text{
+    background-image:var(--gold-grad);-webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+  }
+}
+
+/* ====== HEADER de cada página ====== */
+.pg-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:8px;border-bottom:1px solid var(--line);
+  page-break-inside:avoid;
+}
+.pg-header-brand{font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+.pg-header-section{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pg-header-phone{font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--gold)}
+
+/* ====== GRID 2×2 ====== */
+.cat-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2mm;
+  flex:1;padding-top:3mm;align-content:start;
+}
+.prod{display:flex;flex-direction:column;gap:0.5mm;page-break-inside:avoid}
+.prod-img-wrap{
+  position:relative;aspect-ratio:1/0.9;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:#0f0d0c;
+  box-shadow:0 8px 20px -16px rgba(201,167,91,.5),inset 0 0 0 1px rgba(201,167,91,.06);
+}
+.prod-img{width:100%;height:100%;object-fit:cover;display:block}
+.prod-badge{
+  position:absolute;top:8px;left:8px;z-index:2;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  color:#0b0907;background:var(--gold-grad);
+  padding:3px 8px;border-radius:var(--r-sm);
+}
+.prod-name{
+  font-family:Arial,sans-serif;font-weight:700;
+  font-size:clamp(16px,2.8vw,22px);line-height:1.25;
+  margin-top:2px;
+  letter-spacing:.01em;
+}
+.prod-price{
+  font-family:Arial,sans-serif;font-weight:700;
+  font-size:clamp(22px,3.8vw,30px);line-height:1.1;
+  margin-top:2px;
+  letter-spacing:.01em;
+}
+.prod-price-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.prod-installments{font-size:12px;color:var(--muted);margin-top:1px;line-height:1.4}
+.prod-installments b{color:var(--cream);font-weight:500}
+.prod-tags{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
+.prod-tag{
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:2px 6px;
+  font-family:Arial,sans-serif;font-weight:500;
+}
+.prod-contact{
+  margin-top:auto;padding-top:3px;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  font-family:Arial,sans-serif;
+}
+.prod-contact strong{color:var(--gold);font-weight:500}
+
+/* ====== BANNER de informação (substitui um produto) ====== */
+.info-banner{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:16px 16px;
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:linear-gradient(170deg,rgba(201,167,91,.12) 0%,rgba(20,17,16,.92) 62%);
+  text-align:center;gap:5px;
+  page-break-inside:avoid;
+}
+.info-banner-tag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;font-family:Arial,sans-serif}
+.info-banner-h{
+  font-family:Arial,sans-serif;font-weight:700;
+  font-size:clamp(17px,2.9vw,23px);line-height:1.25;
+}
+.info-banner-h strong{font-weight:700}
+.info-banner-p{font-size:12px;color:var(--muted);line-height:1.5;max-width:26ch;margin:0 auto;font-family:Arial,sans-serif}
+.info-banner-icon{
+  width:28px;height:28px;margin:0 auto 3px;
+  color:var(--gold);opacity:.85;
+}
+
+/* ====== RODAPÉ de cada página ====== */
+.pg-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:8px;border-top:1px solid var(--line);
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-top:auto;padding-top:8px;
+}
+.pg-footer strong{color:var(--cream);font-weight:500}
+
+/* ====== RODAPÉ última página ====== */
+.back-info{justify-content:center;align-items:center;text-align:center;gap:6px}
+.back-info-name{
+  font-family:Arial,sans-serif;font-size:22px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.back-info-cnpj{font-size:11px;color:var(--muted);letter-spacing:.05em;font-family:Arial,sans-serif}
+.back-info-cities{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);font-family:Arial,sans-serif}
+.back-info-phone{font-family:Arial,sans-serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:.05em;margin-top:3px}
+.back-info-rule{width:50px;height:1px;background:var(--line);margin:4px 0}
+.back-info-rights{font-size:9px;color:rgba(156,147,132,.4);letter-spacing:.07em;margin-top:2px;font-family:Arial,sans-serif}
+
+/* ====== VISUALIZAÇÃO ====== */
+@media screen{
+  body{background:#1a1816;padding:14px 0 30px}
+  .page{
+    margin:0 auto 16px;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(201,167,91,.08);
+  }
+}
+@media print{
+  @page{size:A4;margin:0;padding:0}
+  *{margin:0;padding:0}
+  body{background:#0b0907 !important;margin:0;padding:0}
+  .pages{max-width:none;margin:0;padding:0}
+  .page{
+    margin:0;box-shadow:none;page-break-after:always;
+    width:210mm;overflow:hidden;
+    padding:6mm;
+  }
+  .page:last-child{page-break-after:auto}
+}
+
+/* ====== Sr. Fernandes page ====== */
+  .sr-fernandes{
+    display:flex;align-items:flex-start;gap:8mm;
+    flex:1;padding-top:4mm;
+  }
+  .sr-fernandes-img{
+    flex:0 0 24mm;text-align:center;
+  }
+  .sr-photo{
+    width:20mm;height:20mm;object-fit:cover;border-radius:var(--r-lg);
+    border:2px solid var(--line);
+  }
+  .sr-fernandes-text{
+    flex:1;display:flex;flex-direction:column;gap:3mm;
+  }
+  .sr-name{
+    font-family:Arial,sans-serif;font-size:15px;font-weight:700;
+    color:var(--cream);letter-spacing:.06em;
+    margin-bottom:2mm;
+  }
+  .sr-msg{
+    font-family:Arial,sans-serif;font-size:11px;line-height:1.5;
+    color:var(--muted);margin:0;
+  }
+  .sr-pricing{
+    list-style:none;padding:0;margin:0;
+  }
+  .sr-pricing li{
+    font-family:Arial,sans-serif;font-size:11px;
+    color:var(--cream);margin:1mm 0;
+  }
+  .sr-pricing strong{
+    color:var(--gold);font-weight:500;
+  }
+  .sr-highlight{
+    font-family:Arial,sans-serif;font-size:12px;font-weight:600;
+    color:var(--cream);margin:2mm 0;
+  }
+  .sr-cta{
+    font-family:var(--font-display);font-size:16px;font-weight:700;
+    color:var(--gold);text-align:center;
+    margin-top:4mm;
+  }
+
+  /* ====== ajustes de altura ====== */
+  /* .page-inner precisa ocupar a folha: sem isso o flex:1 do grid/sr-fernandes
+     nao tem sobra para distribuir e o rodape sobe (metade da pagina ficava vazia) */
+  .page-inner{flex:1;min-height:0}
+  .cat-grid{gap:0.8mm;padding-top:0.3mm;grid-template-rows:repeat(2,minmax(0,1fr))}
+  /* 1/1 + contain: as fotos do Elite 18K sao 1000x1000. Com object-fit:cover
+     numa caixa 10/9 o navegador cortava as laterais e a BORDA PRETA da foto
+     sumia — parecia que ainda havia moldura branca. contain mostra a foto
+     inteira e o preto da borda aparece. */
+  .prod-img-wrap{aspect-ratio:1/1;background:var(--bg)}
+  .prod-img{object-fit:contain}
+  .prod-name{font-size:clamp(11px,1.8vw,17px);line-height:1.05}
+  .prod-price{font-size:clamp(17px,2.4vw,23px)}
+  .prod-price-label{font-size:7.5px;line-height:1.1}
+  .prod-installments{font-size:8px;line-height:1.1}
+  .prod-tag{font-size:7px;padding:0.3px 2px}
+  .pg-footer{padding-top:2px}
+
+  /* ====== como pedir (3 passos) ====== */
+  .howto{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-top:4mm}
+  .howto-step{
+    border:1px solid var(--line);border-radius:var(--r-lg);
+    background:linear-gradient(170deg,rgba(201,167,91,.10) 0%,rgba(20,17,16,.9) 65%);
+    padding:4mm 3.5mm;display:flex;flex-direction:column;gap:1.5mm;
+  }
+  .howto-n{
+    width:20px;height:20px;border-radius:999px;flex:0 0 20px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--gold-grad);color:#0b0907;
+    font-family:Arial,sans-serif;font-size:11px;font-weight:700;
+  }
+  .howto-t{
+    font-family:Arial,sans-serif;font-size:11.5px;font-weight:700;
+    color:var(--cream);letter-spacing:.05em;text-transform:uppercase;line-height:1.25;
+  }
+  .howto-p{font-family:Arial,sans-serif;font-size:11px;line-height:1.45;color:var(--muted);margin:0}
+
+  /* ====== CTA final ====== */
+  .cta-final{
+    margin-top:4mm;padding:4mm;
+    border:1px solid var(--line);border-radius:var(--r-lg);
+    background:linear-gradient(120deg,rgba(201,167,91,.14) 0%,rgba(20,17,16,.94) 60%);
+    display:flex;align-items:center;gap:5mm;
+  }
+  .cta-final-txt{flex:1;display:flex;flex-direction:column;gap:1mm}
+  .cta-final-t{font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:var(--cream);letter-spacing:.04em;text-transform:uppercase}
+  .cta-final-p{font-family:Arial,sans-serif;font-size:11px;line-height:1.45;color:var(--muted);margin:0}
+  .cta-final-phone{
+    font-family:var(--font-display);font-size:26px;font-weight:700;
+    color:var(--gold);letter-spacing:.04em;white-space:nowrap;
+  }
+
+  /* ====== pagina de fechamento: tipografia maior (pagina de texto) ====== */
+  .sr-fernandes{align-items:center;gap:6mm}
+  .sr-fernandes-img{flex:0 0 30mm}
+  .sr-photo{width:27mm;height:27mm}
+  .sr-fernandes-text{gap:4mm}
+  .sr-name{font-size:18px;margin-bottom:1mm}
+  .sr-msg{font-size:12px;line-height:1.55}
+  .sr-pricing li{font-size:12px;margin:1.5mm 0}
+  .sr-highlight{font-size:13px;line-height:1.5;margin:3mm 0}
+
+</style>
+</head>
+<body>
+<div class="pages">
+
+  <!-- ==================== PÁGINA 1 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-7MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA 7MM PIASTRINE - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA 7MM PIASTRINE - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 234,99</p>
+          <p class="prod-price-label">2x de R$ 117,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-GRUMET-LAMINADO-4MM-PINGENTE-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA GRUMET LAMINADO 4MM + PINGENTE - BANHADO A OURO 18k"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA GRUMET LAMINADO 4MM + PINGENTE - BANHADO A OURO 18k</p>
+          <p class="prod-price gold-text">R$ 234,99</p>
+          <p class="prod-price-label">2x de R$ 117,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA LACRAIA 10MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA LACRAIA 10MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 219,99</p>
+          <p class="prod-price-label">2x de R$ 109,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-LACRAIA-6MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA LACRAIA 6MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA LACRAIA 6MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 219,99</p>
+          <p class="prod-price-label">2x de R$ 109,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 2 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-VENEZIANA-PINGENTE-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA VENEZIANA + PINGENTE - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA VENEZIANA + PINGENTE - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 194,99</p>
+          <p class="prod-price-label">2x de R$ 97,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PULSEIRA-VENEZIANA-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO + PULSEIRA VENEZIANA - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO + PULSEIRA VENEZIANA - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 194,99</p>
+          <p class="prod-price-label">2x de R$ 97,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-1MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO 1MM + PINGENTE CRUZ - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO 1MM + PINGENTE CRUZ - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 184,99</p>
+          <p class="prod-price-label">2x de R$ 92,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-1MM-PINGENTE-CRUZ-FIO-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO 1MM + PINGENTE CRUZ FIO- BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO 1MM + PINGENTE CRUZ FIO- BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 184,99</p>
+          <p class="prod-price-label">2x de R$ 92,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 3 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-ALONGADO-3MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO ALONGADO 3MM + PINGENTE CRUZ - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO ALONGADO 3MM + PINGENTE CRUZ - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 204,99</p>
+          <p class="prod-price-label">2x de R$ 102,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-E-PULSEIRA-3MM-GRUMET-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO E PULSEIRA 3MM GRUMET BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO E PULSEIRA 3MM GRUMET BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 234,99</p>
+          <p class="prod-price-label">2x de R$ 117,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 1MM + PINGENTE CRUZ - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 1MM + PINGENTE CRUZ - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 184,99</p>
+          <p class="prod-price-label">2x de R$ 92,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-CRUZ-MOLDADA-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 1MM PINGENTE CRUZ MOLDADA - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 1MM PINGENTE CRUZ MOLDADA - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 184,99</p>
+          <p class="prod-price-label">2x de R$ 92,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 4 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-PINGENTE-PLACA-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 1MM PINGENTE PLACA CRUZ - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 1MM PINGENTE PLACA CRUZ - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 184,99</p>
+          <p class="prod-price-label">2x de R$ 92,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-VENEZIANA-PINGENTE-CRUZ-INRI-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO VENEZIANA + PINGENTE CRUZ INRI - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO VENEZIANA + PINGENTE CRUZ INRI - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 194,99</p>
+          <p class="prod-price-label">2x de R$ 97,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-VENEZIANA-PINGENTE-PLACA-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO VENEZIANA + PINGENTE PLACA CRUZ - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO VENEZIANA + PINGENTE PLACA CRUZ - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 194,99</p>
+          <p class="prod-price-label">2x de R$ 97,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-2MM-PINGENTE-JESUS-CRUZ-BANHADO-A-OURO-18K-1-v3.webp" alt="Cordão Cadeado 2mm + Pingente Jesus Cruz Banhado A Ouro 18k"></div>
+          <p class="prod-name">Cordão Cadeado 2mm + Pingente Jesus Cruz Banhado A Ouro 18k</p>
+          <p class="prod-price gold-text">R$ 214,99</p>
+          <p class="prod-price-label">2x de R$ 107,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 5 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-PITBULL-PULSEIRA-3MM-BANHADO-A-OURO-18K-1-v3.webp" alt="Cordão Pitbull + Pulseira 3mm - Banhado A Ouro 18k"></div>
+          <p class="prod-name">Cordão Pitbull + Pulseira 3mm - Banhado A Ouro 18k</p>
+          <p class="prod-price gold-text">R$ 234,99</p>
+          <p class="prod-price-label">2x de R$ 117,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-PIASTRINE-3MM-PINGENTE-CRUZ-FIO-BANHADO-A-OURO-18K-1-v3.webp" alt="KIT PIASTRINE 3MM PINGENTE CRUZ FIO BANHADO A OURO 18K"></div>
+          <p class="prod-name">KIT PIASTRINE 3MM PINGENTE CRUZ FIO BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 214,99</p>
+          <p class="prod-price-label">2x de R$ 107,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-CORDAO-PERUANO-5MM-PINGENTE-BANHADO-A-OURO-1-v3.webp" alt="KIT CORDÃO PERUANO 5MM + PINGENTE BANHADO A OURO"></div>
+          <p class="prod-name">KIT CORDÃO PERUANO 5MM + PINGENTE BANHADO A OURO</p>
+          <p class="prod-price gold-text">R$ 239,99</p>
+          <p class="prod-price-label">2x de R$ 119,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-FRISO-TRIPLO-13MM-BANHADO-A-OURO-18K-1-v3.webp" alt="KIT FRISO TRIPLO 13MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">KIT FRISO TRIPLO 13MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 854,99</p>
+          <p class="prod-price-label">2x de R$ 427,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 6 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/KIT-LACRAIA-5MM-CORDAO-PULSEIRA-PINGENTE-CRUZ-CRISTO-BANHADO-A-OURO-1-v3.webp" alt="KIT LACRAIA 5MM CORDÃO PULSEIRA PINGENTE CRUZ CRISTO - BANHADO A OURO"></div>
+          <p class="prod-name">KIT LACRAIA 5MM CORDÃO PULSEIRA PINGENTE CRUZ CRISTO - BANHADO A OURO</p>
+          <p class="prod-price gold-text">R$ 219,99</p>
+          <p class="prod-price-label">2x de R$ 109,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-5MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO 5MM PIASTRINE - BANHADO A OURO 18k"></div>
+          <p class="prod-name">CORDÃO 5MM PIASTRINE - BANHADO A OURO 18k</p>
+          <p class="prod-price gold-text">R$ 214,99</p>
+          <p class="prod-price-label">2x de R$ 107,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-BALAO-8MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO BALÃO 8MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO BALÃO 8MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 254,99</p>
+          <p class="prod-price-label">2x de R$ 127,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-2MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO 2MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO 2MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 204,99</p>
+          <p class="prod-price-label">2x de R$ 102,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 7 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-3MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO 3MM- BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO 3MM- BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 204,99</p>
+          <p class="prod-price-label">2x de R$ 102,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-6MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO 6MM- BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO CADEADO 6MM- BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 304,99</p>
+          <p class="prod-price-label">2x de R$ 152,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-ALONGADO-3MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO ALONGADO 3MM - BANHADO A OURO 18k"></div>
+          <p class="prod-name">CORDÃO CADEADO ALONGADO 3MM - BANHADO A OURO 18k</p>
+          <p class="prod-price gold-text">R$ 194,99</p>
+          <p class="prod-price-label">2x de R$ 97,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-DUPLO-3MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO CADEADO DUPLO 3MM - BANHADO A OURO 18k"></div>
+          <p class="prod-name">CORDÃO CADEADO DUPLO 3MM - BANHADO A OURO 18k</p>
+          <p class="prod-price gold-text">R$ 214,99</p>
+          <p class="prod-price-label">2x de R$ 107,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 8 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-FRISO-S-13MM-BANHADO-OURO-18K-1-v3.webp" alt="CORDÃO FRISO S 13MM - BANHADO OURO 18k"></div>
+          <p class="prod-name">CORDÃO FRISO S 13MM - BANHADO OURO 18k</p>
+          <p class="prod-price gold-text">R$ 224,99</p>
+          <p class="prod-price-label">2x de R$ 112,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-13MM-FECHO-SANTA-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO GRUMET 13MM FECHO SANTA - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO GRUMET 13MM FECHO SANTA - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 854,99</p>
+          <p class="prod-price-label">2x de R$ 427,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-7MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO GRUMET 7MM- BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO GRUMET 7MM- BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 224,99</p>
+          <p class="prod-price-label">2x de R$ 112,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO LACRAIA 10MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO LACRAIA 10MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 204,99</p>
+          <p class="prod-price-label">2x de R$ 102,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 9 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-5MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO LACRAIA 5MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO LACRAIA 5MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 204,99</p>
+          <p class="prod-price-label">2x de R$ 102,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 1MM- BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 1MM- BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 189,99</p>
+          <p class="prod-price-label">2x de R$ 94,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-3MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 3MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 3MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 189,99</p>
+          <p class="prod-price-label">2x de R$ 94,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-6MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDÃO TIJOLINHO 6MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDÃO TIJOLINHO 6MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 189,99</p>
+          <p class="prod-price-label">2x de R$ 94,99 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA 10 — Correntes, Kits e Conjuntos 18K ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Correntes, Kits e Conjuntos 18K</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="cat-grid">
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-5MM-FECHO-NOSSA-SENHORA-BANHADO-A-OURO-18K-1-v3.webp" alt="Cordão Cadeado 5mm Fecho Nossa Senhora Banhado A Ouro 18k"></div>
+          <p class="prod-name">Cordão Cadeado 5mm Fecho Nossa Senhora Banhado A Ouro 18k</p>
+          <p class="prod-price gold-text">R$ 304,99</p>
+          <p class="prod-price-label">2x de R$ 152,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+
+        <div class="prod">
+<div class="prod-img-wrap"><img class="prod-img" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-OCA-750-15MM-BANHADO-A-OURO-18K-1-v3.webp" alt="CORDAO GRUMET OCA 750 15MM - BANHADO A OURO 18K"></div>
+          <p class="prod-name">CORDAO GRUMET OCA 750 15MM - BANHADO A OURO 18K</p>
+          <p class="prod-price gold-text">R$ 854,99</p>
+          <p class="prod-price-label">2x de R$ 427,49 sem juros</p>
+          <p class="prod-price-label">Cuiabá/V.Grande: entrega+pagto | Correios: grátis ou R$44,99</p>
+          <p class="prod-tags"></p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PÁGINA FINAL — Como pedir ==================== -->
+  <div class="page">
+    <div class="page-inner">
+      <div class="pg-header">
+        <span class="pg-header-brand">Noiva Joias MT</span>
+        <span class="pg-header-section">Como Pedir</span>
+        <span class="pg-header-phone">(65) 9294-2810</span>
+      </div>
+
+      <div class="sr-fernandes" style="align-items:flex-start">
+        <div class="sr-fernandes-text" style="flex:1">
+          <p class="sr-name">Correntes, Kits e Conjuntos 18K</p>
+          <p class="sr-msg">38 peças banhadas a ouro 18K, à pronta entrega. Você escolhe pelo catálogo, manda no WhatsApp e recebe na sua cidade.</p>
+          <p class="sr-highlight gold-text">A partir de R$ 184,99 — 2x sem juros no cartão.</p>
+          <p class="sr-msg">Todas as peças são banhadas a ouro 18K. Confira a peça na mão no momento da entrega e só pague depois de aprovar.</p>
+        </div>
+      </div>
+
+            <div class="howto">
+        <div class="howto-step">
+          <span class="howto-n">1</span>
+          <p class="howto-t">Escolha a peça</p>
+          <p class="howto-p">Veja as fotos deste catálogo e anote o nome do modelo que você gostou.</p>
+        </div>
+        <div class="howto-step">
+          <span class="howto-n">2</span>
+          <p class="howto-t">Fale no WhatsApp</p>
+          <p class="howto-p">Mande o nome do modelo e a sua cidade. Você fala direto com uma pessoa de verdade — sem robô e sem fila de espera.</p>
+        </div>
+        <div class="howto-step">
+          <span class="howto-n">3</span>
+          <p class="howto-t">Receba e pague</p>
+          <p class="howto-p">Entrega na sua cidade. Você confere a peça na mão e só então paga.</p>
+        </div>
+      </div>
+
+            <div class="cta-final">
+        <div class="cta-final-txt">
+          <p class="cta-final-t">Noiva Joias MT</p>
+          <p class="cta-final-p">CNPJ 31.186.957/0001-06 · Cuiabá · Rondonópolis · Sinop · noivajoiasmt.com.br</p>
+        </div>
+        <p class="cta-final-phone gold-text">(65) 9294-2810</p>
+      </div>
+
+            <div class="pg-footer">
+        <span><strong>Noiva Joias MT</strong> · CNPJ 31.186.957/0001-06</span>
+        <span>Cuiabá · Rondonópolis · Sinop</span>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+</body>
+</html>
