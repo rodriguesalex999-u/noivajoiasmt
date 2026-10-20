@@ -17,6 +17,21 @@
    caso a resposta é `precisa_cpf: true` e o pedido fica na fila —
    o dono then de confirmar o CPF pelo WhatsApp. Não existe atalho:
    a Melhor Envios recusa sem CPF.
+
+   FORMATOS DA API (verificado ao vivo em 19/10/2026, com o token real)
+     · dinheiro: REAL. A API devolve 38.94 = R$ 38,94. NÃO dividir por 100.
+       (o saldo vem com centavos: 322.3 = R$ 322,30 — se fosse em centavos
+       a API devolveria um número inteiro)
+     · peso do volume: QUILOGRAMA (0.5 = 500 g)
+     · medidas do volume: CENTÍMETRO, e a API só aceita de 1 a 300.
+       Mandar 0,5 cm nas três dimensões é recusado com HTTP 422:
+       "O valor do campo comprimento para o pacote 1 deve ser entre 1 e 300"
+     · número do endereço: o campo é "number". O "location_number" é
+       ignorado pela API (a etiqueta sairia sem número).
+     · remetente e destinatário não podem ser iguais (mesmo CPF) —
+       a API responde 422 "O remetente e o destinatário não podem ser iguais".
+     · o carrinho (POST /me/cart) NÃO gasta saldo. O saldo é debitado no
+       checkout (POST /me/shipment/checkout), e só isso.
    ============================================================ */
 
 const API = 'https://melhorenvio.com.br/api/v2';
@@ -26,7 +41,9 @@ const API = 'https://melhorenvio.com.br/api/v2';
    - seguro de R$ 10,00, e unitary_value SEMPRE igual ao seguro
    - non_commercial: true = Declaração de Conteúdo, nunca Nota Fiscal */
 const PADRAO_LOJA = {
-  volumes: { height: 0.5, width: 0.5, length: 0.5, weight: 0.5 },
+  /* Volume de uma joia: 5 x 10 x 15 cm, 500 g. A API exige medidas de
+     1 a 300 cm — por isso o pacote "0,5" em tudo era recusado (422). */
+  volumes: { height: 5, width: 10, length: 15, weight: 0.5 },
   options: {
     insurance_value: 10.0,
     receipt: false,
@@ -41,9 +58,13 @@ const CODIGO_PAIS = 'BR';
 const REMETENTE = {
   name: process.env.ME_SENDER_NAME || 'Noiva Joias MT',
   email: process.env.ME_SENDER_EMAIL || 'rodriguesalex999@gmail.com',
+  phone: process.env.ME_SENDER_PHONE || '',
+  /* A conta da Melhor Envios é de PESSOA FÍSICA: quem assina é o CPF.
+     A API chama esse campo de "document". */
+  document: process.env.ME_SENDER_CPF || '',
   postal_code: process.env.ME_SENDER_CEP || '',
   address: process.env.ME_SENDER_STREET || '',
-  location_number: process.env.ME_SENDER_NUMBER || '',
+  number: process.env.ME_SENDER_NUMBER || '',
   district: process.env.ME_SENDER_DISTRICT || '',
   city: process.env.ME_SENDER_CITY || '',
   state_abbr: process.env.ME_SENDER_UF || 'MT',
@@ -81,7 +102,8 @@ async function me(metodo, caminho, corpo) {
 async function saldo() {
   const r = await me('GET', '/me/balance');
   if (!r.ok) throw new Error('saldo indisponível: ' + JSON.stringify(r.dados).slice(0, 200));
-  return (r.dados.balance || 0) / 100;
+  /* A API devolve o saldo em REAL (vem com centavos: 322.3 = R$ 322,30). */
+  return Number(r.dados.balance || 0);
 }
 
 /* ---------- cotação de todos os Correios (service 1 = PAC, 2 = SEDEX) ---------- */
@@ -110,7 +132,7 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
   if (!destino.cpf) falta.push('CPF do destinatário');
   if (!destino.cep) falta.push('CEP do destinatário');
   if (!REMETENTE.postal_code) falta.push('CEP do remetente (ME_SENDER_CEP)');
-  if (!REMETENTE.cpf) falta.push('CPF do remetente (ME_SENDER_CPF)');
+  if (!REMETENTE.document) falta.push('CPF do remetente (ME_SENDER_CPF)');
   if (falta.length) {
     return { ok: false, etapa: 'pre-requisitos', precisa: falta };
   }
@@ -119,11 +141,7 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
   const insured = PADRAO_LOJA.options.insurance_value;
   const cart = await me('POST', '/me/cart', {
     service: 1, // PAC dos Correios
-    from: {
-      ...REMETENTE,
-      phone: REMETENTE.phone || '',
-      document: REMETENTE.cpf,
-    },
+    from: { ...REMETENTE },
     to: {
       name: destino.nome,
       phone: destino.telefone || '',
@@ -131,7 +149,7 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
       document: destino.cpf,
       postal_code: destino.cep,
       address: destino.endereco || '',
-      location_number: destino.numero || '',
+      number: destino.numero || '',
       complement: destino.complemento || undefined,
       district: destino.bairro || '',
       city: destino.cidade || '',
@@ -153,6 +171,7 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
     return { ok: false, etapa: 'carrinho', erro: cart.dados };
   }
   const item = cart.dados;
+  /* A API devolve o preço em REAL (ex.: 38.94 = R$ 38,94). */
   const preco = Number(item.price || 0);
 
   /* 2. Checkout — AQUI o saldo é gasto de verdade. Por isso devolvemos
@@ -162,8 +181,8 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
       ok: false,
       etapa: 'confirmacao',
       precisa_confirmar: true,
-      preco_centavos: preco,
-      preco: (preco / 100).toFixed(2),
+      preco_centavos: Math.round(preco * 100),
+      preco: preco.toFixed(2),
       cart_id: item.id,
       protocolo: item.protocol,
       servico: item.service?.name || 'PAC',

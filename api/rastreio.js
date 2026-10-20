@@ -11,9 +11,28 @@
 
 const fs = require('fs/promises');
 const path = require('path');
-const me = require('./melhorenvio.js');
+/* Fica em api/_lib/ porque o Vercel transforma TUDO que está em api/ numa
+   rota. Como este arquivo é um módulo (não é um handler), deixá-lo em api/
+   criava uma rota quebrada que devolvia 500. O prefixo _lib o mantém
+   fora das rotas, mas o Node o empacota junto quando alguém o importa. */
+const me = require('./_lib/melhorenvio.js');
 
 const ARQ = path.join('/tmp', 'pedidos.json');
+
+/* ---------- porta do dono ---------- */
+/* Listar pedidos, cotar frete e gerar etiqueta são ações do DONO: elas
+   mostram dados dos clientes (CPF) e gastam saldo. Exigem o token do
+   dono, enviado no cabeçalho "x-owner-token" (ou ?token= na URL).
+   O cliente NÃO usa nada disto: as ações "consultar" (rastreio) e
+   "medida" (informar o CPF) continuam abertas, porque são usadas pela
+   página de obrigado.html. */
+const OWNER_TOKEN = process.env.OWNER_TOKEN || '';
+
+function ehDono(req) {
+  if (!OWNER_TOKEN) return false;
+  const t = String(req.headers['x-owner-token'] || req.query?.token || '').trim();
+  return t.length > 0 && t === OWNER_TOKEN;
+}
 
 async function ler() {
   try {
@@ -122,6 +141,12 @@ module.exports = async function handler(req, res) {
 
     /* ================= LISTAR (dono) ================= */
     if (req.method === 'GET') {
+      if (!OWNER_TOKEN) {
+        return res.status(503).json({ erro: 'OWNER_TOKEN não configurado na Vercel' });
+      }
+      if (!ehDono(req)) {
+        return res.status(401).json({ erro: 'não autorizado' });
+      }
       const lista = await ler();
       let saldo = null;
       try {
@@ -156,6 +181,12 @@ module.exports = async function handler(req, res) {
 
     /* ================= COTAR (dono) ================= */
     if (acao === 'cotar' && req.method === 'POST') {
+      if (!OWNER_TOKEN) {
+        return res.status(503).json({ erro: 'OWNER_TOKEN não configurado na Vercel' });
+      }
+      if (!ehDono(req)) {
+        return res.status(401).json({ erro: 'não autorizado' });
+      }
       const cep = String(req.body?.cep || '').replace(/\D/g, '');
       if (cep.length !== 8) return res.status(400).json({ erro: 'CEP inválido' });
       const c = await me.cotar({ cep });
@@ -164,6 +195,12 @@ module.exports = async function handler(req, res) {
 
     /* ================= GERAR ETIQUETA (dono) ================= */
     if (acao === 'etiqueta' && req.method === 'POST') {
+      if (!OWNER_TOKEN) {
+        return res.status(503).json({ erro: 'OWNER_TOKEN não configurado na Vercel' });
+      }
+      if (!ehDono(req)) {
+        return res.status(401).json({ erro: 'não autorizado' });
+      }
       const paymentId = String(req.body?.payment_id || '');
       const lista = await ler();
       const p = lista.find(x => x.payment_id === paymentId);
@@ -194,13 +231,14 @@ module.exports = async function handler(req, res) {
 
       /* Passo 1 (carrinho) não gasta saldo: devolve o preço e para. */
       if (r.ok === false && r.precisa_confirmar) {
+        const valor = Number(r.preco || 0).toFixed(2).replace('.', ',');
         return res.status(200).json({
           ok: false,
           precisa_confirmar: true,
-          preco: r.preco,
+          preco: Number(r.preco || 0),
           servico: r.servico,
           cart_id: r.cart_id,
-          aviso: 'Gerar esta etiqueta gasta ' + r.preco + ' do saldo da Melhor Envios.',
+          aviso: 'Gerar esta etiqueta gasta R$ ' + valor + ' do saldo da Melhor Envios.',
         });
       }
       if (r.ok === false) {

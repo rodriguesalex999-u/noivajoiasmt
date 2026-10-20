@@ -4,6 +4,25 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-19 (tarde) — Melhor Envios funcionando de ponta a ponta (cotação, etiqueta e rastreio)
+
+**A integração de etiqueta dos Correios estava caída (500) desde antes — agora está no ar e testada com a API real.**
+
+- **Causa:** o projeto Vercel tinha só `MP_ACCESS_TOKEN`. Faltava a `ME_API_TOKEN` (JWT da Melhor Envios) e todo o bloco do remetente (`ME_SENDER_*`), que o código exige para gerar etiqueta.
+- **Token:** o JWT estava guardado em `C:\Users\rodri\OneDrive\Documents\00-VIDA-ALEX\melhor_envio\.env` (chave `token`). Confirmado **válido** (29 escopos, até 23/09/2027) e com **R$ 322,30** de saldo. Configurado como variável sensível na Vercel (produção e preview).
+- **Remetente:** os dados vieram da própria conta na Melhor Envios (`GET /me/addresses` e `GET /me`) e batem com os dados fiscais da empresa: Rua Santa Terezinha, 31 — Dom Aquino, Cuiabá/MT, CEP 78015-140, titular Alex Rodrigues (CPF), telefone (65) 9277-1501.
+- **Bugs do código corrigidos** (todos testados ao vivo na API):
+  1. Volume com 0,5 cm nas três dimensões era **recusado com HTTP 422** (a API só aceita 1 a 300 cm). Agora 5 × 10 × 15 cm / 0,5 kg.
+  2. O número do endereço ia em `location_number`, que a API **ignora** — a etiqueta sairia sem número. Agora em `number`.
+  3. `REMETENTE.cpf` e `REMETENTE.phone` **nunca eram lidos do ambiente**, então a etiqueta era sempre barrada com "falta o CPF do remetente". Agora vêm de `ME_SENDER_CPF` / `ME_SENDER_PHONE`.
+  4. Dinheiro estava em centavos: o saldo aparecia como R$ 3,22 (é R$ 322,30) e o preço da etiqueta como R$ 0,39 (é R$ 38,94). **A API devolve em real.**
+  5. `api/melhorenvio.js` é um módulo, mas estava em `api/` — o Vercel transformava em rota e a rota `/api/melhorenvio` devolvia 500. Movido para `api/_lib/melhorenvio.js`.
+- **Segurança:** `GET /api/rastreio` (lista de pedidos com CPF dos clientes), `cotar` e `etiqueta` passaram a exigir o header `x-owner-token` (env `OWNER_TOKEN`, valor no `.env.local` da máquina, fora do Git). O cliente continua usando `consultar` e `medida` sem token.
+- **Verificado:** cotação do PAC (Cuiabá → São Paulo) = R$ 38,94; etiqueta gerada no carrinho **sem gastar saldo** (R$ 38,94) e removida depois; teste automatizado em `scripts/testar_melhor_envio.js` (`node scripts/testar_melhor_envio.js`).
+- **Observação do dono (regra mantida):** o seguro continua em R$ 10,00 (regra do dono) enquanto o valor declarado do produto vai o preço real — a API aceita, mas o ressarcimento em caso de extravio é o do seguro.
+
+---
+
 ## 2026-10-19 — Página de Dúvidas Frequentes publicada em /faq
 
 **Nova página `faq.html` no ar em `https://noivajoiasmt.vercel.app/faq` — no mesmo projeto/site da Noiva Joias MT, para mandar aos clientes.**
