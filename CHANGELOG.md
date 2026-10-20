@@ -4,6 +4,18 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-19 — Página de Dúvidas Frequentes publicada em /faq
+
+**Nova página `faq.html` no ar em `https://noivajoiasmt.vercel.app/faq` — no mesmo projeto/site da Noiva Joias MT, para mandar aos clientes.**
+
+- **O quê:** as 12 dúvidas mais comuns em uma página só: garantia de 3 meses, banhada a ouro x moeda antiga comum x forrada, tempo de escurecimento, cuidados, pagamento na entrega, unidades (Cuiabá/Rondonópolis/Sinop), parcelamento, tamanho do dedo, taxa de experimentação e reembolso.
+- **Arquivo:** `faq.html` — HTML único autocontido, sem build e sem framework (igual ao `index.html`).
+- **Rota:** `/faq` → `/faq.html` (nova rewrite no `vercel.json`, antes do catch-all `/((?!api/|faq).*)` → `/index.html`). O site principal não foi alterado.
+- **Compartilhamento:** `canonical`, `og:url`, `og:image` (imagem do próprio site) e JSON-LD `FAQPage` — o link aparece com título e capa ao ser enviado no WhatsApp.
+- **Deploy:** commit na `main` do GitHub → deploy automático na Vercel (produção).
+
+---
+
 ## 2026-10-13 (tarde) — Baixar etiqueta dos Correios pelo Gmail (himalaya)
 
 **Capacidade nova: baixar o rótulo de envio (PDF) direto do e-mail dos Correios, via Gmail/IMAP (himalaya).**
