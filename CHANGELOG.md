@@ -4,6 +4,24 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-13 (tarde) — Baixar etiqueta dos Correios pelo Gmail (himalaya)
+
+**Capacidade nova: baixar o rótulo de envio (PDF) direto do e-mail dos Correios, via Gmail/IMAP (himalaya).**
+
+- **Script:** `0-FUNCIONARIOS-DE-IA\PAINEL\baixar_rotulo_correios.py`
+- **Como funciona:**
+  1. Busca no Gmail (INBOX) o e-mail dos Correios com anexo (assunto "Comunicado Correios - Devolução de Encomendas").
+  2. Baixa **somente** o PDF `Rotulo_<RASTREIO>.pdf` — a etiqueta de envio.
+  3. Os PNGs "inline" do rodapé do e-mail (lixo) são descartados automaticamente (baixa tudo pra pasta temp, mantém só o rótulo, apaga o resto).
+  4. Salva em `C:\Users\rodri\Downloads` e imprime o caminho final.
+- **Uso:** `python baixar_rotulo_correios.py <RASTREIO>` ou `python baixar_rotulo_correios.py mais-recente`
+  - Se o rótulo daquele rastreio já existe, **não baixa de novo** (reaproveita).
+- **Requisito:** himalaya instalado e configurado com a conta Gmail (`C:\Users\rodri\himalaya-bin\himalaya.exe`).
+- **Regra do dono (confirmada 13/10/2026):** o único anexo que interessa é o `Rotulo_<rastreio>.pdf` (a etiqueta). Os demais anexos do e-mail não são necessários.
+- **Verificado:** rótulo real `Rotulo_AP603957375BR.pdf` baixado (31 KB) — só o PDF, sem lixo na pasta.
+
+---
+
 ## 2026-10-13 (manhã)
 
 **Foto do KIT CORDÃO PERUANO 5MM + PINGENTE substituída no R2 e catálogos**
