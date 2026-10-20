@@ -13,17 +13,24 @@ const ENV_ME =
   process.env.ME_ENV_PATH ||
   'C:\\Users\\rodri\\OneDrive\\Documents\\00-VIDA-ALEX\\melhor_envio\\.env';
 
-/* Le o token e monta o remetente (dados cadastrados na conta). */
+/* Le o token e monta o remetente (dados cadastrados na conta).
+   Se as variaveis ja vierem do ambiente (por exemplo do .env puxado da
+   Vercel), elas tem prioridade — assim o teste roda com os valores
+   REAIS de producao. */
 function carregarEnv() {
-  if (!fs.existsSync(ENV_ME)) {
-    console.error('Arquivo de credenciais nao encontrado:', ENV_ME);
+  if (fs.existsSync(ENV_ME)) {
+    for (const linha of fs.readFileSync(ENV_ME, 'utf8').split(/\r?\n/)) {
+      const m = linha.match(/^\s*(?:ME_API_TOKEN|token)\s*[=:]\s*(.+?)\s*$/i);
+      if (m && !process.env.ME_API_TOKEN) {
+        process.env.ME_API_TOKEN = m[1].replace(/^["']|["']$/g, '');
+      }
+    }
+  }
+  if (!process.env.ME_API_TOKEN) {
+    console.error('Token nao encontrado. Defina ME_API_TOKEN ou aponte ME_ENV_PATH.');
     process.exit(2);
   }
-  for (const linha of fs.readFileSync(ENV_ME, 'utf8').split(/\r?\n/)) {
-    const m = linha.match(/^\s*token\s*=\s*(.+?)\s*$/i);
-    if (m) process.env.ME_API_TOKEN = m[1].replace(/^["']|["']$/g, '');
-  }
-  Object.assign(process.env, {
+  const padroes = {
     ME_SENDER_NAME: 'Noiva Joias MT',
     ME_SENDER_EMAIL: 'rodriguesalex999@gmail.com',
     ME_SENDER_PHONE: '65992771501',
@@ -34,7 +41,10 @@ function carregarEnv() {
     ME_SENDER_DISTRICT: 'Dom Aquino',
     ME_SENDER_CITY: 'Cuiaba',
     ME_SENDER_UF: 'MT',
-  });
+  };
+  for (const [k, v] of Object.entries(padroes)) {
+    if (!process.env[k]) process.env[k] = v;
+  }
 }
 
 async function removerDoCarrinho(cartId) {
