@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Correntes, Pulseiras e Pingentes Masculinos 18K — Noiva Joias MT</title>
+<meta name="description" content="Correntes, pulseiras e pingentes masculino 18K banhados a ouro. Entrega hoje em Cuiabá, Rondonópolis e Sinop — você só paga na entrega. Fale no WhatsApp.">
+<meta name="theme-color" content="#0B0907">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://noivajoiasmt.vercel.app/masculino">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Noiva Joias MT">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Correntes, Pulseiras e Pingentes Masculinos 18K — Noiva Joias MT">
+<meta property="og:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop.">
+<meta property="og:url" content="https://noivajoiasmt.vercel.app/masculino">
+<meta property="og:image" content="https://noivajoiasmt.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Correntes, Pulseiras e Pingentes Masculinos 18K — Noiva Joias MT">
+<meta name="twitter:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop.">
+<meta name="twitter:image" content="https://noivajoiasmt.vercel.app/og.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0907'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3.4'%3E%3Ccircle cx='24' cy='40' r='14'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3Cpath d='M32 6l7 8-7 8-7-8z' fill='%23F0DCA4'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   NOIVA JOIAS MT — catálogo masculino 18K
+   mesmo design system do index.html (tokens, cores, fontes)
+   ============================================================ */
+:root{
+  --bg:#0b0907;
+  --bg-2:#141110;
+  --bg-3:#1c1816;
+  --gold:#c9a75b;
+  --gold-light:#f0dca4;
+  --gold-deep:#8a6a22;
+  --cream:#f6f1e6;
+  --muted:#9c9384;
+  --line:rgba(201,167,91,.22);
+  --line-strong:rgba(201,167,91,.45);
+  --green:#1ea65a;
+  --green-deep:#157a41;
+  --gold-grad:linear-gradient(100deg,var(--gold-light) 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  --font-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --shell:720px;
+  --r-lg:22px;
+  --r-md:16px;
+  --r-sm:999px;
+  --ease:cubic-bezier(.22,.8,.28,1);
+  font-variant-numeric:lining-nums;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  scroll-padding-top:88px;
+}
+
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+strong,b{font-weight:600}
+ul{list-style:none}
+
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+::selection{background:rgba(201,167,91,.32);color:#fff}
+
+.gold-text{color:var(--gold)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .gold-text{
+    background-image:var(--gold-grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
+}
+
+.num,.wa-number,.dock-btn span,.prod-price-val,.prod-installments,.footer-cnpj{
+  font-variant-numeric:lining-nums;
+}
+.wa-number,.dock-btn span{letter-spacing:.045em}
+.prod-price-val{letter-spacing:.01em}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--gold);color:#0b0907;padding:10px 16px;border-radius:0 0 10px 0;
+  font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.skip:focus{left:0}
+
+/* ---------- fundo ---------- */
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58% 38% at 50% -6%,rgba(201,167,91,.20) 0%,transparent 68%),
+    radial-gradient(42% 30% at 8% 24%,rgba(138,106,34,.14) 0%,transparent 70%),
+    radial-gradient(46% 34% at 96% 72%,rgba(201,167,91,.10) 0%,transparent 72%),
+    linear-gradient(#0d0b09 0%,#0b0907 42%,#100d0b 100%);
+}
+.bg-noise{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.bg-vignette{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(120% 80% at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%);
+}
+
+.shell{position:relative;z-index:2;max-width:var(--shell);margin:0 auto;padding:0 22px 148px}
+
+/* ---------- header fixo ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  transform:translateY(-102%);
+  transition:transform .35s var(--ease);
+  background:linear-gradient(rgba(11,9,7,.86),rgba(11,9,7,.97));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar.show{transform:translateY(0)}
+.topbar-in{
+  max-width:var(--shell);margin:0 auto;padding:11px 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0}
+.topbar-mark{width:26px;height:26px;flex:0 0 auto}
+.topbar-name{
+  font-family:var(--font-display);font-size:.98rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;
+}
+.topbar-wa{
+  display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;
+  min-height:40px;padding:0 16px;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  color:#fff;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 8px 20px -12px rgba(30,166,90,.9);
+  transition:filter .18s;
+}
+.topbar-wa:hover{filter:brightness(1.08)}
+
+/* ---------- marca ---------- */
+.header{padding:20px 0 0;text-align:center}
+.brand{display:inline-flex;flex-direction:column;align-items:center;gap:8px}
+.brand-mark{width:50px;height:50px;display:block;filter:drop-shadow(0 6px 22px rgba(201,167,91,.28))}
+.brand-name{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,6.6vw,2rem);
+  font-weight:600;letter-spacing:.15em;text-transform:uppercase;line-height:1;
+}
+.brand-sub{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- hero ---------- */
+.hero{padding:24px 0 6px;text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:7px 15px;margin-bottom:14px;
+  background:rgba(11,9,7,.5);
+}
+.eyebrow::before{
+  content:"";width:5px;height:5px;border-radius:999px;
+  background:var(--gold);box-shadow:0 0 9px var(--gold);
+  animation:pulse 2.4s var(--ease) infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+
+h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.05rem,8.8vw,3.6rem);
+  font-weight:500;line-height:1.06;letter-spacing:-.01em;
+  margin-bottom:16px;
+}
+h1 em{font-style:italic;display:block;font-weight:600}
+
+.lead{font-size:1rem;line-height:1.7;color:var(--muted);max-width:34ch;margin:0 auto}
+.lead b{color:var(--cream);font-weight:400}
+
+.actions{display:flex;flex-direction:column;gap:13px;margin:22px auto 0;max-width:460px}
+
+.wa{
+  display:flex;align-items:center;gap:14px;
+  min-height:64px;padding:14px 20px;border-radius:var(--r-md);
+  color:#fff;
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  box-shadow:0 14px 32px -14px rgba(30,166,90,.75),inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .18s var(--ease),box-shadow .18s,filter .18s;
+}
+.wa:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 20px 40px -16px rgba(30,166,90,.9),inset 0 1px 0 rgba(255,255,255,.28)}
+.wa:active{transform:translateY(0) scale(.99)}
+.wa-icon{
+  flex:0 0 auto;width:40px;height:40px;border-radius:999px;
+  background:rgba(255,255,255,.16);display:grid;place-items:center;
+}
+.wa-text{display:flex;flex-direction:column;gap:2px;text-align:left;line-height:1.15;min-width:0}
+.wa-label{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.82)}
+.wa-number{font-family:var(--font-display);font-size:1.44rem;font-weight:600;letter-spacing:.03em}
+.wa-arrow{margin-left:auto;opacity:.75;flex:0 0 auto;transition:transform .18s var(--ease)}
+.wa:hover .wa-arrow{transform:translateX(3px)}
+
+.ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;padding:0 22px;border-radius:var(--r-md);
+  border:1px solid var(--line);color:var(--cream);
+  font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+  transition:border-color .18s,background .18s,transform .18s var(--ease);
+}
+.ghost:hover{border-color:var(--line-strong);background:rgba(201,167,91,.07);transform:translateY(-2px)}
+
+.rule{position:relative;height:1px;width:156px;margin:36px auto;background:var(--line);overflow:hidden}
+.rule::after{
+  content:"";position:absolute;inset:0;background:var(--gold-grad);
+  animation:sweep 3.6s ease-in-out infinite;
+}
+@keyframes sweep{0%{transform:translateX(-100%)}55%{transform:translateX(100%)}100%{transform:translateX(100%)}}
+
+/* ---------- grade de coleções ---------- */
+.sec-title{
+  font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold);text-align:center;margin:56px 0 24px;
+}
+.sec-h{
+  font-family:var(--font-display);font-weight:500;
+  font-size:clamp(1.7rem,7vw,2.35rem);line-height:1.15;text-align:center;
+  margin:0 0 12px;
+}
+.sec-sub{text-align:center;color:var(--muted);font-size:.9rem;line-height:1.7;max-width:38ch;margin:0 auto 26px}
+
+.col-grid{display:grid;gap:16px}
+@media(min-width:620px){.col-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.col-grid{grid-template-columns:repeat(3,1fr);gap:20px}}
+
+.col-card{
+  position:relative;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(175deg,rgba(28,24,22,.85) 0%,rgba(15,13,12,.9) 100%);
+  transition:transform .28s var(--ease),border-color .28s,box-shadow .28s;
+}
+.col-card:hover{
+  transform:translateY(-5px);border-color:var(--line-strong);
+  box-shadow:0 26px 54px -32px rgba(201,167,91,.4);
+}
+.col-media{position:relative;aspect-ratio:1/1;overflow:hidden;background:#0f0d0c}
+.col-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.col-card:hover .col-media img{transform:scale(1.055)}
+.col-media::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(201,167,91,.14),inset 0 -60px 60px -50px rgba(201,167,91,.35);
+}
+.col-badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  color:#0b0907;background:var(--gold-grad);
+  padding:6px 11px;border-radius:var(--r-sm);
+  box-shadow:0 6px 16px -8px rgba(201,167,91,.8);
+}
+.col-count{
+  position:absolute;left:12px;bottom:12px;z-index:2;
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream);background:rgba(11,9,7,.72);
+  border:1px solid var(--line-strong);border-radius:var(--r-sm);
+  padding:6px 11px;white-space:nowrap;
+}
+.col-body{display:flex;flex-direction:column;flex:1;padding:20px 20px 18px}
+.col-name{
+  font-family:var(--font-display);font-size:1.34rem;font-weight:600;
+  line-height:1.25;margin-bottom:8px;
+}
+.col-desc{font-size:.83rem;line-height:1.65;color:var(--muted);margin-bottom:16px}
+.col-cta{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  min-height:52px;margin-top:auto;border-radius:13px;
+  color:var(--gold);background:transparent;
+  border:1px solid var(--line-strong);
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  transition:background .18s,color .18s;
+}
+.col-cta:hover{background:rgba(201,167,91,.12);color:var(--gold-light)}
+.col-cta svg{flex:0 0 auto}
+
+/* ---------- rodapé ---------- */
+.footer{margin-top:58px;padding-top:30px;border-top:1px solid var(--line);text-align:center}
+.footer-name{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.11em;text-transform:uppercase}
+.footer-cnpj{font-size:.8rem;letter-spacing:.06em;color:var(--muted);margin-top:8px}
+.footer-cities{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(156,147,132,.8);margin-top:10px}
+.footer-rights{font-size:.68rem;color:rgba(156,147,132,.6);margin-top:20px;letter-spacing:.08em}
+
+/* ---------- dock fixo ---------- */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  padding:14px 14px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(rgba(11,9,7,0) 0%,rgba(11,9,7,.9) 34%,rgba(11,9,7,.99) 100%);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.dock-in{max-width:var(--shell);margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.dock-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;border-radius:var(--r-md);
+  color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  box-shadow:0 12px 28px -14px rgba(30,166,90,.9),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:filter .18s,transform .18s var(--ease);
+}
+.dock-btn:hover{filter:brightness(1.07)}
+.dock-btn:active{transform:scale(.99)}
+.dock-btn span{font-family:var(--font-display);font-size:1.2rem;font-weight:600;letter-spacing:.03em}
+.dock-hint{text-align:center;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- modal do catálogo ---------- */
+.modal{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center}
+.modal:not(.open){display:none}
+.modal-bd{
+  position:absolute;inset:0;
+  background:rgba(5,4,3,.78);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  animation:fadein .25s var(--ease);
+}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.modal-box{
+  position:relative;width:100%;max-width:560px;
+  max-height:92vh;max-height:92dvh;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#1c1816 0%,#141110 42%);
+  border:1px solid var(--line);border-bottom:0;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -24px 64px -30px rgba(0,0,0,.95);
+  animation:sheet .34s var(--ease);
+}
+@keyframes sheet{from{transform:translateY(28px);opacity:.35}to{transform:none;opacity:1}}
+@media(min-width:640px){
+  .modal{align-items:center;padding:24px}
+  .modal-box{border-bottom:1px solid var(--line);border-radius:24px;max-height:86vh;max-height:86dvh}
+}
+.modal-head{
+  flex:0 0 auto;display:flex;align-items:flex-start;gap:14px;
+  padding:22px 18px 17px;border-bottom:1px solid var(--line);
+}
+.modal-head-t{flex:1;min-width:0}
+.modal-tag{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.modal-h{font-family:var(--font-display);font-size:1.46rem;font-weight:600;line-height:1.22;margin-top:7px}
+.modal-sub{font-size:.79rem;line-height:1.6;color:var(--muted);margin-top:6px}
+.modal-x{
+  flex:0 0 auto;width:44px;height:44px;border-radius:999px;
+  display:grid;place-items:center;color:var(--cream);
+  border:1px solid var(--line);background:rgba(11,9,7,.6);
+  transition:border-color .18s,background .18s,transform .3s var(--ease);
+}
+.modal-x:hover{border-color:var(--line-strong);background:rgba(11,9,7,.12);transform:rotate(90deg)}
+.modal-body{
+  flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:16px 18px calc(24px + env(safe-area-inset-bottom));
+  display:grid;gap:12px;align-content:start;
+}
+@media(min-width:520px){.modal-body{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.modal-body{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media(min-width:1440px){.modal-body{grid-template-columns:repeat(4,1fr)}}
+
+/* card de produto dentro do modal */
+.prod{
+  display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:rgba(15,13,12,.72);
+  transition:border-color .2s,transform .2s var(--ease);
+}
+.prod:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.prod-img{position:relative;aspect-ratio:1/1;background:#0f0d0c}
+.prod-img img{width:100%;height:100%;object-fit:cover}
+.prod-img::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(201,167,91,.14);
+}
+.prod-name{font-family:var(--font-display);font-size:1.06rem;font-weight:600;line-height:1.25;padding:14px 14px 0}
+.prod-badges{display:flex;flex-wrap:wrap;gap:6px;padding:9px 14px 0}
+.prod-tag{
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:4px 9px;
+}
+.prod-price-val{font-family:var(--font-display);font-size:1.44rem;font-weight:600;line-height:1.1;padding:12px 14px 0}
+.prod-cta{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;margin:12px 14px 14px;border-radius:12px;
+  color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  box-shadow:0 10px 22px -12px rgba(30,166,90,.85),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:filter .18s,transform .18s var(--ease);
+}
+.prod-cta:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.prod-cta-whatsapp{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;margin:0 14px;border-radius:12px;
+  color:#fff;background:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  box-shadow:0 10px 22px -12px rgba(30,166,90,.85),inset 0 1px 0 rgba(255,255,255,.2);
+  transition:filter .18s,transform .18s var(--ease);
+}
+.prod-cta-whatsapp:hover{filter:brightness(1.08);transform:translateY(-2px)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(20px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.d1.in{transition-delay:.06s}
+.reveal.d2.in{transition-delay:.16s}
+.reveal.d3.in{transition-delay:.26s}
+.reveal.d4.in{transition-delay:.36s}
+
+/* ============================================================
+   CAMADA DE RESPONSIVIDADE (desktop)
+   Até 1023px o celular continua exatamente como está.
+   ============================================================ */
+@media(min-width:768px){
+  :root{--shell:820px}
+}
+
+@media(min-width:1024px){
+  :root{--shell:1120px}
+
+  .hero{
+    display:flex;flex-direction:column;align-items:stretch;
+    padding:34px 0 10px;
+  }
+  .hero > .eyebrow{order:1;align-self:center;margin-bottom:18px}
+  .hero > h1{order:2;margin:0 auto 16px;font-size:clamp(2.6rem,4.2vw,3.6rem)}
+  .hero > .lead{order:3;margin:0 auto;max-width:46ch;font-size:1.06rem}
+  .hero > .actions{order:4;margin:26px auto 0;max-width:520px}
+  .hero > .col-section{order:5;margin-top:38px}
+
+  .modal-box{max-width:920px}
+  .modal-head{padding:26px 26px 20px}
+  .modal-body{padding:20px 26px 30px}
+
+  .dock-in{flex-direction:column;align-items:center;gap:8px}
+  .dock-btn{width:100%;max-width:420px;min-height:56px}
+  .dock-hint{text-align:center}
+}
+
+@media(min-width:1440px){
+  :root{--shell:1240px}
+  .hero > h1{font-size:3.6rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .reveal{opacity:1;transform:none}
+  .rule::after{transform:none;opacity:.7}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#colecoes">Ir para as coleções</a>
+
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+<div class="bg-vignette" aria-hidden="true"></div>
+
+<!-- ============ header fixo ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar-in">
+    <a class="topbar-brand" href="index.html" aria-label="Noiva Joias MT — início">
+      <svg class="topbar-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M32 3.5 38.4 11 32 18.5 25.6 11 32 3.5Z" stroke="#C9A75B" stroke-width="2.2" stroke-linejoin="round"/>
+        <circle cx="24" cy="40" r="15.5" stroke="#C9A75B" stroke-width="3"/>
+        <circle cx="40" cy="40" r="15.5" stroke="#C9A75B" stroke-width="3"/>
+      </svg>
+      <span class="topbar-name gold-text">Noiva Joias</span>
+    </a>
+    <a class="topbar-wa" data-wa="topo" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </div>
+</header>
+
+<div class="shell" id="topo">
+
+  <!-- ============ marca ============ -->
+  <div class="header">
+    <div class="brand reveal d1">
+      <svg class="brand-mark" viewBox="0 0 64 64" fill="none" role="img" aria-label="Noiva Joias MT">
+        <defs>
+          <linearGradient id="njg" x1="8" y1="4" x2="56" y2="62" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F0DCA4"/>
+            <stop offset="48%" stop-color="#C9A75B"/>
+            <stop offset="100%" stop-color="#8A6A22"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 3.5 38.4 11 32 18.5 25.6 11 32 3.5Z" stroke="url(#njg)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M25.6 11h12.8M32 3.5V18.5" stroke="url(#njg)" stroke-width=".85" opacity=".75"/>
+        <circle cx="24" cy="40" r="15.5" stroke="url(#njg)" stroke-width="2.4"/>
+        <circle cx="40" cy="40" r="15.5" stroke="url(#njg)" stroke-width="2.4"/>
+      </svg>
+      <span class="brand-name gold-text">Noiva Joias</span>
+      <span class="brand-sub">Noiva Joias MT</span>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ============ hero ============ -->
+    <section class="hero">
+      <span class="eyebrow reveal d1">Elite 18K · masculino</span>
+      <h1 class="reveal d2">Correntes, pulseiras<em class="gold-text">e pingentes</em></h1>
+      <p class="lead reveal d3">
+        Peças masculinas 18K banhadas a ouro, com entrega hoje
+        em Cuiabá, Rondonópolis e Sinop. <b>Você só paga na entrega.</b>
+      </p>
+
+      <div class="actions reveal d4">
+        <a class="wa" data-wa="hero" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chamar no WhatsApp o número (65) 9294-2810">
+          <span class="wa-icon">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.62-.93-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.09 3.19 5.06 4.47.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35Z"/><path d="M12.04 2.02c-5.5 0-9.97 4.46-9.97 9.96 0 1.76.46 3.48 1.34 5L2 22.02l5.2-1.36a9.96 9.96 0 0 0 4.83 1.24h.01c5.5 0 9.97-4.47 9.97-9.97a9.9 9.9 0 0 0-2.92-7.05 9.9 9.9 0 0 0-7.05-2.86Zm0 18.2h-.01a8.3 8.3 0 0 1-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.32a8.26 8.26 0 0 1-1.27-4.4c0-4.57 3.72-8.28 8.3-8.28a8.22 8.22 0 0 1 5.86 2.43 8.24 8.24 0 0 1 2.42 5.86c0 4.57-3.72 8.28-8.29 8.28Z"/></svg>
+          </span>
+          <span class="wa-text">
+            <span class="wa-label">Chamar no WhatsApp</span>
+            <span class="wa-number">(65) 9294-2810</span>
+          </span>
+          <svg class="wa-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg>
+        </a>
+
+        <a class="ghost" id="voltarTopo" href="index.html">Voltar para o site</a>
+      </div>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- ============ coleções ============ -->
+    <section class="col-section" id="colecoes">
+      <h2 class="sec-title reveal">Nossas coleções</h2>
+      <h3 class="sec-h reveal d1">Escolha a sua</h3>
+      <p class="sec-sub reveal d2">
+        Toque na coleção e veja todos os modelos com o preço de cada um.
+        A mensagem do WhatsApp já vai pronta.
+      </p>
+      <div class="col-grid" id="colGrid"></div>
+    </section>
+
+    <!-- ============ rodapé ============ -->
+    <footer class="footer">
+      <p class="footer-name">Noiva Joias MT</p>
+      <p class="footer-cnpj">CNPJ 31.186.957/0001-06</p>
+      <p class="footer-cities">Cuiabá &middot; Rondonópolis &middot; Sinop</p>
+      <p class="footer-rights">&copy; 2026 Noiva Joias MT — CNPJ 31.186.957/0001-06</p>
+    </footer>
+
+  </main>
+</div>
+
+<!-- ============ dock fixo ============ -->
+<div class="dock">
+  <div class="dock-in">
+    <a class="dock-btn" data-wa="dock" href="#" target="_blank" rel="noopener noreferrer" aria-label="Chamar no WhatsApp o número (65) 9294-2810">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.62-.93-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.09 3.19 5.06 4.47.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.13-.27-.2-.57-.35Z"/><path d="M12.04 2.02c-5.5 0-9.97 4.46-9.97 9.96 0 1.76.46 3.48 1.34 5L2 22.02l5.2-1.36a9.96 9.96 0 0 0 4.83 1.24h.01c5.5 0 9.97-4.47 9.97-9.97a9.9 9.9 0 0 0-2.92-7.05 9.9 9.9 0 0 0-7.05-2.86Zm0 18.2h-.01a8.3 8.3 0 0 1-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.32a8.26 8.26 0 0 1-1.27-4.4c0-4.57 3.72-8.28 8.3-8.28a8.22 8.22 0 0 1 5.86 2.43 8.24 8.24 0 0 1 2.42 5.86c0 4.57-3.72 8.28-8.29 8.28Z"/></svg>
+      <span>(65) 9294-2810</span>
+    </a>
+    <p class="dock-hint">Toque para falar no WhatsApp</p>
+  </div>
+</div>
+
+<!-- ============ catálogo que abre por cima ============ -->
+<div class="modal" id="modal">
+  <div class="modal-bd" id="modalBack"></div>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div class="modal-head-t">
+        <p class="modal-tag">Coleção</p>
+        <h2 class="modal-h" id="modalTitle"></h2>
+        <p class="modal-sub" id="modalSub"></p>
+      </div>
+      <button class="modal-x" id="modalClose" type="button" aria-label="Fechar o catálogo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   CONFIGURAÇÃO
+   ========================================================================== */
+const CONFIG = {
+  empresa: 'Noiva Joias MT',
+  telefone: '556592942810',
+  telefoneLabel: '(65) 9294-2810',
+  cnpj: '31.186.957/0001-06',
+  cidades: ['Cuiabá', 'Rondonópolis', 'Sinop']
+};
+
+const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+const waLink = (msg) =>
+  'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg);
+
+const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23141110'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3' opacity='.5'%3E%3Ccircle cx='170' cy='215' r='58'/%3E%3Ccircle cx='230' cy='215' r='58'/%3E%3C/g%3E%3Cpath d='M200 104l20 22-20 22-20-22z' fill='none' stroke='%23F0DCA4' stroke-width='2.5' opacity='.75'/%3E%3Ctext x='200' y='330' fill='%239C9384' font-family='Jost,sans-serif' font-size='15' letter-spacing='3' text-anchor='middle'%3ENoiva Joias MT%3C/text%3E%3C/svg%3E";
+
+/* ---------- links de WhatsApp com tracking ---------- */
+document.querySelectorAll('[data-wa]').forEach((a) => {
+  a.href = waLink('Olá! Vim pelo site e quero ver as correntes, pulseiras e pingentes 18K.');
+});
+
+const COLLECTION_MAP = {
+'correntes': {
+  nome: 'Correntes Masculinas 18K',
+  previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-5MM-PIASTRINE-BANHADO-A-OURO-18K-1.webp',
+  itens: [
+    {nome: 'CORDÃO 5MM PIASTRINE - BANHADO A OURO 18k', preco: 189.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-5MM-PIASTRINE-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Piastrine', '5mm', '18K']},
+    {nome: 'CORDÃO BALÃO 8MM - BANHADO A OURO 18K', preco: 255.0, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-BALAO-8MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Balão', '8mm', '18K']},
+    {nome: 'CORDÃO CADEADO 2MM - BANHADO A OURO 18K', preco: 105.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-2MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado', '2mm', '18K']},
+    {nome: 'CORDÃO CADEADO 3MM- BANHADO A OURO 18K', preco: 117.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-3MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado', '3mm', '18K']},
+    {nome: 'CORDÃO CADEADO 6MM- BANHADO A OURO 18K', preco: 186.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-6MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado', '6mm', '18K']},
+    {nome: 'CORDÃO CADEADO ALONGADO 3MM - BANHADO A OURO 18k', preco: 126.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-ALONGADO-3MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado', 'Alinhado', '3mm', '18K']},
+    {nome: 'CORDÃO CADEADO DUPLO 3MM - BANHADO A OURO 18k', preco: 129.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-DUPLO-3MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado Duplo', '3mm', '18K']},
+    {nome: 'CORDÃO FRISO S 13MM - BANHADO OURO 18k', preco: 405.0, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-FRISO-S-13MM-BANHADO-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Friso S', '13mm', '18K']},
+    {nome: 'CORDÃO GRUMET 13MM FECHO SANTA - BANHADO A OURO 18K', preco: 534.75, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-13MM-FECHO-SANTA-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Grumet', '13mm', '18K']},
+    {nome: 'CORDÃO GRUMET 7MM- BANHADO A OURO 18K', preco: 204.0, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-GRUMET-7MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Grumet', '7mm', '18K']},
+    {nome: 'CORDÃO LACRAIA 10MM - BANHADO A OURO 18K', preco: 285.0, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-10MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Lacraia', '10mm', '18K']},
+    {nome: 'CORDÃO LACRAIA 5MM - BANHADO A OURO 18K', preco: 165.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-LACRAIA-5MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Lacraia', '5mm', '18K']},
+    {nome: 'CORDÃO TIJOLINHO 1MM- BANHADO A OURO 18K', preco: 111.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-1MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Tijolinho', '1mm', '18K']},
+    {nome: 'CORDÃO TIJOLINHO 3MM - BANHADO A OURO 18K', preco: 144.0, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-3MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Tijolinho', '3mm', '18K']},
+    {nome: 'CORDÃO TIJOLINHO 6MM - BANHADO A OURO 18K', preco: 225.0, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-TIJOLINHO-6MM-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Tijolinho', '6mm', '18K']},
+    {nome: 'Cordão Cadeado 5mm Fecho Nossa Senhora Banhado A Ouro 18k', preco: 172.5, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/CORDAO-CADEADO-5MM-FECHO-NOSSA-SENHORA-BANHADO-A-OURO-18K-1.webp', selo: 'Corrente', tags: ['Corrente', 'Cadeado', 'Nossa Senhora', '5mm', '18K']}
+  ]
+},
+'pulseiras': {
+  nome: 'Pulseiras Masculinas 18K',
+  previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-3MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp',
+  itens: [
+    {nome: 'PULSEIRA 3MM PIASTRINE - BANHADO A OURO 18k', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-3MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Piastrine', '3mm', '18K']},
+    {nome: 'PULSEIRA 5MM PIASTRINE - BANHADO A OURO 18k', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-5MM-PIASTRINE-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Piastrine', '5mm', '18K']},
+    {nome: 'PULSEIRA BALÃO 8MM - BANHADO A OURO 18k', preco: 289.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-BALAO-8MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Balão', '8mm', '18K']},
+    {nome: 'PULSEIRA CADEADO 10MM BANHADA A OURO 18K', preco: 244.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-10MM-BANHADA-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', '10mm', '18K']},
+    {nome: 'PULSEIRA CADEADO 14MM BANHADA A OURO 18K', preco: 244.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-14MM-BANHADA-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', '14mm', '18K']},
+    {nome: 'PULSEIRA CADEADO 5MM BANHADA A OURO 18K', preco: 244.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-5MM-BANHADA-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', '5mm', '18K']},
+    {nome: 'PULSEIRA CADEADO ALONGADO 3MM - BANHADO A OURO 18k', preco: 244.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-ALONGADO-3MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', 'Alinhado', '3mm', '18K']},
+    {nome: 'PULSEIRA CADEADO ALONGADO 5MM - BANHADO A OURO 18K', preco: 244.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-ALONGADO-5MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', 'Alinhado', '5mm', '18K']},
+    {nome: 'PULSEIRA CADEADO DUPLO 5MM BANHADA A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-DUPLO-5MM-BANHADA-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado Duplo', '5mm', '18K']},
+    {nome: 'PULSEIRA CADEADO QUÁDRUPLO 16MM - BANHADO A OURO 18K', preco: 334.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-CADEADO-QUADRUPLO-16MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Cadeado', 'Quadrúplo', '16mm', '18K']},
+    {nome: 'PULSEIRA DUBAI 8MM - BANHADO OURO 18K', preco: 289.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-8MM-BANHADO-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Dubai', '8mm', '18K']},
+    {nome: 'PULSEIRA ELO AMERICANO 13MM- BANHADO A OURO 18K', preco: 334.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-ELO-AMERICANO-13MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Elo Americano', '13mm', '18K']},
+    {nome: 'PULSEIRA FRISO S 13MM FECHO 750 BANHADO OURO 18K', preco: 334.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-FRISO-S-13MM-FECHO-750-BANHADO-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Friso S', '13mm', '18K']},
+    {nome: 'PULSEIRA GRUMET 13MM- BANHADO A OURO 18K', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-13MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Grumet', '13mm', '18K']},
+    {nome: 'PULSEIRA GRUMET 15MM- BANHADO A OURO 18K', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-15MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Grumet', '15mm', '18K']},
+    {nome: 'PULSEIRA GRUMET 18MM - BANHADO A OURO 18K', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-18MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Grumet', '18mm', '18K']},
+    {nome: 'PULSEIRA GRUMET 3MM- BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-GRUMET-3MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Grumet', '3mm', '18K']},
+    {nome: 'PULSEIRA LACRAIA 10MM - BANHADO A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-10MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Lacraia', '10mm', '18K']},
+    {nome: 'PULSEIRA LACRAIA 5MM - BANHADO A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-5MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Lacraia', '5mm', '18K']},
+    {nome: 'PULSEIRA LACRAIA 6MM - BANHADO A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-LACRAIA-6MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Lacraia', '6mm', '18K']},
+    {nome: 'PULSEIRA TIJOLINHO 1MM - BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-1MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Tijolinho', '1mm', '18K']},
+    {nome: 'PULSEIRA TIJOLINHO 3MM - BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-3MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Tijolinho', '3mm', '18K']},
+    {nome: 'PULSEIRA TIJOLINHO 6MM - BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-6MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Tijolinho', '6mm', '18K']},
+    {nome: 'PULSEIRA TIJOLINHO DUPLO 10MM BANHADO A OURO', preco: 334.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-TIJOLINHO-DUPLO-10MM-BANHADO-A-OURO-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Tijolinho Duplo', '10mm', '18K']},
+    {nome: 'Pulseira Dubai 15mm Fecho Especial Jacaré Banhado A Ouro 18k', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-15MM-FECHO-ESPECIAL-JACARE-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Dubai', '15mm', 'Jacaré', '18K']},
+    {nome: 'Pulseira Dubai 15mm Fecho Jesus Cristo Banhado A Ouro 18k', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-15MM-FECHO-JESUS-CRISTO-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Dubai', '15mm', 'Jesus Cristo', '18K']},
+    {nome: 'Pulseira Dubai Supremo 22mm Banhado A Ouro 18k', preco: 404.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PULSEIRA-DUBAI-SUPREMO-22MM-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pulseira', tags: ['Pulseira', 'Dubai', '22mm', '18K']}
+  ]
+},
+'pingentes': {
+  nome: 'Pingentes Masculinos 18K',
+  previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp',
+  itens: [
+    {nome: 'PINGENTE ANJINHO BANHADO A OURO 18K', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ANJINHO-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Anjinho', '18K']},
+    {nome: 'PINGENTE CORAÇÃO RELICÁRIO G -BANHADO A OURO 18K', preco: 179.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CORACAO-RELICARIO-G-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Coração', 'Relicário', '18K']},
+    {nome: 'PINGENTE CRUCIFIXO CLÁSSICO LUXO - BANHADO OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUCIFIXO-CLASSICO-LUXO-BANHADO-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Crucifixo', 'Clássico', 'Luxo', '18K']},
+    {nome: 'PINGENTE CRUCIFIXO MADEIRA - BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUCIFIXO-MADEIRA-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Crucifixo', 'Madeira', '18K']},
+    {nome: 'PINGENTE CRUZ - BANHADO A OURO 18K', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz', '18K']},
+    {nome: 'PINGENTE CRUZ INRE - BANHADO A OURO 18K', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-INRE-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz', 'Inre', '18K']},
+    {nome: 'PINGENTE CRUZ LISA (P) - BANHADO A OURO 18K', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-LISA-P-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz', 'Lisa', '18K']},
+    {nome: 'PINGENTE CRUZ PERGAMINHO - BANHADO A OURO 18K', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-PERGAMINHO-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz', 'Pergaminho', '18K']},
+    {nome: 'PINGENTE CRUZ PLACA P (BRUTO) 040', preco: 179.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-PLACA-P-BRUTO-040-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz', 'Placa', '18K']},
+    {nome: 'PINGENTE ESPÍRITO SANTO LISO -BANHADO A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ESPIRITO-SANTO-LISO-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Espírito Santo', 'Liso', '18K']},
+    {nome: 'PINGENTE FERRADURA DE CAVALO M (BRUTO) 151 - SEM BANHO', preco: 219.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FERRADURA-DE-CAVALO-M-BRUTO-151-SEM-BANHO-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Ferradura', 'Cavalo', '18K']},
+    {nome: 'PINGENTE FUZIL G - BANHADO A OURO 18K', preco: 254.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FUZIL-G-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Fuzil', 'G', '18K']},
+    {nome: 'PINGENTE JESUS CRISTO P - BANHADO A OURO 18K', preco: 214.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-JESUS-CRISTO-P-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Jesus Cristo', 'P', '18K']},
+    {nome: 'PINGENTE NOSSA SENHORA G - BANHADO A OURO 18K', preco: 234.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-NOSSA-SENHORA-G-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Nossa Senhora', 'G', '18K']},
+    {nome: 'PINGENTE PITBULL CRAVEJADO M BANHADO A OURO 18K', preco: 254.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-PITBULL-CRAVEJADO-M-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Pitbull', 'Cravejado', 'M', '18K']},
+    {nome: 'PINGENTE SOU GRATO BANHADO A OURO 18K', preco: 179.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-SOU-GRATO-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Sou Grato', '18K']},
+    {nome: 'PINGENTE ZEUS M BANHADO A OURO 18K', preco: 254.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-ZEUS-M-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Zeus', 'M', '18K']},
+    {nome: 'Pingente Cruz Jesus 3d (M) - Banhado A Ouro 18k', preco: 174.99, parcelas: 1, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-CRUZ-JESUS-3D-M-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Cruz Jesus 3D', 'M', '18K']},
+    {nome: 'Pingente Face Cristo Desenhada Banhado A Ouro 18k', preco: 249.99, parcelas: 2, imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/elite18k/PINGENTE-FACE-CRISTO-DESENHADA-BANHADO-A-OURO-18K-1-v3.webp', selo: 'Pingente', tags: ['Pingente', 'Face Cristo', '18K']}
+  ]
+}
+};
+
+/* reveal */
+(function(){
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(n=>obs.observe(n));
+})();
+
+/* header fixo */
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>{topbar.classList.toggle('show',window.scrollY>80)},true);
+window.dispatchEvent(new Event('scroll'));
+
+/* modal */
+const modal=document.getElementById('modal');
+const modalTitle=document.getElementById('modalTitle');
+const modalBody=document.getElementById('modalBody');
+const modalSub=document.getElementById('modalSub');
+const modalClose=document.getElementById('modalClose');
+const modalBack=document.getElementById('modalBack');
+
+function abrirColecao(key){
+  const c=COLLECTION_MAP[key];
+  if(!c)return;
+  modalTitle.textContent=c.nome;
+  modalSub.textContent=c.itens.length + ' modelos · entrega hoje, pagamento na entrega';
+  modalBody.innerHTML='';
+  c.itens.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='prod';
+    const img=document.createElement('div');
+    img.className='prod-img';
+    const i=document.createElement('img');
+    i.src=p.imagem;
+    i.alt=p.nome+' — Noiva Joias MT';
+    i.loading='lazy';
+    i.onerror=(e)=>{e.target.src=PLACEHOLDER};
+    img.appendChild(i);
+    card.appendChild(img);
+
+    const name=document.createElement('h3');
+    name.className='prod-name';
+    name.textContent=p.nome;
+    card.appendChild(name);
+
+    const tags=document.createElement('div');
+    tags.className='prod-badges';
+    (p.tags||[]).forEach(t=>{
+      const tag=document.createElement('span');
+      tag.className='prod-tag';
+      tag.textContent=t;
+      tags.appendChild(tag);
+    });
+    card.appendChild(tags);
+
+    const preco=document.createElement('p');
+    preco.className='prod-price-val gold-text';
+    preco.textContent=brl.format(p.preco);
+    card.appendChild(preco);
+
+    const ctas=document.createElement('div');
+    ctas.style.display='flex';ctas.style.flexDirection='column';ctas.style.gap='6px';
+
+    const msg='Quero este modelo: '+p.nome+'\nValor: '+brl.format(p.preco)+'\nConsegue me entregar agora ?';
+    const ctaWA=document.createElement('a');
+    ctaWA.href=waLink(msg);
+    ctaWA.target='_blank';
+    ctaWA.rel='noopener noreferrer';
+    ctaWA.className='prod-cta-whatsapp';
+    ctaWA.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.02C7.5 2.02 4 5.5 4 10c0 1.76.46 3.48 1.34 5L4 22.02l5.2-1.36a9.96 9.96 0 0 0 2.84 1.24v-2.3h-.01c-.01 0-.01 0-.02.01h-.01c-1.75 0-3.36-.99-4.14-2.44.15-.28.3-.58.42-.9.1-.27.3-.54.52-.79l.13-.13a7.5 7.5 0 0 1 0-4.26c.62-1.1 1.77-1.93 3.08-2.32-.17-.33-.35-.66-.52-1A6.5 6.5 0 0 0 12.04 3.5c1.93 0 3.7 1.28 4.26 3.08.33.87.48 1.79.43 2.72h2.12c.28-1.75 1-3.36 2.27-4.28 1.31-.96 2.93-1.5 4.47-.73.35.18.64.42.89.7.24.27.46.57.64.89.16.28.3.57.42.86v.02c.01-.01.03-.03.05-.04 1.8-1.35 2.77-3.56 2.77-5.95 0-3.58-2.69-6.5-6.02-6.77-2.66-.2-5.2.63-7.21 2.18-2.01 1.54-3.48 3.66-4.07 6.04-1.64-.62-3.45-.5-5.06.36z"/></svg> Quero este modelo';
+    ctas.appendChild(ctaWA);
+
+    const checkoutLink='checkout.html?nome='+encodeURIComponent(p.nome)+'&preco='+p.preco+'&img='+encodeURIComponent(p.imagem)+'&desc='+encodeURIComponent(p.descricao||'');
+    const ctaCheckout=document.createElement('a');
+    ctaCheckout.href=checkoutLink;
+    ctaCheckout.className='prod-cta';
+    ctaCheckout.innerHTML='<span style="font-weight:600">Comprar — Frete Grátis</span>';
+    ctas.appendChild(ctaCheckout);
+
+    card.appendChild(ctas);
+    modalBody.appendChild(card);
+  });
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+modalClose.addEventListener('click',()=>{modal.classList.remove('open');document.body.style.overflow=''});
+modalBack.addEventListener('click',()=>{modal.classList.remove('open');document.body.style.overflow=''});
+modal.addEventListener('click',(e)=>{if(e.target===modal){modal.classList.remove('open');document.body.style.overflow=''}});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&modal.classList.contains('open')){modal.classList.remove('open');document.body.style.overflow=''}});
+
+/* voltar */
+document.getElementById('voltarTopo').addEventListener('click',()=>{window.location.href='index.html'});
+
+
+/* ---------- cards das coleções ---------- */
+const ICON_GRID = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
+const ICON_CHEVRON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+const COL_DESC = {
+  correntes: 'Cordões, elos, grumets e modelos lisos e com textura. Do clássico ao statement.',
+  pulseiras: 'De 3mm a 18mm, com fechos seguros e acabamento que não arranha fácil.',
+  pingentes: 'Cruzes, crucifixos, medalhas e símbolosreligiousos em 18K.'
+};
+
+const colGrid = document.getElementById('colGrid');
+Object.keys(COLLECTION_MAP).forEach((key, i) => {
+  const c = COLLECTION_MAP[key];
+  const card = document.createElement('article');
+  card.className = 'col-card reveal d' + ((i % 4) + 1);
+
+  const media = document.createElement('div');
+  media.className = 'col-media';
+  const img = document.createElement('img');
+  img.src = c.previa;
+  img.alt = c.nome + ' — Noiva Joias MT';
+  img.loading = i === 0 ? 'eager' : 'lazy';
+  img.onerror = (e) => { e.target.src = PLACEHOLDER; };
+  media.appendChild(img);
+
+  const selo = document.createElement('span');
+  selo.className = 'col-badge';
+  selo.textContent = '18K';
+  media.appendChild(selo);
+
+  const cont = document.createElement('span');
+  cont.className = 'col-count';
+  cont.textContent = c.itens.length + ' modelos';
+  media.appendChild(cont);
+  card.appendChild(media);
+
+  const body = document.createElement('div');
+  body.className = 'col-body';
+
+  const nome = document.createElement('h4');
+  nome.className = 'col-name';
+  nome.textContent = c.nome;
+  body.appendChild(nome);
+
+  const desc = document.createElement('p');
+  desc.className = 'col-desc';
+  desc.textContent = COL_DESC[key] || '';
+  body.appendChild(desc);
+
+  const cta = document.createElement('button');
+  cta.type = 'button';
+  cta.className = 'col-cta';
+  cta.setAttribute('aria-haspopup', 'dialog');
+  cta.setAttribute('aria-label', 'Abrir o catálogo de ' + c.nome);
+  cta.innerHTML = ICON_GRID + '<span>Ver o catálogo</span>' + ICON_CHEVRON;
+  cta.addEventListener('click', () => abrirColecao(key));
+  body.appendChild(cta);
+
+  card.appendChild(body);
+  colGrid.appendChild(card);
+});
+
+/* revela os cards que acabaram de ser criados */
+(function(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:.1});
+  colGrid.querySelectorAll('.reveal').forEach(n=>obs.observe(n));
+})();
+</script>
+</body>
+</html>

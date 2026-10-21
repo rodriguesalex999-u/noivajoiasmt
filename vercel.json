@@ -1,6 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/faq", "destination": "/faq.html" },
-    { "source": "/((?!api/|faq).*)", "destination": "/index.html" }
-  ]
-}
+{"rewrites":[{"source":"/faq","destination":"/faq.html"},{"source":"/obrigado","destination":"/obrigado.html"},{"source":"/checkout","destination":"/checkout.html"},{"source":"/painel","destination":"/painel.html"},{"source":"/masculino","destination":"/masculino.html"},{"source":"/((?!api/|faq|obrigado|checkout|painel|masculino).*)","destination":"/index.html"}]}

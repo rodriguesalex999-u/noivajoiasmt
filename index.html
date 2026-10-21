@@ -167,7 +167,9 @@ ul{list-style:none}
 }
 
 .shell{position:relative;z-index:2;max-width:var(--shell);margin:0 auto;padding:0 22px 148px}
-@media(min-width:900px){:root{--shell:780px}}
+/* a largura da coluna de conteúdo (--shell) é definida na camada de
+   responsividade, no fim da folha: 720 (celular) → 820 (tablet)
+   → 1120 (desktop) → 1240 (telas largas) */
 
 /* ---------- header fixo ---------- */
 .topbar{
@@ -456,13 +458,13 @@ h1 em{font-style:italic;display:block;font-weight:600}
   border:1px solid var(--line-strong);border-radius:var(--r-sm);
   padding:6px 11px;white-space:nowrap;
 }
-.prod-mini{display:flex;align-items:center;gap:8px;margin:2px 0 16px}
+.prod-mini{display:flex;align-items:center;gap:8px;margin:2px 0 16px;flex-wrap:wrap}
 .prod-mini img{
-  width:42px;height:42px;flex:0 0 auto;
+  width:40px;height:40px;flex:0 0 auto;
   border-radius:10px;object-fit:cover;
   border:1px solid var(--line);background:#0f0d0c;
 }
-.prod-mini-n{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+.prod-mini-n{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);line-height:1.35;width:100%;margin-top:8px}
 .prod-mini-n b{display:block;color:var(--gold);font-weight:600}
 
 /* catálogo destacado no hero */
@@ -677,6 +679,84 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
 .reveal.d4.in{transition-delay:.36s}
 .reveal.d5.in{transition-delay:.46s}
 
+/* ============================================================
+   CAMADA DE RESPONSIVIDADE (desktop)
+   ------------------------------------------------------------
+   O site foi construído mobile-first: até 1023px nada muda em
+   relação ao que já existia — a experiência do celular continua
+   exatamente igual. A partir de 1024px o site deixa de ser uma
+   coluna estreita e passa a usar a largura da tela:
+     • hero em duas colunas (texto à esquerda, coleções à direita)
+     • catálogo principal em 3 colunas (4 em telas largas)
+     • catálogo que abre por cima, mais largo e com 3–4 colunas
+     • blocos de texto com largura de leitura confortável
+     • dock do WhatsApp centralizado, sem virar barra de largura toda
+   ============================================================ */
+@media(min-width:768px){
+  :root{--shell:820px}
+}
+
+@media(min-width:1024px){
+  :root{--shell:1120px}
+
+  /* ---------- hero ----------
+     No celular a ordem é título → coleções → botão. No desktop o "order"
+     traz o botão do WhatsApp para logo abaixo do texto (continua na
+     primeira dobra) e as coleções ganham uma grade de 3 colunas. */
+  .hero{
+    display:flex;flex-direction:column;align-items:stretch;
+    padding:34px 0 10px;
+  }
+  .hero > .eyebrow{order:1;align-self:center;margin-bottom:18px}
+  .hero > h1{order:2;margin:0 auto 16px;font-size:clamp(2.6rem,4.2vw,3.6rem)}
+  .hero > .lead{order:3;margin:0 auto;max-width:46ch;font-size:1.06rem}
+  .hero > .actions{order:4;margin:26px auto 0;max-width:520px}
+  .hero > .hero-cat{order:5;margin-top:38px}
+  .cat-card-shell{grid-template-columns:repeat(3,1fr);gap:18px}
+
+  /* ---------- catálogo principal ---------- */
+  .cat{grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{padding:28px 24px}
+  .step{padding:30px 24px}
+
+  /* ---------- blocos de conteúdo ---------- */
+  .promo{max-width:900px;margin-left:auto;margin-right:auto;padding:44px 48px}
+  .promo-h{font-size:2.5rem}
+  .promo-p{font-size:1rem;max-width:52ch}
+  .final{max-width:900px;margin-left:auto;margin-right:auto;padding:52px 48px}
+  .final-h{font-size:2.5rem}
+  .final-p{font-size:1rem;max-width:46ch}
+  .faq{max-width:760px}
+
+  /* ---------- catálogo que abre por cima ---------- */
+  .modal-box{max-width:920px}
+  .modal-grid{grid-template-columns:repeat(3,1fr);gap:14px}
+  .modal-head{padding:26px 26px 20px}
+  .modal-body{padding:20px 26px 30px}
+
+  /* ---------- dock fixo ---------- */
+  .dock-in{flex-direction:column;align-items:center;gap:8px}
+  .dock-btn{width:100%;max-width:420px;min-height:56px}
+  .dock-hint{text-align:center}
+}
+
+@media(min-width:1440px){
+  :root{--shell:1240px}
+  .hero > h1{font-size:3.6rem}
+  .cat{grid-template-columns:repeat(4,1fr)}
+  .cat-card-shell{grid-template-columns:repeat(4,1fr)}
+  .modal-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ---------- correção: a fileira de miniaturas era mais larga que o card
+   e o texto "ver todos os preços" ficava cortado (sumia) dentro do card ---------- */
+@media(max-width:619px){
+  .prod-mini{gap:6px}
+  .prod-mini img{width:36px;height:36px;border-radius:9px}
+  .prod-mini img:nth-of-type(4){display:none}
+  .prod-mini-n{margin-top:7px}
+}
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
@@ -809,6 +889,9 @@ src="https://www.facebook.com/tr?id=186922223282687&ev=PageView&noscript=1"
   <main>
 
     <!-- ============ hero ============ -->
+    <!-- A ordem dos blocos no HTML é a ordem do celular (título, coleções,
+         botão). No desktop o CSS reorganiza com "order" para o botão do
+         WhatsApp subir antes das coleções e continuar na primeira dobra. -->
     <section class="hero">
       <span class="eyebrow reveal d1">Alianças e semijoias</span>
       <h1 class="reveal d2">Alianças que marcam<em class="gold-text">histórias</em></h1>
@@ -887,8 +970,8 @@ src="https://www.facebook.com/tr?id=186922223282687&ev=PageView&noscript=1"
 
     <!-- botão discreto para correntes e pulseiras masculinas -->
     <div class="reveal d2" style="text-align:center;margin:42px 0 18px">
-      <a href="masculino.html" target="_blank" rel="noopener noreferrer"
-         class="ghost masculino-btn" aria-label="Abrir catálogo de correntes e pulseiras masculinas 18K em nova aba">
+<a href="masculino" target="_blank" rel="noopener noreferrer"
+       class="ghost masculino-btn" aria-label="Abrir catálogo de correntes e pulseiras masculinas 18K em nova aba">
         <span>Correntes e pulseiras masculinas 18K</span>
       </a>
     </div>

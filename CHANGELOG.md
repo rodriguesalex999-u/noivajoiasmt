@@ -4,6 +4,30 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-21 — Site responsivo: camada de desktop (celular intacto)
+
+**O site já era mobile-first e nunca quebrou no celular, mas no computador o conteúdo ficava preso numa coluna de 780px dentro de uma tela de 1440px — sobrava metade da tela vazia e o catálogo continuava com 2 colunas.**
+
+- **Coluna de conteúdo (`--shell`) em escada:** 720px (celular) → 820px (tablet, a partir de 768px) → 1120px (desktop, a partir de 1024px) → 1240px (telas a partir de 1440px). A regra antiga de 780px foi removida.
+- **Hero no desktop:** título maior e centralizado, e o botão do WhatsApp sobe para logo abaixo do texto (via `order`, sem mexer no HTML) — o CTA continua na primeira dobra, como no celular. As 8 coleções viram uma grade de 3 colunas (4 a partir de 1440px).
+- **Catálogo principal:** 1 coluna (celular) → 2 (tablet) → 3 (desktop) → 4 (telas largas).
+- **Catálogo que abre por cima (modal):** passa de 560px para 920px no desktop, com 3 colunas (4 a partir de 1440px). No celular continua como folha de baixo, 1 coluna.
+- **Blocos de texto:** "Nosso diferencial" e a CTA final limitedos a 900px, FAQ a 760px — largura de leitura confortável em vez de texto esticado.
+- **Dock fixo:** no desktop vira um botão de 420px centralizado (antes esticava pela largura toda da tela).
+- **Correção no celular:** a fileira de miniaturas do card de coleção era mais larga que o card, e o texto "ver todos os preços" ficava **cortado/sumido**. Agora as miniaturas encolhem e o texto aparece abaixo. O layout do celular como um todo não mudou.
+- **Testado** em 360, 390, 430, 768, 1024, 1280, 1440 e 1920px: sem rolagem horizontal e sem elemento vazando em nenhum tamanho. `faq.html` e `checkout.html` já tinham layout próprio de desktop e não foram alterados.
+
+## 2026-10-21 — Catálogo masculino reparado e responsivo
+
+**`masculino.html` estava quebrado: o arquivo só continha JavaScript (sem `<html>`, `<head>`, `<style>`), então a página abria em branco e o botão do site principal abria a home em vez do catálogo.**
+
+- **Reconstruído** o arquivo completo (`masculino.html`) com o mesmo design system do `index.html` (tokens, cores, fontes, fundo, header fixo, dock).
+- **Dados preservados:** `COLLECTION_MAP` com correntes, pulseiras e pingentes 18K (3 coleções, ~70 modelos) e modal de catálogo.
+- **Responsivo** com a mesma escada: 720 → 820 (768) → 1120 (1024) → 1240 (1440), modal 560 → 920px, 1 → 2 → 3 → 4 colunas.
+- **Rota adicionada:** `/masculino` → `masculino.html` (rewrite em `vercel.json`); botão do `index.html` agora aponta para `/masculino`.
+- **Correção de texto:** "Comprar — Frete Gráis" → "Frete Grátis".
+
+---
 ## 2026-10-19 (tarde) — Melhor Envios funcionando de ponta a ponta (cotação, etiqueta e rastreio)
 
 **A integração de etiqueta dos Correios estava caída (500) desde antes — agora está no ar e testada com a API real.**
