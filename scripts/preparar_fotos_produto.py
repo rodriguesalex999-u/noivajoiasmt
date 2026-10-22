@@ -95,28 +95,33 @@ def sobe_r2(chave: str, arquivo: Path) -> bool:
            % (BUCKET, chave, arquivo))
     print('    $ %s' % cmd)
     r = subprocess.run(cmd, cwd=str(RAIZ), env=env, shell=True,
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, encoding='utf-8',
+                       errors='replace')
     if r.returncode != 0:
         print('    !! falhou:\n%s' % (r.stderr or r.stdout)[-800:])
         return False
     return True
 
 
-def confere_url(url: str, tentativas: int = 4) -> str:
-    """HEAD na URL publica. Repete algumas vezes: logo depois do upload o
-    objeto pode ainda nao estar publicado (o primeiro HEAD pode dar 403)."""
+def confere_url(url: str, tentativas: int = 30) -> str:
+    """Confere a URL publica com GET, aguardando a propagacao no CDN."""
     ultimo = ''
     for i in range(tentativas):
         try:
-            req = urllib.request.Request(url, method='HEAD')
+            req = urllib.request.Request(
+                url,
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                                      'AppleWebKit/537.36'}
+            )
             with urllib.request.urlopen(req, timeout=20) as resp:
+                resp.read(1)
                 return 'HTTP %s' % resp.status
         except urllib.error.HTTPError as e:
             ultimo = 'HTTP %s' % e.code
         except Exception as e:
             ultimo = 'erro: %s' % e
         if i < tentativas - 1:
-            time.sleep(3)
+            time.sleep(5)
     return ultimo
 
 
@@ -172,7 +177,10 @@ def main():
                 falhas.append(chave)
         print('\nConferindo as URLs publicas:')
         for chave, url in zip(chaves, urls):
-            print('  %-58s %s' % (chave[:58], confere_url(url)))
+            status = confere_url(url)
+            print('  %-58s %s' % (chave[:58], status))
+            if status != 'HTTP 200':
+                falhas.append('%s (%s)' % (chave, status))
 
     if falhas:
         print('\nFALHAS: %s' % ', '.join(falhas))

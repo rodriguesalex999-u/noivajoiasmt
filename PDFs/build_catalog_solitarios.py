@@ -59,15 +59,6 @@ MAIS_VENDIDOS = {
     'solitario-prata-anel-solitario-cor-prata-pedra-cor-cristal.webp',
 }
 
-# Fotos que ainda NAO subiram para o R2. A chave R2 ja esta correta no
-# index.html; enquanto o arquivo nao estiver no bucket, o PDF usa a copia local
-# (mesma chave de nome) para nao sair com imagem quebrada.
-# APAGAR esta linha assim que a foto subir no R2.
-IMAGEM_LOCAL = {
-    'solitario-dourada-anel-solitario-cor-dourada-pedra-cristal-1.webp':
-        'img/solitario-dourada-anel-solitario-cor-dourada-pedra-cristal-1.webp',
-}
-
 # o aviso do site: solitario nao tem garantia. Vai em TODO card.
 OBS = {
     'Solitários Cor Dourada': 'anel na cor dourada não tem garantia · a aliança tem 3 meses · compre se quiser · é opcional',
@@ -144,23 +135,11 @@ def extrair_colecao(texto, nome_colecao):
 
 
 # ---------------------------------------------------------------- paginas
-def _aplica_imagem_local(itens):
-    """Troca a URL pelo caminho local quando a foto ainda nao subiu no R2."""
-    for p in itens:
-        nome = p['imagem'].rsplit('/', 1)[-1]
-        local = IMAGEM_LOCAL.get(nome)
-        if local:
-            if not (BASE / local).exists():
-                raise SystemExit('IMAGEM LOCAL AUSENTE: %s' % local)
-            p['imagem'] = local
-    return itens
-
-
 def build_pages():
     texto = INDEX_HTML.read_text(encoding='utf-8')
 
-    dourada = _aplica_imagem_local(extrair_colecao(texto, SECOES[0][0]))
-    prata = _aplica_imagem_local(extrair_colecao(texto, SECOES[1][0]))
+    dourada = extrair_colecao(texto, SECOES[0][0])
+    prata = extrair_colecao(texto, SECOES[1][0])
     for nome, itens in ((SECOES[0][0], dourada), (SECOES[1][0], prata)):
         if len(itens) != ESPERADO[nome]:
             raise SystemExit('Esperava %d itens em "%s", veio %d — index.html mudou?'

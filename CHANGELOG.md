@@ -4,6 +4,16 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-22 — Foto do solitário de R$ 99,99 corrigida no site e no PDF
+
+**A URL da foto do “Anel Solitário Cor Dourada Pedra Cristal” estava cadastrada corretamente, mas o objeto no R2 respondia 403. A foto do Downloads foi preparada no padrão do catálogo e publicada no mesmo endereço; o PDF foi regenerado com a imagem atual.**
+
+- **Foto no R2** — substituído `solitario-dourada-anel-solitario-cor-dourada-pedra-cristal-1.webp` (1000×1000, WebP q90, borda preta), preservando a URL já usada pelo site.
+- **Catálogo PDF** — removido o desvio para uma cópia local antiga; o gerador usa agora a imagem publicada no endereço oficial do produto.
+- **Preparo de fotos** — o script agora trata a saída UTF-8 do Wrangler no Windows e encerra com erro se a URL publicada não responder HTTP 200, em vez de indicar sucesso com foto inacessível.
+
+---
+
 ## 2026-10-22 — Clicar na foto amplia o produto (com nome, preço e botões) + caminho do produto novo documentado
 
 **Antes, clicar na foto do produto não fazia nada — o cliente tinha que adivinhar que o botão verde era o caminho. Agora a foto abre grande na tela dele, com o nome do produto embaixo, o preço e os dois botões: comprar e falar com o entregador. E o caminho para entrar um produto novo (inclusive com 2 ou mais fotos) ficou escrito no projeto, para a próxima não depender de memória.**
