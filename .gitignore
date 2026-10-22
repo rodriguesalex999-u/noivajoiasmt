@@ -9,3 +9,11 @@ node_modules/
 .DS_Store
 Thumbs.db
 .vercel
+.env*.local
+
+# temporarios de teste (scripts e screenshots de verificacao)
+.tmp-check/
+
+# fotos e catalogos em PDF: nao versionados (o site puxa as fotos do R2)
+PDFs/img/
+PDFs/*.pdf

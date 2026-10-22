@@ -4,6 +4,25 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-22 — Clicar na foto amplia o produto (com nome, preço e botões) + caminho do produto novo documentado
+
+**Antes, clicar na foto do produto não fazia nada — o cliente tinha que adivinhar que o botão verde era o caminho. Agora a foto abre grande na tela dele, com o nome do produto embaixo, o preço e os dois botões: comprar e falar com o entregador. E o caminho para entrar um produto novo (inclusive com 2 ou mais fotos) ficou escrito no projeto, para a próxima não depender de memória.**
+
+- **Visor ampliado da foto (`index.html`)** — clicar na foto abre ela grande na tela (celular e computador):
+  - a foto ocupa o topo; embaixo ficam o **nome do produto**, o **preço**, o parcelamento e a descrição;
+  - dois botões: **Comprar — Frete Grátis** (Mercado Pago, com o produto já na URL) e **Falar com o entregador** (WhatsApp com a mensagem já pronta);
+  - com 2 ou mais fotos, as **setinhas**, o teclado (← →) e o **arrasto no celular** trocam a foto dentro do visor, com o contador “1 / 2”;
+  - fecha pelo X, pelo fundo ou pelo `Esc`; trava a rolagem do fundo e devolve o foco para onde o cliente estava;
+  - funciona **tanto no card do catálogo principal quanto no item da coleção que abre por cima da página** (era exatamente nesse segundo caso que nada acontecia).
+- **Setinhas também no card do catálogo principal** — até agora só o item da coleção por cima da página tinha a galeria. O card do catálogo principal agora usa a mesma galeria (setinhas, bolinhas, contador) quando o produto declara `fotos`.
+- **Lupa discreta** no canto inferior esquerdo de toda foto de produto (30 px, opacidade 0,55) — sinaliza que a foto dá para ampliar.
+- **Guia do caminho padrão** — `COMO-COLOCAR-PRODUTO-NO-SITE.md`: os 5 passos (foto → R2 → `index.html` → PDF → publicar), o bloco de exemplo, o que o site faz sozinho e as armadilhas conhecidas (a `CLOUDFLARE_API_TOKEN` inválida, o campo `fotos` que liga as setinhas, a trava de contagem do PDF, o que não entra no Git).
+- **`scripts/preparar_fotos_produto.py`** — comando único do produto novo: converte as fotos (1000×1000 webp q90, branco → preto do catálogo, borda preta de 4 px), publica no R2, confere a URL pública e **imprime o bloco do produto pronto para o `index.html`**.
+- **Docs** — `AGENTS.md` (nova seção “Como colocar um produto novo” + as capacidades novas), `INDICE.md` (guia e script na raiz e no acesso rápido).
+- **Testado no navegador** (Playwright, 1440 px e 390 px): o visor abre com o produto certo, o preço e os dois botões, a seta troca a foto (2 / 2), o `Esc` fecha, o catálogo por cima da página continua aberto depois, **nenhuma imagem quebrada e nenhum erro de console**. O script de fotos foi rodado de ponta a ponta (conversão + subida no R2 + URL pública respondendo 200; o objeto de teste foi apagado depois).
+
+---
+
 ## 2026-10-22 — Anel Solitário Doce Coração (cor dourada) no site e no catálogo PDF
 
 **Entrou um anel novo no catálogo: o Solitário Doce Coração, R$ 249,99, na coleção *Solitários Cor Dourada*. As duas fotos do anel entraram no card com botõezinhos de troca: o cliente clica na seta (ou arrasta no celular) e passa da foto do anel na caixa para a foto na mão.**
