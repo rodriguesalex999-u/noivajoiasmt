@@ -4,6 +4,22 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-22 — Anel Solitário Doce Coração (cor dourada) no site e no catálogo PDF
+
+**Entrou um anel novo no catálogo: o Solitário Doce Coração, R$ 249,99, na coleção *Solitários Cor Dourada*. As duas fotos do anel entraram no card com botõezinhos de troca: o cliente clica na seta (ou arrasta no celular) e passa da foto do anel na caixa para a foto na mão.**
+
+- **`index.html`** — novo item na coleção *Solitários Cor Dourada* (9 → 10 anéis): nome, preço R$ 249,99 (2x de R$ 124,99), descrição, tags e o mesmo aviso dos outros da coleção (anel na cor dourada não tem garantia; o par de aliança tem 3 meses).
+- **Galeria de fotos nos itens do catálogo** — a galeria já existia no código, mas **sem CSS nenhum** (nenhum botão aparecia) e ela só reconhecia fotos pelo nome do arquivo `(1)`, `(2)`. Agora:
+  - o item pode declarar a lista de fotos (`fotos: [...]`) — é essa lista que diz quantas fotos existem, sem adivinhação;
+  - **setinhas discretas de 28 px nas duas laterais** (opacidade 0,6; viram 1 no mouse), bolinhas de posição embaixo e contador "1 / 2" no canto da foto;
+  - funciona com clique, teclado (setas do teclado), arrastar no celular e pelo botão da bolinha;
+  - CSS novo (`.mi-gallery*`) no `index.html`, no mesmo dourado/creme do site.
+- **Fotos** — convertidas para **1000×1000 webp** com a borda preta do catálogo e publicadas no R2: `solitario-dourada-anel-solitario-doce-coracao-1.webp` (anel na caixa) e `-2.webp` (anel na mão), as duas respondendo HTTP 200.
+- **`PDFs/build_catalog_solitarios.py`** — passa a esperar 10 + 3 itens (o script **falha o build** se a quantidade no `index.html` mudar). A página que sobrou com 1 card ganhou **3 banners informativos** (garantia, entrega, numeração) no lugar dos slots vazios. PDF regerado: **5 páginas** (antes 4), 14,7 MB, zero imagem quebrada e zero corte.
+- **Testado no navegador** (Playwright, 1440 px e 390 px): o card aparece na coleção, as duas setinhas trocam a foto, a 2ª foto carrega, nenhuma imagem quebrada e nenhum erro de console.
+
+---
+
 ## 2026-10-21 — Site responsivo: camada de desktop (celular intacto)
 
 **O site já era mobile-first e nunca quebrou no celular, mas no computador o conteúdo ficava preso numa coluna de 780px dentro de uma tela de 1440px — sobrava metade da tela vazia e o catálogo continuava com 2 colunas.**

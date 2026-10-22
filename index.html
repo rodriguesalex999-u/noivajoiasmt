@@ -563,6 +563,42 @@ h1 em{font-style:italic;display:block;font-weight:600}
 }
 .mi-cta:hover{filter:brightness(1.08);transform:translateY(-2px)}
 
+/* ---------- galeria do item: setinhas discretas nas laterais ----------
+   Item com mais de uma foto ganha um botãozinho de cada lado: o cliente
+   clica e a foto troca (ou arrasta no celular). As setas são pequenas e
+   translúcidas para não competir com a foto do anel. */
+.mi-media.has-gallery{overflow:hidden}
+.mi-gallery{position:absolute;inset:0;z-index:2}
+.mi-gallery-track{display:flex;height:100%;transition:transform .3s var(--ease)}
+.mi-gallery-slide{position:relative;flex:0 0 100%;height:100%}
+.mi-gallery-slide img{width:100%;height:100%;object-fit:cover}
+.mi-gallery-indicator{
+  position:absolute;right:8px;bottom:8px;z-index:3;
+  padding:3px 7px;border-radius:999px;
+  background:rgba(10,8,7,.6);border:1px solid rgba(201,167,91,.28);
+  color:var(--cream);font-size:.6rem;letter-spacing:.08em;line-height:1.2;
+}
+.mi-gallery-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:28px;height:28px;display:grid;place-items:center;padding:0;
+  border:1px solid rgba(201,167,91,.3);border-radius:50%;
+  background:rgba(10,8,7,.55);color:var(--cream);cursor:pointer;
+  opacity:.6;transition:opacity .18s,background .18s,border-color .18s;
+}
+.mi-gallery-btn:hover{opacity:1;background:rgba(10,8,7,.85);border-color:rgba(201,167,91,.6)}
+.mi-gallery-prev{left:6px}
+.mi-gallery-next{right:6px}
+.mi-gallery-dots{
+  position:absolute;left:50%;bottom:9px;transform:translateX(-50%);z-index:3;
+  display:flex;align-items:center;gap:5px;
+}
+.mi-gallery-dot{
+  width:6px;height:6px;padding:0;border-radius:50%;
+  border:1px solid rgba(201,167,91,.65);background:transparent;cursor:pointer;
+  transition:background .18s,transform .18s;
+}
+.mi-gallery-dot.active{background:var(--gold);transform:scale(1.2)}
+
 /* trava a rolagem do fundo enquanto o catálogo está aberto */
 html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);overflow:hidden}
 
@@ -1812,6 +1848,19 @@ const COLECOES = [
         descricao: 'Anel solitário luminese cravejado, cor dourada.',
         nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
         tags: ['Luminese', 'Cor Dourada', 'Cravejado']
+      },
+      {
+        nome: 'Anel Solitário Doce Coração Cor Dourada',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-doce-coracao-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-doce-coracao-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/solitario-dourada-anel-solitario-doce-coracao-2.webp'
+        ],
+        descricao: 'Anel solitário doce coração: três pedras cristal e coração vazado com pedra, cor dourada.',
+        nota: 'Produto na cor dourada não tem garantia, justamente por esse motivo que vendemos neste valor acessível. Compre se sentir confortável, ou seja, compre se quiser. É opcional. O par de aliança, diferente, tem garantia de 3 meses.',
+        tags: ['Doce Coração', 'Cor Dourada', 'Pedra Cristal']
       }
     ]
   },
@@ -3411,6 +3460,13 @@ const COLECOES = [
     return urls;
   }
 
+  // Lista de fotos do produto: a lista explícita (fotos) tem prioridade —
+  // é ela que diz quantas fotos existem (sem adivinhação). Sem a lista, cai
+  // na detecção automática pelo nome do arquivo (1), (2), (3)...
+  function fotosDoProduto(p) {
+    if (p && Array.isArray(p.fotos) && p.fotos.length > 1) return p.fotos;
+    return detectarFotosSequenciais(p.imagem);
+  }
   // Cria galeria/slider para fotos sequenciais
   function criarGaleria(urls, nomeProduto) {
     if (urls.length <= 1) return null;
@@ -3509,17 +3565,20 @@ const COLECOES = [
 const itemCard = (p) => {
     const li = el('article', 'mi');
     
-    // Detecta fotos sequenciais baseado na URL da imagem principal
-    const urlsFotos = detectarFotosSequenciais(p.imagem);
+    // Fotos do item: a lista explícita (fotos) manda; sem ela, tenta descobrir
+    // pelo nome do arquivo (1), (2), (3)...
+    const urlsFotos = fotosDoProduto(p);
     const temGaleria = urlsFotos.length > 1;
-    
+
     const media = el('div', 'mi-media' + (temGaleria ? ' has-gallery' : ''));
-    media.appendChild(foto(p.imagem, p.nome + ' — Noiva Joias MT', false));
-    
-    // Se tem galeria, adiciona a galeria dentro do media
+
+    // Com galeria, as fotos ficam dentro do slider (a primeira é a capa)
     if (temGaleria) {
       const gallery = criarGaleria(urlsFotos, p.nome);
       if (gallery) media.appendChild(gallery);
+      else media.appendChild(foto(p.imagem, p.nome + ' — Noiva Joias MT', false));
+    } else {
+      media.appendChild(foto(p.imagem, p.nome + ' — Noiva Joias MT', false));
     }
     
     li.appendChild(media);
