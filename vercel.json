@@ -1,1 +1,49 @@
-{"rewrites":[{"source":"/faq","destination":"/faq.html"},{"source":"/obrigado","destination":"/obrigado.html"},{"source":"/checkout","destination":"/checkout.html"},{"source":"/painel","destination":"/painel.html"},{"source":"/masculino","destination":"/masculino.html"},{"source":"/((?!api/|faq|obrigado|checkout|painel|masculino).*)","destination":"/index.html"}]}
+{
+  "rewrites": [
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/obrigado", "destination": "/obrigado.html" },
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/painel", "destination": "/painel.html" },
+    { "source": "/masculino", "destination": "/masculino.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://pub-30377154a86f42f9be74defe556d3deb.r2.dev https://*.r2.dev https://www.facebook.com https://connect.facebook.net; connect-src 'self' https://www.facebook.com https://*.facebook.com; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.(png|jpg|jpeg|webp|gif|svg|ico|woff|woff2))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
+}

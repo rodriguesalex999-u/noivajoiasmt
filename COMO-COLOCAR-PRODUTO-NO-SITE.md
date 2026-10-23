@@ -9,15 +9,22 @@
 
 ---
 
-## Resumo em 5 passos
+## Resumo em 6 passos
 
 | # | O quê | Como |
 |---|---|---|
 | 1 | Fotos (converter + subir no R2) | `python scripts/preparar_fotos_produto.py ...` (imprime o bloco do produto) |
 | 2 | Cadastrar no site | colar o bloco em `index.html`, dentro do `itens` da coleção |
-| 3 | Conferir no navegador | abrir o site, clicar na foto (abre o visor ampliado) |
-| 4 | Catálogo PDF | `python PDFs/build_catalog_solitarios.py` (só as coleções que têm PDF) |
-| 5 | Fechar | `CHANGELOG.md` + commit + push na `main` (deploy automático) |
+| 3 | **Catálogo de preços do servidor** | `node scripts/gerar_catalogo_precos.js` (**sem isto o produto não pode ser pago!**) |
+| 4 | Conferir no navegador | abrir o site, clicar na foto (abre o visor ampliado) |
+| 5 | Catálogo PDF | `python PDFs/build_catalog_solitarios.py` (só as coleções que têm PDF) |
+| 6 | Fechar | `CHANGELOG.md` + commit + push na `main` (deploy automático) |
+
+> ⚠️ **Passo 3 é de segurança e não pode ser pulado.** O servidor de pagamento
+> cobra o preço de `api/_lib/catalogo-precos.json`, que é gerado a partir do
+> `index.html`/`masculino.html`. Se você cadastrou o produto e esqueceu de rodar
+> o script, o cliente vê o produto no site mas o **pagamento é recusado**
+> ("produto não encontrado no catálogo") — e preço antigo cobra preço antigo.
 
 ---
 
@@ -117,7 +124,24 @@ Cole o bloco impresso dentro do array `itens` da coleção, no fim da lista:
 
 ---
 
-## Passo 3 — O que o site faz sozinho (não precisa mexer em código)
+## Passo 3 — Catálogo de preços do servidor (obrigatório)
+
+```bash
+node scripts/gerar_catalogo_precos.js
+```
+
+- O script lê `index.html` e `masculino.html` e regenera
+  `api/_lib/catalogo-precos.json` — o mapa de preços que o
+  `/api/checkout` usa para **cobrar o valor certo**.
+- Depois de rodar, ele imprime quantos produtos saíram e o que mudou
+  (novos, saíram, preço alterado).
+- **Regra:** qualquer mexida em `nome` ou `preco` de produto, no
+  `index.html` ou no `masculino.html`, exige rodar este script de novo
+  e publicar junto.
+
+---
+
+## Passo 4 — O que o site faz sozinho (não precisa mexer em código)
 
 Depois de cadastrado, o produto ganha tudo isto, sem nenhuma linha a mais:
 
@@ -136,7 +160,7 @@ Depois de cadastrado, o produto ganha tudo isto, sem nenhuma linha a mais:
 
 ---
 
-## Passo 4 — Catálogo em PDF (só para as coleções que têm PDF)
+## Passo 5 — Catálogo em PDF (só para as coleções que têm PDF)
 
 ```bash
 python PDFs/build_catalog_solitarios.py
@@ -150,7 +174,7 @@ python PDFs/build_catalog_solitarios.py
 
 ---
 
-## Passo 5 — Fechar
+## Passo 6 — Fechar
 
 - [ ] `CHANGELOG.md` — uma linha do que mudou
 - [ ] `git add` **só o código** (as fotos em `PDFs/img/` e os PDFs não entram no repositório)

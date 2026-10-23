@@ -168,67 +168,90 @@ h1 em{display:block;font-style:italic;font-weight:600;color:var(--gold)}
 
 <script>
 /* ==========================================================================
-   Dados que chegam do Mercado Pago (ou da URL, para teste)
+   DADOS DO PEDIDO — vêm do BANCO, não da URL
+   ==========================================================================
+   A versão anterior desta página lia produto e preço da query string.
+   O Mercado Pago, ao devolver o cliente, manda só os códigos do
+   pagamento (payment_id, collection_id, preference_id…) — sem nome e
+   sem valor. Resultado: a tela mostrava "Aliança Noiva Joias MT" e
+   "R$ 0,00" para todo mundo.
+
+   Agora a página pergunta ao /api/rastreio pelo código e mostra o
+   que está gravado no pedido. Se o webhook ainda não tiver rodado,
+   mostra "processando" e tenta de novo.
    ========================================================================== */
-const q      = new URLSearchParams(window.location.search);
-const nome   = q.get('nome')   || 'Aliança Noiva Joias MT';
-const preco  = q.get('preco')  || '0';
-const region = q.get('regiao') || 'fora';
-const mod    = q.get('pagamento') || 'tradicional';
-const pagId  = q.get('payment_id') || q.get('preference_id') || '';
+const q = new URLSearchParams(window.location.search);
+
+/* O Mercado Pago pode voltar com qualquer um destes códigos. */
+const pagId =
+  q.get('payment_id') ||
+  q.get('collection_id') ||
+  q.get('preference_id') ||
+  q.get('external_reference') ||
+  '';
+
+/* Dados provisórios, da URL — usados SÓ enquanto o banco não responde
+   (a URL vem do link do site, que monta o checkout com nome e preço). */
+let nome   = q.get('nome') || 'Aliança Noiva Joias MT';
+let valorProd = parseFloat(String(q.get('preco') || '0').replace(',', '.')) || 0;
+let num       = valorProd;
+let frete     = 0;
+let region    = q.get('regiao') || 'fora';
+let mod       = q.get('pagamento') || 'tradicional';
+let prazoTxt  = region === 'local' ? '3 dias úteis' : '4 a 7 dias úteis';
+let ehSedex    = mod === 'sedex';
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-const num = parseFloat(String(preco).replace(',', '.')) || 0;
 const FRETE_SEDEX = 44.99;
 
-const ehSedex   = mod === 'sedex';
-const prazoTxt  = region === 'local' ? '3 dias úteis' : '4 a 7 dias úteis';
-const valorProd = ehSedex ? Math.max(0, num - FRETE_SEDEX) : num;
-
 /* ---------- preenche a tela ---------- */
-document.getElementById('rsProduto').textContent = nome.length > 34 ? nome.slice(0, 33) + '…' : nome;
-document.getElementById('rsProdutoVal').textContent = brl.format(valorProd);
+function pintar() {
+  document.getElementById('rsProduto').textContent =
+    nome.length > 34 ? nome.slice(0, 33) + '…' : nome;
+  document.getElementById('rsProdutoVal').textContent = brl.format(valorProd);
 
-const rsFrete = document.getElementById('rsFrete');
-if (ehSedex) {
-  rsFrete.textContent = brl.format(FRETE_SEDEX);
-  rsFrete.classList.remove('gr');
-  document.getElementById('aviso').hidden = false;
-} else {
-  rsFrete.textContent = 'Grátis';
-  rsFrete.classList.add('gr');
+  const rsFrete = document.getElementById('rsFrete');
+  if (ehSedex) {
+    rsFrete.textContent = brl.format(frete || FRETE_SEDEX);
+    rsFrete.classList.remove('gr');
+    document.getElementById('aviso').hidden = false;
+  } else {
+    rsFrete.textContent = 'Grátis';
+    rsFrete.classList.add('gr');
+  }
+
+  document.getElementById('rsTotal').textContent = brl.format(num);
+  document.getElementById('rsPrazo').textContent = prazoTxt;
+
+  if (ehSedex) {
+    document.getElementById('badge').textContent = 'Frete pago — pedido reservado';
+    document.getElementById('lead').textContent =
+      'Já reservamos o seu pedido. O valor do produto será pago quando você retirar na agência dos Correios.';
+    document.getElementById('passo3-t').textContent = 'Você retira na agência dos Correios';
+    document.getElementById('passo3-d').textContent =
+      'Leve o valor do produto e pague ao atendente, que repassa para a Noiva Joias MT.';
+  } else {
+    document.getElementById('passo3-d').textContent =
+      region === 'local'
+        ? 'Entrega no seu endereço em Cuiabá, Rondonópolis ou Sinop.'
+        : 'Entrega no endereço que você informar, pelos Correios.';
+  }
+
+  /* ---------- WhatsApp com tudo já preenchido ---------- */
+  const waMsg =
+    'Olá! Acabei de comprar no site da Noiva Joias MT.\n\n' +
+    'Produto: ' + nome + '\n' +
+    'Valor do produto: ' + brl.format(valorProd) + '\n' +
+    'Frete: ' + (ehSedex ? brl.format(frete || FRETE_SEDEX) : 'Grátis') + '\n' +
+    'Pago agora: ' + brl.format(num) + '\n' +
+    'Modalidade: ' + (ehSedex ? 'Sedex a Cobrar (pago o produto ao retirar)' : 'Recebo no meu endereço') + '\n' +
+    'Prazo: ' + prazoTxt + '\n' +
+    (pagId ? 'Código do pagamento: ' + pagId + '\n' : '') +
+    '\nPodem me passar a medida do meu dedo?';
+  document.getElementById('btnWa').href =
+    'https://wa.me/556592942810?text=' + encodeURIComponent(waMsg);
 }
-
-document.getElementById('rsTotal').textContent = brl.format(num);
-document.getElementById('rsPrazo').textContent = prazoTxt;
-
-if (ehSedex) {
-  document.getElementById('badge').textContent = 'Frete pago — pedido reservado';
-  document.getElementById('lead').textContent =
-    'Já reservamos o seu pedido. O valor do produto será pago quando você retirar na agência dos Correios.';
-  document.getElementById('passo3-t').textContent = 'Você retira na agência dos Correios';
-  document.getElementById('passo3-d').textContent =
-    'Leve o valor do produto e pague ao atendente, que repassa para a Noiva Joias MT.';
-} else {
-  document.getElementById('passo3-d').textContent =
-    region === 'local'
-      ? 'Entrega no seu endereço em Cuiabá, Rondonópolis ou Sinop.'
-      : 'Entrega no endereço que você informar, pelos Correios.';
-}
-
-/* ---------- WhatsApp com tudo já preenchido ---------- */
-const waMsg =
-  'Olá! Acabei de comprar no site da Noiva Joias MT.\n\n' +
-  'Produto: ' + nome + '\n' +
-  'Valor do produto: ' + brl.format(valorProd) + '\n' +
-  'Frete: ' + (ehSedex ? brl.format(FRETE_SEDEX) : 'Grátis') + '\n' +
-  'Pago agora: ' + brl.format(num) + '\n' +
-  'Modalidade: ' + (ehSedex ? 'Sedex a Cobrar (pago o produto ao retirar)' : 'Recebo no meu endereço') + '\n' +
-  'Prazo: ' + prazoTxt + '\n' +
-  (pagId ? 'Código do pagamento: ' + pagId + '\n' : '') +
-  '\nPodem me passar a medida do meu dedo?';
-document.getElementById('btnWa').href =
-  'https://wa.me/556592942810?text=' + encodeURIComponent(waMsg);
+pintar();
 
 if (pagId) document.getElementById('codigo').value = pagId;
 
@@ -247,19 +270,41 @@ async function consultar(codigo) {
     const d = await r.json();
     if (!d.encontrado) {
       s.textContent = d.erro || 'Ainda n\u00e3o localizamos esse pedido.';
-      return;
+      return false;
     }
+
+    /* Agora sim: os valores REAIS do pedido, vindos do banco. */
+    if (d.produto) nome = d.produto;
+    if (d.valor_produto != null) valorProd = Number(d.valor_produto);
+    if (d.frete != null) frete = Number(d.frete);
+    if (d.valor != null) num = Number(d.valor);
+    if (d.modalidade) { mod = d.modalidade; ehSedex = mod === 'sedex'; }
+    if (d.regiao) region = d.regiao;
+    if (d.prazo) prazoTxt = d.prazo;
+    pintar();
+
     s.dataset.rastreio = d.rastreio || '';
     s.dataset.link = d.link_rastreio || '#';
     desenharEtapas(d.etapas);
+    dispararPixel();
 
     /* Se o pedido est\u00e1 esperando o CPF, mostra a caixa para enviar. */
-    if ((d.etapas || []).some(e => e.bloqueio)) {
+    if ((d.etapas || []).some(e => e.bloqueio) || d.precisa_cpf) {
       document.getElementById('cpfBox').hidden = false;
     }
+    return true;
   } catch (e) {
     s.textContent = 'N\u00e3o conseguimos consultar agora. Chame no WhatsApp: (65) 9294-2810';
+    return false;
   }
+}
+
+/* Escapa texto antes de virar HTML — os dados do pedido vêm do
+   banco e podem conter caracteres especiais (<, >, & etc.). */
+function escapar(t) {
+  return String(t == null ? '' : t)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 /* Desenha as 5 etapas com o codigo dos Correios quando ja postou. */
@@ -270,15 +315,15 @@ function desenharEtapas(lista) {
   const blocos = lista.map(function (e) {
     return '<div class="etapa' + (e.ok ? ' ok' : '') + '">' +
       '<span class="etapa-i">' + (e.ok ? '\u2713' : '\u2022') + '</span>' +
-      '<span class="etapa-b"><b>' + e.rotulo + '</b><span>' +
-      (e.bloqueio ? '<b style="color:#ff8a9c">' + e.bloqueio + '</b>' : (e.detalhe || '')) +
+      '<span class="etapa-b"><b>' + escapar(e.rotulo) + '</b><span>' +
+      (e.bloqueio ? '<b style="color:#ff8a9c">' + escapar(e.bloqueio) + '</b>' : escapar(e.detalhe || '')) +
       '</span></span></div>';
   }).join('');
 
   let html = '<div class="etapas">' + blocos + '</div>';
   if (s.dataset.rastreio) {
-    html += '<div class="trk"><div class="trk-n">' + s.dataset.rastreio + '</div>' +
-      '<a href="' + s.dataset.link + '" target="_blank" rel="noopener noreferrer">' +
+    html += '<div class="trk"><div class="trk-n">' + escapar(s.dataset.rastreio) + '</div>' +
+      '<a href="' + escapar(s.dataset.link) + '" target="_blank" rel="noopener noreferrer">' +
       'Rastrear nos Correios</a></div>';
   }
   s.innerHTML = html;
@@ -295,7 +340,16 @@ document.getElementById('btnRastreio').addEventListener('click', function () {
 });
 
 /* Volta do Mercado Pago ja com o codigo: consulta sozinho. */
-if (pagId) consultar(pagId);
+if (pagId) {
+  consultar(pagId).then(ok => {
+    if (ok) return;
+    /* O webhook pode ainda não ter gravado (Pix e boleto demoram).
+       Tenta de novo em 6 segundos e, depois, em 20. */
+    setTimeout(() => consultar(pagId).then(o => { if (!o) setTimeout(() => consultar(pagId), 14000); }), 6000);
+  });
+} else {
+  dispararPixel();
+}
 
 /* ==========================================================================
    CPF \u2014 a Melhor Envios exige; o Mercado Pago n\u00e3o pede
@@ -319,13 +373,13 @@ document.getElementById('btnCpf').addEventListener('click', async function () {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        acao: 'medida',
-        payment_id: pagId,
-        cpf: digitos,
-        medida: 'informado pelo cliente no site'
+        acao: 'cpf',
+        codigo: pagId,
+        cpf: digitos
       })
     });
-    if (r.ok) {
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
       btn.textContent = 'CPF enviado, obrigada!';
       document.getElementById('cpfCampo').disabled = true;
       if (pagId) consultar(pagId);
@@ -334,6 +388,7 @@ document.getElementById('btnCpf').addEventListener('click', async function () {
       btn.disabled = false;
       erro.hidden = false;
       erro.textContent =
+        (d && d.erro) ||
         'N\u00e3o deu certo agora. Chame no WhatsApp (65) 9294-2810 que a gente resolve.';
     }
   } catch (e) {
@@ -355,8 +410,14 @@ document.getElementById('cpfCampo').addEventListener('input', function () {
 
 /* ==========================================================================
    Pixel — Purchase confirmado
+   ==========================================================================
+   Dispara SÓ depois que o banco respondeu, para mandar o valor
+   certo (e não o R$ 0,00 que vinha da URL).
    ========================================================================== */
-if (window.fbqTrackRich) {
+let pixelDisparado = false;
+function dispararPixel() {
+  if (pixelDisparado || !window.fbqTrackRich) return;
+  pixelDisparado = true;
   window.fbqTrackRich('Purchase', {
     content_ids: ['noivajoias_' + (pagId || Date.now())],
     content_name: nome,
@@ -368,10 +429,10 @@ if (window.fbqTrackRich) {
     quantity: 1,
     num_items: 1,
     custom_data: {
-      frete: ehSedex ? FRETE_SEDEX : 0,
+      frete: ehSedex ? (frete || FRETE_SEDEX) : 0,
       frete_gratis: !ehSedex,
       modalidade: ehSedex ? 'sedex_a_cobrar' : 'tradicional',
-      regiao,
+      regiao: region,
       prazo: prazoTxt,
       pagamento_agora: num,
       valor_produto: valorProd,

@@ -860,6 +860,50 @@ Object.keys(COLLECTION_MAP).forEach((key, i) => {
   },{threshold:.1});
   colGrid.querySelectorAll('.reveal').forEach(n=>obs.observe(n));
 })();
+
+/* ---------- dados estruturados dos produtos (Google) ----------
+   Mesmo padrão do index.html: lista única com os itens de todas as
+   coleções, com Product + Offer (preço em BRL) para o Google mostrar
+   o preço nos resultados de busca. */
+(function () {
+  const url = 'https://noivajoiasmt.vercel.app/masculino';
+  const itens = [];
+  Object.keys(COLLECTION_MAP).forEach(function (key) {
+    (COLLECTION_MAP[key].itens || []).forEach(function (p) {
+      if (p && typeof p.preco === 'number') itens.push(p);
+    });
+  });
+  if (!itens.length) return;
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: itens.map(function (p, i) {
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Product',
+          name: p.nome,
+          description: p.descricao || p.nome,
+          image: p.imagem,
+          brand: { '@type': 'Brand', name: CONFIG.empresa },
+          offers: {
+            '@type': 'Offer',
+            price: p.preco.toFixed(2),
+            priceCurrency: 'BRL',
+            availability: 'https://schema.org/InStock',
+            url: url,
+            seller: { '@type': 'Organization', name: CONFIG.empresa }
+          }
+        }
+      };
+    })
+  };
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(ld);
+  document.head.appendChild(s);
+})();
 </script>
 </body>
 </html>

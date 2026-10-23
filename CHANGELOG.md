@@ -4,6 +4,24 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-22 — Segurança do checkout: preço agora é definido no servidor (fecha compra de R$ 0,01)
+
+**Auditoria independente confirmou que qualquer pessoa conseguia montar `checkout.html?nome=X&preco=0.01` e fechar uma compra a 1 centavo — o servidor cobrava o preço que o navegador mandava. Também foram fechados: webhook sem assinatura, cabeçalhos de segurança ausentes, soft-404 (tudo devolvia 200 com a home), ausência de robots.txt/sitemap.xml, XSS potencial no rastreio e o rastreio quebrado em produção.**
+
+- **Preço no servidor (`api/checkout.js`)** — o servidor ignora o `preco` que vier do navegador e consulta o catálogo oficial `api/_lib/catalogo-precos.json` (155 produtos, gerado do `index.html` + `masculino.html`). Produto fora do catálogo = recusado com 400. Nome é comparado sem acento/caixa.
+- **`scripts/gerar_catalogo_precos.js`** — regenera o catálogo do servidor a partir dos HTMLs. **Obrigatório rodar depois de mexer em preço/produto** (`node scripts/gerar_catalogo_precos.js`).
+- **Webhook (`api/webhook.js` + handler embutido em `api/checkout.js`)** — assinatura `x-signature` do Mercado Pago validada (HMAC-SHA256) quando `MP_SECRET` está configurada; sem a env, os dados ainda vêm da API do Mercado Pago (nunca do corpo da notificação).
+- **Banco de pedidos (Neon/Postgres)** — os pedidos passam a ser gravados no Postgres compartilhado (`api/_lib/pedidos.js`), substituindo o `/tmp` da Vercel (cada função tem seu /tmp — por isso o rastreio de produção nunca encontrava o pedido gravado pelo webhook). Schema criado por `scripts/criar_schema.js`.
+- **Cabeçalhos de segurança (`vercel.json`)** — CSP, X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy, Permissions-Policy, HSTS (repetido de propósito) e cache de 1 dia para imagens. O CSP libera Google Fonts, R2 e o pixel do Facebook.
+- **Soft-404 encerrado** — removido o rewrite catch-all que devolvia a home com 200 para qualquer endereço inexistente (também `/robots.txt`, `/sitemap.xml` e lixo de SEO). Agora endereço inexistente responde **404** com página de erro própria (`404.html`).
+- **`robots.txt` + `sitemap.xml`** — criados, apontando só as páginas públicas (`/`, `/masculino`, `/faq`); checkout/obrigado/painel/api ficam de fora.
+- **XSS do rastreio (`checkout.html`, `obrigado.html`)** — status/produto/rastreio passam por escape HTML antes de virar `innerHTML`; o `r.json()` ganhou `catch` para resposta vazia não derrubar a consulta.
+- **JSON-LD de produtos no `masculino.html`** — ItemList + Product + Offer (preço BRL), mesmo padrão que o `index.html` já tinha, para o Google mostrar preço nos resultados.
+- **Testes** — 18 casos locais com mocks (produto fantasma recusado; preço manipulado cobra o do catálogo; sedex cobra só R$ 44,99; assinatura errada recusada; rastreio devolve JSON; dono sem token leva 401). Backup dos arquivos anteriores em `BACKUP-2026-10-22-antes-melhorias/`.
+- **Pendente (requer o dono)** — configurar `MP_SECRET` (painel Mercado Pago → Webhooks → secret) e `PANEL_SENHA` na Vercel para ligar a validação de assinatura e o login do painel; remover o `Access-Control-Allow-Origin: *` que está no painel do Vercel (Settings), não no código.
+
+---
+
 ## 2026-10-22 — Foto do solitário de R$ 99,99 corrigida no site e no PDF
 
 **A URL da foto do “Anel Solitário Cor Dourada Pedra Cristal” estava cadastrada corretamente, mas o objeto no R2 respondia 403. A foto do Downloads foi preparada no padrão do catálogo e publicada no mesmo endereço; o PDF foi regenerado com a imagem atual.**

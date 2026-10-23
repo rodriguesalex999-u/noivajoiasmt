@@ -1,24 +1,24 @@
 /* ============================================================
-   MELHOR ENVIOS — cotação, etiqueta e rastreio
+   MELHOR ENVIOS — cotação, etiqueta, cancelamento e rastreio
    ============================================================
    A chave (JWT, 29 escopos, válida até 23/09/2027) fica na variável
    de ambiente ME_API_TOKEN da Vercel — nunca no HTML. Este arquivo é
    o único que fala com a Melhor Envios.
 
    O que este módulo faz, em ordem:
-     1. consulta  — lê o pedido e diz em que_stage ele está
-     2. etiqueta  — cria a etiqueta no Melhor Envios e devolve o PDF
-     3. rastreio  — status real do envio
+     1. saldo      — quanto há na conta
+     2. cotar      — preço do frete antes de gastar saldo
+     3. gerarEtiqueta — cria a etiqueta (cart → checkout → generate → print)
+     4. cancelar   — cancela a etiqueta e pede o estorno
+     5. statusEnvio — status real do envio
 
    DIFERENÇA IMPORTANTE PARA O DONO
-   A Melhor Envios exige **CPF do destinatário**. O Mercado Pago
-   collected só o que o cliente preencheu no checkout; se o CPF não
-   estiver no pedido, a etiqueta não pode ser gerada por API. Nesse
-   caso a resposta é `precisa_cpf: true` e o pedido fica na fila —
-   o dono then de confirmar o CPF pelo WhatsApp. Não existe atalho:
-   a Melhor Envios recusa sem CPF.
+   A Melhor Envios exige **CPF do destinatário** e **endereço
+   completo**. O Mercado Pago nem sempre manda esses dados. Quando
+   faltam, a API recusa — e o painel do dono deixa preencher à mão
+   (o cliente manda o endereço pelo WhatsApp).
 
-   FORMATOS DA API (verificado ao vivo em 19/10/2026, com o token real)
+   FORMATOS DA API (verificado ao vivo em 19-20/10/2026, com o token real)
      · dinheiro: REAL. A API devolve 38.94 = R$ 38,94. NÃO dividir por 100.
        (o saldo vem com centavos: 322.3 = R$ 322,30 — se fosse em centavos
        a API devolveria um número inteiro)
@@ -32,24 +32,34 @@
        a API responde 422 "O remetente e o destinatário não podem ser iguais".
      · o carrinho (POST /me/cart) NÃO gasta saldo. O saldo é debitado no
        checkout (POST /me/shipment/checkout), e só isso.
+     · CANCELAMENTO (contrato lido na doc oficial, 20/10/2026):
+         POST /me/shipment/cancel
+         corpo: { "order": { "id": "...", "reason_id": "2", "description": "..." } }
+         resposta 200: { "<id>": { "canceled": true } }
+         resposta 422: { "message": "The given data was invalid.", "errors": {...} }
+         O reason_id é SEMPRE "2" para integração.
+         O estorno do valor acontece em até 12 HORAS depois da aprovação.
    ============================================================ */
 
 const API = 'https://melhorenvio.com.br/api/v2';
 
 /* Padrões fixos da loja (definidos pelo dono como regra):
    - volumes 0.5 em todas as medidas (joia: pacote pequeno)
-   - seguro de R$ 10,00, e unitary_value SEMPRE igual ao seguro
-   - non_commercial: true = Declaração de Conteúdo, nunca Nota Fiscal */
+   - declaração de conteúdo, nunca Nota Fiscal
+   - o SEGURO (valor segurado) é o valor REAL do produto, não um
+     valor fixo: é isso que faz a Melhor Envios indenizar a peça
+     se o pacote sumir no correio. */
 const PADRAO_LOJA = {
   /* Volume de uma joia: 5 x 10 x 15 cm, 500 g. A API exige medidas de
      1 a 300 cm — por isso o pacote "0,5" em tudo era recusado (422). */
   volumes: { height: 5, width: 10, length: 15, weight: 0.5 },
   options: {
-    insurance_value: 10.0,
     receipt: false,
     own_hand: false,
     non_commercial: true,
   },
+  /* Serviços da API: 1 = PAC, 2 = SEDEX, 17 = Mini Envios. */
+  servicos: { pac: 1, sedex: 2 },
 };
 
 const CODIGO_PAIS = 'BR';
@@ -78,7 +88,7 @@ function headers() {
     Authorization: 'Bearer ' + t,
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'User-Agent': 'NoivaJoias/1.0',
+    'User-Agent': 'NoivaJoias/1.0 (suporte@noivajoiasmt.com.br)',
   };
 }
 
@@ -106,8 +116,10 @@ async function saldo() {
   return Number(r.dados.balance || 0);
 }
 
-/* ---------- cotação de todos os Correios (service 1 = PAC, 2 = SEDEX) ---------- */
-async function cotar(destino, peso = 0.5) {
+/* ---------- cotação ---------- */
+/* Pede a cotação de todos os serviços disponíveis. Devolve a lista
+   crua da API (cada item tem id, name, price, delivery_time...). */
+async function cotar(destino, peso = 0.5, valorDeclarado = null) {
   const payload = {
     from: {
       postal_code: REMETENTE.postal_code,
@@ -117,7 +129,10 @@ async function cotar(destino, peso = 0.5) {
       postal_code: destino.cep,
       country_id: CODIGO_PAIS,
     },
-    options: { insurance_value: PADRAO_LOJA.options.insurance_value, receipt: false },
+    options: {
+      receipt: false,
+      ...(valorDeclarado ? { insurance_value: Number(valorDeclarado) } : {}),
+    },
     volumes: [{ ...PADRAO_LOJA.volumes, weight: peso }],
   };
   const r = await me('POST', '/me/shipment/calculate', payload);
@@ -126,21 +141,40 @@ async function cotar(destino, peso = 0.5) {
 }
 
 /* ---------- gera a etiqueta: cart → checkout → generate → print ---------- */
-async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = false }) {
+async function gerarEtiqueta({
+  destino,
+  produto,
+  valorDeclarado,
+  confirmar = false,
+  servico = 1,
+}) {
   /* 0. Pré-requisitos honestos: sem isso a Melhor Envios recusa. */
   const falta = [];
   if (!destino.cpf) falta.push('CPF do destinatário');
   if (!destino.cep) falta.push('CEP do destinatário');
+  if (!destino.endereco) falta.push('Endereço do destinatário');
+  if (!destino.cidade) falta.push('Cidade do destinatário');
+  if (!destino.estado) falta.push('UF do destinatário');
   if (!REMETENTE.postal_code) falta.push('CEP do remetente (ME_SENDER_CEP)');
   if (!REMETENTE.document) falta.push('CPF do remetente (ME_SENDER_CPF)');
   if (falta.length) {
     return { ok: false, etapa: 'pre-requisitos', precisa: falta };
   }
 
+  /* O valor segurado é o valor REAL da peça. Se a peça vale R$ 300
+     e o pacote some, a Melhor Envios reembolsa R$ 300 — e não os
+     R$ 10 do valor fixo antigo. O custo: a Melhor Envios taxa sobre
+     o valor segurado, então o frete encarece um pouco (é o preço da
+     paz de espírito). */
+  const insured = Math.max(Number(valorDeclarado) || 0, 0);
+  const opcoes = {
+    ...PADRAO_LOJA.options,
+    ...(insured > 0 ? { insurance_value: insured } : {}),
+  };
+
   /* 1. Carrinho — NÃO cobra nada, devolve o preço antes de gastar. */
-  const insured = PADRAO_LOJA.options.insurance_value;
   const cart = await me('POST', '/me/cart', {
-    service: 1, // PAC dos Correios
+    service: servico, // 1 = PAC, 2 = SEDEX
     from: { ...REMETENTE },
     to: {
       name: destino.nome,
@@ -160,11 +194,11 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
       {
         name: String(produto || 'Aliança').slice(0, 80),
         quantity: 1,
-        unitary_value: Number(valorDeclarado) || insured,
+        unitary_value: insured > 0 ? insured : 1,
       },
     ],
     volumes: [PADRAO_LOJA.volumes],
-    options: PADRAO_LOJA.options,
+    options: opcoes,
   });
 
   if (!cart.ok) {
@@ -185,7 +219,8 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
       preco: preco.toFixed(2),
       cart_id: item.id,
       protocolo: item.protocol,
-      servico: item.service?.name || 'PAC',
+      servico: item.service?.name || (servico === 2 ? 'SEDEX' : 'PAC'),
+      seguro: insured,
     };
   }
 
@@ -210,8 +245,42 @@ async function gerarEtiqueta({ destino, produto, valorDeclarado, confirmar = fal
     protocolo: item.protocol,
     rastreio: co.dados?.tracking || null,
     preco: preco,
+    seguro: insured,
     etiqueta_url: pr.ok ? pr.dados?.url || null : null,
     print_erro: pr.ok ? undefined : pr.dados,
+  };
+}
+
+/* ---------- cancela a etiqueta e pede o estorno ----------
+   Contrato (doc oficial):
+     POST /me/shipment/cancel
+     { "order": { "id": "...", "reason_id": "2", "description": "..." } }
+   Resposta 200: { "<id>": { "canceled": true } }
+   O estorno do dinheiro entra em até 12 horas. */
+async function cancelar(orderId, motivo = 'Cancelamento pelo painel da loja') {
+  const r = await me('POST', '/me/shipment/cancel', {
+    order: {
+      id: String(orderId),
+      reason_id: '2',
+      description: String(motivo).slice(0, 200),
+    },
+  });
+  if (!r.ok) {
+    return {
+      ok: false,
+      status: r.status,
+      erro: r.dados,
+      texto: JSON.stringify(r.dados).slice(0, 400),
+    };
+  }
+  const cancelado = r.dados?.[String(orderId)]?.canceled === true;
+  return {
+    ok: true,
+    cancelado,
+    dados: r.dados,
+    aviso: cancelado
+      ? 'Etiqueta cancelada. O estorno do valor entra em até 12 horas.'
+      : 'A Melhor Envios respondeu, mas sem confirmar o cancelamento.',
   };
 }
 
@@ -220,7 +289,12 @@ async function statusEnvio(orderId) {
   const r = await me('POST', '/me/shipment/tracking', { orders: [orderId] });
   if (!r.ok) return { ok: false, erro: r.dados };
   const d = r.dados;
-  const item = Array.isArray(d) ? d[0] : d;
+  /* A API devolve um OBJETO indexado pelo id do pedido:
+       { "<orderId>": { status: "...", tracking: "AE...", ... } }
+     (não é array — ler direto d.status daria undefined). */
+  let item = null;
+  if (Array.isArray(d)) item = d[0];
+  else if (d && typeof d === 'object') item = d[String(orderId)] || Object.values(d)[0] || null;
 
   const rotulos = {
     released: 'Liberado — ainda não postado',
@@ -243,4 +317,12 @@ async function statusEnvio(orderId) {
   };
 }
 
-module.exports = { saldo, cotar, gerarEtiqueta, statusEnvio, PADRAO_LOJA, REMETENTE };
+module.exports = {
+  saldo,
+  cotar,
+  gerarEtiqueta,
+  cancelar,
+  statusEnvio,
+  PADRAO_LOJA,
+  REMETENTE,
+};

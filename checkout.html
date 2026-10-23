@@ -239,11 +239,17 @@ h1{font-family:var(--font-display);font-size:clamp(1.9rem,7vw,2.5rem);font-weigh
 <script>
 /* ==========================================================================
    1) DADOS DO PRODUTO — vêm da URL (o card do site monta o link)
+   O PREÇO da URL é só o que a TELA mostra: quem cobra é o servidor,
+   que consulta o catálogo oficial. Produto fora do catálogo o
+   servidor recusa na hora de pagar.
    ========================================================================== */
 const params = new URLSearchParams(window.location.search);
-const nome    = params.get('nome') || 'Aliança Banhada a Ouro';
+/* O nome default tem que existir no catálogo do servidor — se não
+   existir, o servidor recusa o pagamento. */
+const NOME_PADRAO = 'Par de Aliança com Anel Solitário Quadrado 8mm - Banhado a Ouro 18k';
+const nome    = params.get('nome') || NOME_PADRAO;
 const img     = params.get('img')  || 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp';
-const desc    = params.get('desc') || 'Banhado a ouro 18k';
+const desc    = params.get('desc') || 'Par de alianças quadradas 8mm com anel solitário, banhadas a ouro 18k.';
 const preco   = (params.get('preco') || '399.99').replace(',', '.');
 const valor   = parseFloat(preco) || 0;
 
@@ -432,6 +438,13 @@ el('checkoutBtn').addEventListener('click', function (e) {
    preference/external_reference. Como ainda não há banco de pedidos,
    a consulta usa o código que o cliente cola e responde o que der.
    ========================================================================== */
+/* Escapa texto antes de virar HTML — status/produto/rastreio vêm do
+   banco e podem conter caracteres especiais (<, >, & etc.). */
+function escapar(t) {
+  return String(t == null ? '' : t)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 el('btnRastreio').addEventListener('click', async function () {
   const codigo = el('codigoRastreio').value.trim();
   const saida = el('statusRastreio');
@@ -439,15 +452,25 @@ el('btnRastreio').addEventListener('click', async function () {
 
   saida.textContent = 'Consultando…';
   try {
-    const r = await fetch('/api/checkout', {
+    /* A consulta mora no /api/rastreio — o mesmo endpoint que a
+       página de obrigado usa. Antes apontava para /api/checkout com
+       {consultar: ...}, que não existia mais depois da correção
+       do checkout: dava sempre "não encontramos". */
+    const r = await fetch('/api/rastreio', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ consultar: codigo })
+      body: JSON.stringify({ acao: 'consultar', codigo })
     });
-    const d = await r.json();
-    saida.innerHTML = d.status
-      ? '<b>' + d.status + '</b>' + (d.detalhe ? ' — ' + d.detalhe : '')
-      : (d.erro || 'Não encontramos esse pedido. Confira o código ou chame no WhatsApp: (65) 9294-2810');
+    const d = await r.json().catch(() => ({}));
+    if (!d.encontrado) {
+      saida.textContent = d.erro || 'Não encontramos esse pedido. Confira o código ou chame no WhatsApp: (65) 9294-2810';
+      return;
+    }
+    const partes = [];
+    partes.push('<b>' + escapar(d.status || 'Pedido recebido') + '</b>');
+    if (d.produto) partes.push(escapar(d.produto));
+    if (d.rastreio) partes.push('código dos Correios: ' + escapar(d.rastreio));
+    saida.innerHTML = partes.join(' — ');
   } catch (e) {
     saida.textContent = 'Não conseguimos consultar agora. Chame no WhatsApp: (65) 9294-2810';
   }

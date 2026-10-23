@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /obrigado
+Disallow: /painel
+Disallow: /api/
+
+Sitemap: https://noivajoiasmt.vercel.app/sitemap.xml

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel da Loja — Noiva Joias MT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0907;--gold:#c9a75b;--gold-light:#f0dca4;--cream:#f6f1e6;--muted:#9c9384;
+  --line:rgba(201,167,91,.22);--line-strong:rgba(201,167,91,.45);
+  --green:#1ea65a;--green-deep:#157a41;--red:#c8102e;--amber:#e0a13a;
+  --font-display:"Cormorant Garamond",Georgia,serif;
+  --font-body:"Jost",ui-sans-serif,system-ui,sans-serif;
+  --r-md:16px;--r-sm:10px;--ease:cubic-bezier(.22,.8,.28,1);
+  font-variant-numeric:lining-nums;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+body{
+  background:var(--bg);color:var(--cream);font-family:var(--font-body);font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;min-height:100vh;padding:0;
+}
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(58% 38% at 50% -6%,rgba(201,167,91,.18) 0%,transparent 68%),
+    linear-gradient(#0d0b09 0%,#0b0907 42%,#100d0b 100%);
+}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:28px 18px 70px}
+
+/* ---------- topo ---------- */
+.topo{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.topo h1{font-family:var(--font-display);font-size:1.7rem;font-weight:600;letter-spacing:-.01em}
+.topo h1 em{font-style:italic;color:var(--gold)}
+.topo-dir{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.saldo{font-size:.8rem;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-sm);padding:7px 12px}
+.saldo b{color:var(--gold);font-weight:600}
+.btn{
+  border:1px solid var(--line-strong);background:rgba(201,167,91,.1);color:var(--gold);
+  font-family:var(--font-body);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;transition:filter .18s,transform .18s var(--ease);
+}
+.btn:hover{filter:brightness(1.15)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-verde{background:linear-gradient(135deg,var(--green),var(--green-deep));color:#fff;border:0}
+.btn-vermelho{background:rgba(200,16,46,.18);border-color:rgba(200,16,46,.5);color:#ff8a9c}
+.btn-pequeno{padding:6px 10px;font-size:.66rem}
+
+/* ---------- login ---------- */
+.login{max-width:400px;margin:12vh auto 0;padding:32px 26px;border:1px solid var(--line);border-radius:var(--r-md);background:rgba(20,17,16,.88);text-align:center}
+.login h2{font-family:var(--font-display);font-size:1.6rem;font-weight:600;margin-bottom:8px}
+.login p{font-size:.85rem;color:var(--muted);margin-bottom:20px}
+.login input{
+  width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r-sm);
+  background:rgba(11,9,7,.8);color:var(--cream);font-family:var(--font-body);font-size:.98rem;letter-spacing:.06em;
+}
+.login input:focus{outline:none;border-color:var(--gold)}
+.login button{
+  margin-top:12px;width:100%;min-height:50px;border:0;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold),#a8873f);color:#0b0907;
+  font-family:var(--font-body);font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+}
+.login button:hover{filter:brightness(1.08)}
+.login-err{margin-top:10px;font-size:.83rem;color:#ff8a9c}
+
+/* ---------- filtros ---------- */
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{
+  border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:var(--r-sm);
+  padding:7px 12px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:var(--font-body);
+}
+.chip[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:rgba(201,167,91,.1)}
+
+/* ---------- pedido ---------- */
+.pedido{
+  border:1px solid var(--line);border-radius:var(--r-md);background:rgba(20,17,16,.72);
+  margin-bottom:14px;overflow:hidden;
+}
+.pedido-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:15px 17px;border-bottom:1px solid var(--line)}
+.pedido-id{font-family:var(--font-display);font-size:1.12rem;font-weight:600;color:var(--gold);letter-spacing:.04em}
+.pedido-sub{font-size:.79rem;color:var(--muted);margin-top:3px}
+.pedido-dir{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--line-strong);color:var(--muted)}
+.tag.ok{color:var(--green);border-color:rgba(30,166,90,.5);background:rgba(30,166,90,.12)}
+.tag.aviso{color:var(--amber);border-color:rgba(224,161,58,.5);background:rgba(224,161,58,.12)}
+.tag.erro{color:#ff8a9c;border-color:rgba(200,16,46,.5);background:rgba(200,16,46,.12)}
+.pedido-corpo{padding:15px 17px;display:grid;gap:12px}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:11px}
+.campo{font-size:.83rem}
+.campo span{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.campo b{font-weight:500}
+.campo.falta b{color:#ff8a9c}
+.pedido-acoes{display:flex;gap:8px;flex-wrap:wrap;padding:0 17px 15px}
+.nota{font-size:.8rem;color:var(--muted);padding:0 17px 14px;white-space:pre-wrap}
+.sucesso{margin-top:9px;padding:10px 12px;border:1px solid rgba(30,166,90,.4);border-radius:var(--r-sm);background:rgba(30,166,90,.1);font-size:.82rem;color:var(--green);line-height:1.55}
+.erro-msg{margin-top:9px;padding:10px 12px;border:1px solid rgba(200,16,46,.4);border-radius:var(--r-sm);background:rgba(200,16,46,.1);font-size:.82rem;color:#ff8a9c;line-height:1.55}
+.vazio{text-align:center;padding:52px 20px;color:var(--muted);font-size:.9rem;border:1px dashed var(--line);border-radius:var(--r-md)}
+
+/* ---------- editor ---------- */
+.editor{display:none;padding:15px 17px;border-top:1px solid var(--line);background:rgba(11,9,7,.45)}
+.editor.aberto{display:block}
+.editor-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:11px}
+.editor label{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.editor input,.editor textarea,.editor select{
+  width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;
+  background:rgba(11,9,7,.8);color:var(--cream);font-family:var(--font-body);font-size:.88rem;
+}
+.editor input:focus,.editor textarea:focus{outline:none;border-color:var(--gold)}
+.editor .l2{grid-column:span 2}
+@media(max-width:640px){.editor .l2{grid-column:span 1}}
+.rodape{text-align:center;font-size:.74rem;color:rgba(156,147,132,.65);margin-top:26px;line-height:1.7}
+a{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="wrap">
+
+  <!-- ================= LOGIN ================= -->
+  <div class="login" id="telaLogin">
+    <h2>Painel da <em>loja</em></h2>
+    <p>Pedidos, etiquetas e rastreio da Noiva Joias MT.</p>
+    <input id="senha" type="password" placeholder="Senha" autocomplete="current-password">
+    <button type="button" id="btnEntrar">Entrar</button>
+    <div class="login-err" id="loginErro" hidden></div>
+  </div>
+
+  <!-- ================= PAINEL ================= -->
+  <div id="telaPainel" hidden>
+    <div class="topo">
+      <h1>Pedidos <em>da loja</em></h1>
+      <div class="topo-dir">
+        <div class="saldo" id="saldo">Saldo Melhor Envios: —</div>
+        <button class="btn" id="btnAtualizar">Atualizar</button>
+        <button class="btn" id="btnSair">Sair</button>
+      </div>
+    </div>
+
+    <div class="filtros" id="filtros">
+      <button class="chip" data-f="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-f="pagos" aria-pressed="false">Pagos</button>
+      <button class="chip" data-f="aguardando" aria-pressed="false">Aguardando etiqueta</button>
+      <button class="chip" data-f="semcpf" aria-pressed="false">Sem CPF</button>
+      <button class="chip" data-f="prontos" aria-pressed="false">Com etiqueta</button>
+    </div>
+
+    <div id="lista"></div>
+
+    <p class="rodape">Noiva Joias MT · CNPJ 31.186.957/0001-06 · <b>(65) 9294-2810</b></p>
+  </div>
+
+</div>
+
+<script>
+/* ==========================================================================
+   PAINEL DO DONO
+   ==========================================================================
+   Fala com o /api/rastreio usando o token de sessão que o /api/painel
+   devolve depois do login. A senha nunca fica guardada no navegador —
+   só o token, e só nesta aba.
+
+   O que o painel faz:
+     · lista os pedidos (os mais novos primeiro)
+     · mostra o que falta em cada um (CPF, endereço, etiqueta)
+     · deixa CORRIGIR o endereço, que chega pelo WhatsApp — sem ele a
+       Melhor Envios recusa a etiqueta
+     · gera a etiqueta (com confirmação, porque gasta saldo)
+     · cancela a etiqueta (com estorno em até 12 horas)
+   ========================================================================== */
+
+const API = '/api/rastreio';
+let token = sessionStorage.getItem('painel_token') || '';
+let pedidos = [];
+let filtro = 'todos';
+
+/* ---------- utilidades ---------- */
+const el = id => document.getElementById(id);
+const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+async function chamar(acao, corpo, metodo) {
+  const r = await fetch(API + (acao ? '?acao=' + acao : ''), {
+    method: metodo || 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-owner-token': token,
+    },
+    body: corpo ? JSON.stringify(corpo) : undefined,
+  });
+  let d = {};
+  try { d = await r.json(); } catch (e) {}
+  if (r.status === 401) {
+    sair();
+    throw new Error('Sessão expirada. Entre de novo.');
+  }
+  if (!r.ok && d.erro) throw new Error(d.erro);
+  return d;
+}
+
+/* ---------- login ---------- */
+el('btnEntrar').addEventListener('click', async function () {
+  const btn = this;
+  const senha = el('senha').value;
+  const erro = el('loginErro');
+  erro.hidden = true;
+  if (!senha) { erro.hidden = false; erro.textContent = 'Digite a senha.'; return; }
+  btn.disabled = true;
+  btn.textContent = 'Entrando…';
+  try {
+    const r = await fetch('/api/painel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senha }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.token) {
+      erro.hidden = false;
+      erro.textContent = d.erro || 'Senha incorreta.';
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+    token = d.token;
+    sessionStorage.setItem('painel_token', token);
+    el('senha').value = '';
+    abrirPainel();
+  } catch (e) {
+    erro.hidden = false;
+    erro.textContent = 'Não conseguimos entrar. Tente de novo.';
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+});
+
+el('senha').addEventListener('keydown', e => { if (e.key === 'Enter') el('btnEntrar').click(); });
+
+function sair() {
+  token = '';
+  sessionStorage.removeItem('painel_token');
+  el('telaPainel').hidden = true;
+  el('telaLogin').hidden = false;
+}
+
+el('btnSair').addEventListener('click', sair);
+el('btnAtualizar').addEventListener('click', () => carregar());
+
+/* ---------- filtros ---------- */
+el('filtros').addEventListener('click', e => {
+  const b = e.target.closest('.chip');
+  if (!b) return;
+  filtro = b.dataset.f;
+  el('filtros').querySelectorAll('.chip').forEach(c =>
+    c.setAttribute('aria-pressed', String(c.dataset.f === filtro)));
+  desenhar();
+});
+
+/* ---------- carregar ---------- */
+async function carregar() {
+  try {
+    const d = await chamar('', null, 'GET');
+    pedidos = d.pedidos || [];
+    el('saldo').innerHTML = 'Saldo Melhor Envios: <b>' +
+      (d.saldo_me == null ? 'indisponível' : brl.format(Number(d.saldo_me))) + '</b>';
+    desenhar();
+  } catch (e) {
+    el('lista').innerHTML = '<div class="erro-msg">' + esc(e.message) + '</div>';
+  }
+}
+
+function aplicarFiltro(p) {
+  if (filtro === 'pagos') return ['approved', 'authorized', 'in_process', 'pending'].includes(p.status);
+  if (filtro === 'aguardando') return p.status === 'approved' && !p.me_order_id && !p.etiqueta_cancelada;
+  if (filtro === 'semcpf') return !p.cpf && p.status === 'approved';
+  if (filtro === 'prontos') return !!p.me_order_id;
+  return true;
+}
+
+/* ---------- desenhar ---------- */
+function desenhar() {
+  const lista = pedidos.filter(aplicarFiltro);
+  if (!lista.length) {
+    el('lista').innerHTML = '<div class="vazio">Nenhum pedido nesse filtro ainda.</div>';
+    return;
+  }
+  el('lista').innerHTML = lista.map(p => cartao(p)).join('');
+  ligarEventos();
+}
+
+function statusTag(p) {
+  if (p.etiqueta_cancelada) return '<span class="tag erro">Etiqueta cancelada</span>';
+  if (p.me_order_id) return '<span class="tag ok">Etiqueta pronta</span>';
+  if (p.status === 'approved') return '<span class="tag aviso">Pago — sem etiqueta</span>';
+  if (['in_process', 'pending', 'authorized'].includes(p.status)) return '<span class="tag aviso">Em análise</span>';
+  if (p.status === 'rejected') return '<span class="tag erro">Recusado</span>';
+  return '<span class="tag">' + esc(p.status || 'iniciando') + '</span>';
+}
+
+function cartao(p) {
+  const falta = p.falta || [];
+  const id = esc(p.pedido_id || p.payment_id);
+  const endereco = p.endereco
+    ? [p.endereco, p.numero, p.complemento, p.bairro, p.cidade && p.estado ? p.cidade + '/' + p.estado : p.cidade, p.cep]
+        .filter(Boolean).join(', ')
+    : '';
+
+  return '' +
+  '<div class="pedido" data-id="' + id + '">' +
+    '<div class="pedido-top">' +
+      '<div>' +
+        '<div class="pedido-id">' + id + '</div>' +
+        '<div class="pedido-sub">' + esc(p.produto || '—') + ' · ' + brl.format(Number(p.valor || 0)) +
+          ' · ' + esc(p.modalidade === 'sedex' ? 'Sedex a Cobrar' : p.modalidade || '—') +
+          (p.prazo ? ' · ' + esc(p.prazo) : '') + '</div>' +
+      '</div>' +
+      '<div class="pedido-dir">' + statusTag(p) +
+        '<span class="tag">' + esc(p.status || '—') + '</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="pedido-corpo">' +
+      '<div class="grade">' +
+        '<div class="campo"><span>Cliente</span><b>' + esc(p.nome || '—') + '</b></div>' +
+        '<div class="campo' + (p.cpf ? '' : ' falta') + '"><span>CPF</span><b>' + esc(p.cpf || 'FALTA') + '</b></div>' +
+        '<div class="campo"><span>Telefone</span><b>' + esc(p.telefone || '—') + '</b></div>' +
+        '<div class="campo"><span>E-mail</span><b>' + esc(p.email || '—') + '</b></div>' +
+        '<div class="campo' + (endereco ? '' : ' falta') + '" style="grid-column:span 2"><span>Endereço</span><b>' + esc(endereco || 'FALTA — peça o endereço no WhatsApp') + '</b></div>' +
+        '<div class="campo"><span>Valor do produto</span><b>' + brl.format(Number(p.valor_produto || 0)) + '</b></div>' +
+        '<div class="campo"><span>Medida</span><b>' + esc(p.medida_confirmada || 'não confirmada') + '</b></div>' +
+      '</div>' +
+      (falta.length ? '<div class="nota">Falta: ' + esc(falta.join(', ')) + '</div>' : '') +
+      (p.rastreio ? '<div class="nota">Rastreio: <b>' + esc(p.rastreio) + '</b> · <a href="https://www.melhorrastreio.com.br/rastreio/' + esc(p.rastreio) + '" target="_blank" rel="noopener noreferrer">abrir</a></div>' : '') +
+      (p.nota ? '<div class="nota">' + esc(p.nota) + '</div>' : '') +
+    '</div>' +
+    '<div class="pedido-acoes">' +
+      '<button class="btn btn-pequeno" data-acao="editor">Dados / endereço</button>' +
+      '<button class="btn btn-pequeno" data-acao="medida">Confirmar medida</button>' +
+      (p.me_order_id && !p.etiqueta_cancelada
+        ? '<button class="btn btn-pequeno" data-acao="etiqueta">Ver etiqueta</button>' +
+          '<button class="btn btn-pequeno btn-vermelho" data-acao="cancelar">Cancelar etiqueta</button>'
+        : '<button class="btn btn-pequeno btn-verde" data-acao="etiqueta"' + (falta.length ? ' disabled' : '') + '>Gerar etiqueta</button>') +
+    '</div>' +
+    '<div class="editor" data-editor="' + id + '">' +
+      '<div class="editor-grade">' +
+        '<div><label>Nome</label><input data-campo="nome" value="' + esc(p.nome || '') + '"></div>' +
+        '<div><label>CPF</label><input data-campo="cpf" inputmode="numeric" value="' + esc(p.cpf || '') + '"></div>' +
+        '<div><label>Telefone</label><input data-campo="telefone" value="' + esc(p.telefone || '') + '"></div>' +
+        '<div><label>E-mail</label><input data-campo="email" value="' + esc(p.email || '') + '"></div>' +
+        '<div class="l2"><label>Endereço</label><input data-campo="endereco" value="' + esc(p.endereco || '') + '"></div>' +
+        '<div><label>Número</label><input data-campo="numero" value="' + esc(p.numero || '') + '"></div>' +
+        '<div><label>Complemento</label><input data-campo="complemento" value="' + esc(p.complemento || '') + '"></div>' +
+        '<div><label>Bairro</label><input data-campo="bairro" value="' + esc(p.bairro || '') + '"></div>' +
+        '<div><label>Cidade</label><input data-campo="cidade" value="' + esc(p.cidade || '') + '"></div>' +
+        '<div><label>UF</label><input data-campo="estado" maxlength="2" value="' + esc(p.estado || '') + '"></div>' +
+        '<div><label>CEP</label><input data-campo="cep" inputmode="numeric" value="' + esc(p.cep || '') + '"></div>' +
+      '</div>' +
+      '<button class="btn btn-verde btn-pequeno" data-acao="salvar">Salvar</button>' +
+      '<span class="sucesso" data-msg hidden></span>' +
+    '</div>' +
+  '</div>';
+}
+
+/* ---------- eventos ---------- */
+function ligarEventos() {
+  el('lista').querySelectorAll('[data-acao]').forEach(b => {
+    b.addEventListener('click', () => acao(b));
+  });
+}
+
+async function acao(botao) {
+  const pedidoEl = botao.closest('.pedido');
+  const id = pedidoEl.dataset.id;
+  const p = pedidos.find(x => (x.pedido_id || x.payment_id) === id);
+  if (!p) return;
+  const acao = botao.dataset.acao;
+
+  if (acao === 'editor') {
+    const ed = pedidoEl.querySelector('.editor');
+    ed.classList.toggle('aberto');
+    return;
+  }
+
+  if (acao === 'salvar') {
+    const ed = pedidoEl.querySelector('.editor');
+    const dados = { codigo: id };
+    ed.querySelectorAll('[data-campo]').forEach(i => { dados[i.dataset.campo] = i.value.trim(); });
+    const msg = ed.querySelector('[data-msg]');
+    botao.disabled = true;
+    try {
+      await chamar('atualizar', dados);
+      msg.hidden = false;
+      msg.textContent = 'Salvo.';
+      carregar();
+    } catch (e) {
+      msg.hidden = false;
+      msg.style.color = '#ff8a9c';
+      msg.textContent = e.message;
+    }
+    botao.disabled = false;
+    return;
+  }
+
+  if (acao === 'medida') {
+    botao.disabled = true;
+    try {
+      await chamar('medida', { codigo: id });
+      alert('Medida confirmada.');
+      carregar();
+    } catch (e) { alert(e.message); }
+    botao.disabled = false;
+    return;
+  }
+
+  if (acao === 'etiqueta') {
+    if (p.me_order_id && !p.etiqueta_cancelada) {
+      if (p.etiqueta_url) window.open(p.etiqueta_url, '_blank', 'noopener');
+      else alert('Etiqueta gerada, mas o PDF não saiu. Abra pelo painel da Melhor Envios.');
+      return;
+    }
+    if (!confirm('Gerar a etiqueta para ' + (p.nome || 'este cliente') + '?\n\nIsso gasta o valor do frete do saldo da Melhor Envios.')) return;
+    botao.disabled = true;
+    const antigo = botao.textContent;
+    botao.textContent = 'Cotando…';
+    try {
+      const d = await chamar('etiqueta', { codigo: id });
+      if (d.precisa_confirmar) {
+        const ok = confirm('Frete: ' + brl.format(Number(d.preco || 0)) +
+          (d.seguro ? '\nSeguro da peça: ' + brl.format(Number(d.seguro)) : '') +
+          '\n\nConfirmar a compra da etiqueta?');
+        if (!ok) { botao.textContent = antigo; botao.disabled = false; return; }
+        botao.textContent = 'Gerando…';
+        const d2 = await chamar('etiqueta', { codigo: id, confirmar: true });
+        if (d2.ok) {
+          alert('Etiqueta gerada!' + (d2.pedido?.rastreio ? '\nRastreio: ' + d2.pedido.rastreio : ''));
+          if (d2.pedido?.etiqueta_url) window.open(d2.pedido.etiqueta_url, '_blank', 'noopener');
+        } else {
+          alert('Não deu: ' + (d2.erro || d2.etapa || 'erro desconhecido'));
+        }
+      } else if (!d.ok) {
+        alert('Não deu: ' + (d.erro || d.etapa || 'erro desconhecido') +
+          (d.precisa ? '\nFalta: ' + d.precisa.join(', ') : ''));
+      }
+      carregar();
+    } catch (e) { alert(e.message); }
+    botao.textContent = antigo;
+    botao.disabled = false;
+    return;
+  }
+
+  if (acao === 'cancelar') {
+    if (!confirm('Cancelar a etiqueta de ' + (p.nome || 'este cliente') + '?\n\nO valor do frete é estornado em até 12 horas.')) return;
+    botao.disabled = true;
+    try {
+      const d = await chamar('cancelar', { codigo: id });
+      if (d.ok) alert(d.aviso || 'Etiqueta cancelada.');
+      else alert('Não deu: ' + (d.erro || 'erro desconhecido'));
+      carregar();
+    } catch (e) { alert(e.message); }
+    botao.disabled = false;
+    return;
+  }
+}
+
+/* ---------- abrir ---------- */
+function abrirPainel() {
+  el('telaLogin').hidden = true;
+  el('telaPainel').hidden = false;
+  carregar();
+}
+
+if (token) {
+  abrirPainel();
+}
+</script>
+</body>
+</html>

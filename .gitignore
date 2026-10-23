@@ -14,6 +14,9 @@ Thumbs.db
 # temporarios de teste (scripts e screenshots de verificacao)
 .tmp-check/
 
+# backup local feito antes das melhorias de seguranca (nao versionar)
+BACKUP-*/
+
 # fotos e catalogos em PDF: nao versionados (o site puxa as fotos do R2)
 PDFs/img/
 PDFs/*.pdf

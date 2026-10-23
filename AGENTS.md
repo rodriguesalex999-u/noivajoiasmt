@@ -34,10 +34,12 @@
 O caminho completo, com os comandos e as armadilhas, está em **`COMO-COLOCAR-PRODUTO-NO-SITE.md`**. Resumo:
 1. **Fotos** — `python scripts/preparar_fotos_produto.py --colecao <colecao> --slug <slug> --nome "<nome>" --preco <n> --parcelas <n> --fotos "<foto1>" "<foto2>"`: converte para 1000×1000 webp q90 com a borda preta do catálogo, sobe no R2 e **imprime o bloco do produto pronto**. (O `env -u CLOUDFLARE_API_TOKEN` é obrigatório no `wrangler`.)
 2. **Site** — colar o bloco em `index.html`, dentro do `itens` da coleção (`COLECOES`). O campo **`fotos`** (lista de todas as fotos) é o que faz aparecerem as setinhas; `imagem` é a capa.
-3. **PDF** — `python PDFs/build_catalog_solitarios.py` (lê o `index.html`; falha se a quantidade de itens mudar).
-4. **Fechar** — `CHANGELOG.md` + commit + push na `main`. Fotos e PDFs **não** entram no repositório.
+3. **Catálogo de preços do servidor** — `node scripts/gerar_catalogo_precos.js` (gera `api/_lib/catalogo-precos.json`; **sem esse passo o pagamento do produto novo é recusado**).
+4. **PDF** — `python PDFs/build_catalog_solitarios.py` (lê o `index.html`; falha se a quantidade de itens mudar).
+5. **Fechar** — `CHANGELOG.md` + commit + push na `main`. Fotos e PDFs **não** entram no repositório.
 
 ## Capacidades já testadas e aprovadas (registrar aqui também, não só no CHANGELOG)
+- **Preço no servidor (checkout):** `/api/checkout` ignora o preço que vier do navegador e cobra o de `api/_lib/catalogo-precos.json` (gerado por `scripts/gerar_catalogo_precos.js` a partir do `index.html` + `masculino.html`). Produto fora do catálogo = 400. Testado com 18 casos locais (2026-10-22).
 - **Etiqueta de envio dos Correios:** baixa o PDF `Rotulo_<RASTREIO>.pdf` do e-mail dos Correios via Gmail/IMAP (himalaya). Script: `0-FUNCIONARIOS-DE-IA\PAINEL\baixar_rotulo_correios.py`. Só o rótulo interessa; o script descarta os anexos PNG "inline" (lixo). Detalhes no `CHANGELOG.md` (entrada 2026-10-13 tarde).
 - **Melhor Envios (cotação + etiqueta + rastreio) no ar:** token JWT na env `ME_API_TOKEN` da Vercel (origem: `C:\Users\rodri\OneDrive\Documents\00-VIDA-ALEX\melhor_envio\.env`, chave `token`). Remetente em `ME_SENDER_*` (Rua Santa Terezinha, 31 — Dom Aquino, Cuiabá/MT, 78015-140, titular PF). Teste sem gastar saldo: `node scripts/testar_melhor_envio.js`.
   - **Unidades da API (não errar de novo):** dinheiro em **REAL** (38.94 = R$ 38,94 — não dividir por 100); peso do volume em **kg**; medidas do volume em **cm, de 1 a 300** (0,5 nas três é recusado com 422); número do endereço no campo **`number`** (não `location_number`).
