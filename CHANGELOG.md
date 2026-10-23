@@ -4,6 +4,18 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-23 — Site verificado no Google Search Console + pendência de conferência para 27/10
+
+**O site não estava indexado (busca `site:noivajoiasmt.vercel.app` não retornava nada). Configuramos a indexação de ponta a ponta e registramos tudo no projeto, para qualquer IA futura saber do estado e das pendências.**
+
+- **Propriedade criada no Search Console** — prefixo de URL `https://noivajoiasmt.vercel.app/` (conta `rodriguesalex999@gmail.com`), verificada pela metatag `google-site-verification` no `<head>` do `index.html` + arquivo `google9c9d7af11904761d.html` (método arquivo falhou na 1ª tentativa por cache de borda do Vercel; a metatag validou — "Propriedade verificada").
+- **Sitemap enviado** — `https://noivajoiasmt.vercel.app/sitemap.xml` (`/`, `/masculino`, `/faq`), confirmado pelo Google. Relatório da 1ª inspeção da home: "Detectada, mas não indexada no momento".
+- **Pedido de indexação da home** — botão "Solicitar indexação" retornou "cota foi excedida" (cota diária da conta, compartilhada com outro projeto); repetir em dia seguinte.
+- **Documentação no projeto** — novo `COMO-INDEXAR-NO-GOOGLE.md` (passo a passo tela a tela, fluxo para página nova, o que NÃO precisa de indexação à mão, armadilhas) e seção "Indexação no Google — STATUS E PENDÊNCIAS" no `AGENTS.md` (toda sessão lê).
+- **Pendência automática** — `AGENTS.md` manda: em **qualquer sessão de ≥ 27/10/2026**, enquanto não houver entrada no `CHANGELOG` com essa conferência, fazer a conferência de indexação **antes** de atender o usuário e relatar junto com a resposta dele (pedido do dono). Revisão periódica de 6 em 6 meses a partir de 2027-04-27 (2× ao ano, pedido do dono).
+
+---
+
 ## 2026-10-22 — Segurança do checkout: preço agora é definido no servidor (fecha compra de R$ 0,01)
 
 **Auditoria independente confirmou que qualquer pessoa conseguia montar `checkout.html?nome=X&preco=0.01` e fechar uma compra a 1 centavo — o servidor cobrava o preço que o navegador mandava. Também foram fechados: webhook sem assinatura, cabeçalhos de segurança ausentes, soft-404 (tudo devolvia 200 com a home), ausência de robots.txt/sitemap.xml, XSS potencial no rastreio e o rastreio quebrado em produção.**

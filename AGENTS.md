@@ -38,6 +38,41 @@ O caminho completo, com os comandos e as armadilhas, está em **`COMO-COLOCAR-PR
 4. **PDF** — `python PDFs/build_catalog_solitarios.py` (lê o `index.html`; falha se a quantidade de itens mudar).
 5. **Fechar** — `CHANGELOG.md` + commit + push na `main`. Fotos e PDFs **não** entram no repositório.
 
+## Indexação no Google (Search Console) — STATUS E PENDÊNCIAS
+**O site está verificado e configurado no Google Search Console desde 2026-10-23**
+(propriedade `https://noivajoiasmt.vercel.app/`, metatag `google-site-verification`
+no `index.html` — nunca remover — e `sitemap.xml` enviado). Passo a passo completo,
+fluxo de "página nova" e armadilhas: **`COMO-INDEXAR-NO-GOOGLE.md`**.
+
+### ⏳ PENDÊNCIA COM PRAZO (resolver ANTES de atender o usuário, e depois pedir a palavra)
+- **Conferência marcada para 2026-10-27** (feita a pedido do dono, 4 dias após a
+  configuração): verificar se a home `https://noivajoiasmt.vercel.app/` **já foi
+  indexada**. Se ainda não → clicar em "Solicitar indexação" no Search Console
+  (se aparecer "cota excedida", repetir no dia seguinte) e registrar o resultado
+  no `CHANGELOG.md`.
+- **Como saber se já foi feita:** a entrada do `CHANGELOG.md` com data
+  **≥ 2026-10-27** e título que fale de conferência de indexação. Se não existir,
+  a pendência está ABERTA — mesmo que o usuário tenha perguntado outra coisa,
+  **faça a conferência primeiro**, depois responda o que ele pediu e, na mesma
+  resposta, diga: *"fiz a conferência de indexação marcada para 27/10 — deu
+  tudo certo"* ou *"precisei X / ainda não indexou"*.
+- **Se a conferência der certo:** adicionar linha no `CHANGELOG.md`
+  (`Fechada a conferência de indexação de 27/10 — home indexada`) e mudar a data
+  da próxima revisão periódica abaixo.
+
+### 🔁 REVISÃO PERIÓDICA (a cada 6 meses, pedido do dono = 2× ao ano)
+- Próxima revisão: **2027-04-27** (e depois a cada 6 meses).
+- Regra igual à acima: quando a data chegar, **qualquer sessão futura faz a
+  revisão antes de outras tarefas** (relatório Páginas + Sitemaps no Search
+  Console + busca `site:noivajoiasmt.vercel.app`) e registra no `CHANGELOG.md`.
+
+### 📄 Página nova publicada no futuro
+Toda página HTML NOVA (rota nova) precisa: entrar no `sitemap.xml` + "Solicitar
+indexação" no Search Console (ver `COMO-INDEXAR-NO-GOOGLE.md`). Produto novo
+dentro do catálogo **não** precisa de nada disso. Quando subir uma página nova,
+se a conferência/pendência estiver aberta, resolva-a junto (mesmo raciocínio:
+pendente primeiro, depois a tarefa pedida, relatando as duas).
+
 ## Capacidades já testadas e aprovadas (registrar aqui também, não só no CHANGELOG)
 - **Preço no servidor (checkout):** `/api/checkout` ignora o preço que vier do navegador e cobra o de `api/_lib/catalogo-precos.json` (gerado por `scripts/gerar_catalogo_precos.js` a partir do `index.html` + `masculino.html`). Produto fora do catálogo = 400. Testado com 18 casos locais (2026-10-22).
 - **Etiqueta de envio dos Correios:** baixa o PDF `Rotulo_<RASTREIO>.pdf` do e-mail dos Correios via Gmail/IMAP (himalaya). Script: `0-FUNCIONARIOS-DE-IA\PAINEL\baixar_rotulo_correios.py`. Só o rótulo interessa; o script descarta os anexos PNG "inline" (lixo). Detalhes no `CHANGELOG.md` (entrada 2026-10-13 tarde).
