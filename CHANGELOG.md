@@ -4,6 +4,49 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-25 — Nova categoria: Moeda Antiga COM FORRO INTERNO (e o pote de limpeza R$ 9,99)
+
+**A moeda antiga comum mancha o dedo de verde. A versão com forro interno não mancha — e isso
+não estava no site como categoria própria. Agora está, com as 3 fotos do par, o preço fechado
+e a explicação honesta do que ela tem e do que ela não tem.**
+
+- **Coleção nova `Aliança de Moeda Antiga COM FORRO INTERNO`** (`index.html`, no `COLECOES`) —
+  1 produto: **Par de Aliança Clássica 4mm**, R$ 589,99, 2x de R$ 294,99 sem juros, pagamento na
+  entrega. Fica entre "Alianças de Moeda Antiga" e "Correntes, Kits e Conjuntos 18K".
+- **Galeria com as 3 fotos** — o item declara `fotos: [...]`, então o cliente vê as 3 imagens do
+  par (no dedo, na caixa e no estojo) com as setinhas, as bolinhas e o contador "1 / 3". As fotos
+  foram preparadas em 1000×1000 webp com a borda preta do catálogo e publicadas no R2 em
+  `moeda-antiga-forrada/` (as 3 conferidas com HTTP 200 e `image/webp`).
+- **O que a descrição diz** — que ela **não deixa o dedo verde** (o forro separa a liga da pele) e,
+  ao mesmo tempo, que **escurece com o tempo e precisa de limpeza**, porque é característica da
+  moeda antiga e não defeito. A ideia é o cliente não comprar achando que é ouro e não voltar
+  reclamando depois.
+- **Pote de limpeza R$ 9,99 nas DUAS categorias de moeda antiga** (comum e com forro interno) —
+  descrito como pote **pequeno**, com pouca quantidade de produto, que rende de **3 a 8 limpezas**
+  (um pouco num pano, esfregando a aliança). Ao lado dele, a limpeza completa **por máquina, R$ 90**,
+  que é o resultado mais próximo de uma aliança nova. Tudo opcional.
+- **Catálogo de preços do servidor regenerado** — `node scripts/gerar_catalogo_precos.js` passou de
+  155 para **156 produtos**; sem isso o `/api/checkout` recusaria a compra deste produto.
+- **Rota `/moedaantigaforro`** — abre a categoria direto (o link do WhatsApp e o botão voltar
+  funcionam nela como nas outras).
+- **PDF + HTML do catálogo da categoria** — `PDFs/build_catalog_forro_interno.py` gera
+  `Noiva-Joias-MT-Catalogo-Moeda-Antiga-Forro-Interno-v1.pdf` (2 páginas): a 1ª com a foto
+  principal, preço e os 3 diferenciais; a 2ª com as 3 fotos legendadas, o pote R$ 9,99, a limpeza
+  por máquina R$ 90, o "como pedir" em 3 passos e o CTA. O build barra imagem quebrada, conteúdo
+  cortado e erro de console.
+
+### Correções que apareceram no caminho
+
+- **Rotas por índice embaralhavam as categorias** — `ROTAS` mapeava `/correnteskits: 5`,
+  `/pulseiras: 6`, `/pingentes: 7` por **posição** no array. Inserir uma coleção no meio fazia
+  essas três abrirem a categoria errada. Agora o mapa é **rota → nome da coleção**, então a ordem
+  do array pode mudar sem quebrar link nenhum.
+- **Card de coleção com menos de 4 itens mostrava "+-3 modelos"** — a conta era
+  `itens.length - 4` sem tratar o caso pequeno. Agora coleções de 1 a 4 itens mostram a contagem
+  certa ("1 modelo") e o selo do card também acerta o singular.
+
+---
+
 ## 2026-10-23 — Site verificado no Google Search Console + pendência de conferência para 27/10
 
 **O site não estava indexado (busca `site:noivajoiasmt.vercel.app` não retornava nada). Configuramos a indexação de ponta a ponta e registramos tudo no projeto, para qualquer IA futura saber do estado e das pendências.**

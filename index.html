@@ -2032,7 +2032,7 @@ const COLECOES = [
     previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga/moeda-friso-lateral-central-c-pedras-8mm-689-99-156be195.webp',
     selo: 'Moeda Antiga',
     descricao:
-      'Moeda antiga comum de 4mm a 8mm. Escolha o modelo e leve na sua casa hoje — e, se você quiser, complete o par com o anel solitário, que é vendido separado.',
+      'Moeda antiga comum de 4mm a 8mm. Escolha o modelo e leve na sua casa hoje — e, se você quiser, complete o par com o anel solitário, que é vendido separado. <b>Pote de limpeza por R$ 9,99 (opcional):</b> é um pote pequeno, com pouca quantidade do produto. Basta colocar um pouco num pano e esfregar a aliança — a cor volta bem e o pote rende de 3 a 8 limpezas, dependendo do uso. A limpeza completa, feita por máquina, é R$ 90.',
     tags: ['Moeda Antiga', '4mm a 8mm', 'Solitario opcional'],
     itens: [
       {
@@ -2265,6 +2265,32 @@ const COLECOES = [
         nota:
           'Escurece com o tempo e pode manchar o dedo de verde. Para restaurar a cor é só manutenção: pasta de dente ou produto específico. Não é defeito, é característica da moeda antiga.',
         tags: ['8mm', 'Quadrada', 'Friso']
+      }
+    ]
+  },
+  {
+    nome: 'Aliança de Moeda Antiga COM FORRO INTERNO',
+    previa: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-1.webp',
+    selo: 'Moeda Antiga · Forro Interno',
+    descricao:
+      'Moeda antiga com forro interno: por fora é toda moeda antiga e, por dentro, o forro separa a liga da pele — por isso <b>não deixa o dedo verde</b>, que é o problema da moeda antiga comum. Ela também escurece com o tempo e precisa de limpeza: não é defeito, é característica da moeda antiga. A cor volta com manutenção simples, e temos o pote de limpeza por R$ 9,99 (opcional).',
+    tags: ['Moeda Antiga', 'Forro Interno', 'Clássica 4mm'],
+    itens: [
+      {
+        nome: 'Par de Aliança Clássica 4mm com Forro Interno - Moeda Antiga',
+        preco: 589.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-3.webp'
+        ],
+        descricao:
+          'Par de aliança clássica 4mm de moeda antiga com forro interno. Entrega hoje e pagamento na entrega.',
+        nota:
+          'É a única moeda antiga que NÃO deixa o dedo verde, porque o forro interno separa a liga da pele. Mesmo assim ela escurece com o tempo e pede limpeza — característica da moeda antiga, não defeito.',
+        tags: ['4mm', 'Clássica', 'Forro Interno']
       }
     ]
   },
@@ -3539,7 +3565,7 @@ const COLECOES = [
     const media = el('div', 'prod-media');
     media.appendChild(foto(c.previa, c.nome + ' — Noiva Joias MT', i === 0, 'prod-img'));
     if (c.selo) media.appendChild(el('span', 'prod-badge', c.selo));
-    media.appendChild(el('span', 'prod-count', c.itens.length + ' modelos'));
+    media.appendChild(el('span', 'prod-count', c.itens.length + (c.itens.length === 1 ? ' modelo' : ' modelos')));
     card.appendChild(media);
 
     const body = el('div', 'prod-body');
@@ -3554,8 +3580,9 @@ const COLECOES = [
 
     const mini = el('div', 'prod-mini');
     c.itens.slice(0, 4).forEach(p => mini.appendChild(foto(p.imagem, p.nome)));
-    mini.appendChild(el('p', 'prod-mini-n',
-      '<b>+' + (c.itens.length - 4) + ' modelos</b>ver todos os preços'));
+    mini.appendChild(el('p', 'prod-mini-n', c.itens.length > 4
+      ? '<b>+' + (c.itens.length - 4) + ' modelos</b>ver todos os preços'
+      : '<b>' + c.itens.length + (c.itens.length === 1 ? ' modelo' : ' modelos') + '</b>ver todos os preços'));
     body.appendChild(mini);
 
     const cta = el('button', 'prod-cta',
@@ -3924,25 +3951,29 @@ const itemCard = (p) => {
   let travouEm = 0;
   let modalAberto = false;
 
+  /* Rota -> NOME da colecao (nao o indice). Com indice, inserir uma
+     colecao nova no meio do COLECOES embaralhava todas as rotas
+     seguintes; pelo nome, a ordem do array pode mudar a vontade. */
   const ROTAS = {
-    '/prata': 0,
-    '/aliancabanhadas': 1,
-    '/solitariocordourado': 2,
-    '/solitariocorprata': 3,
-    '/moedaantiga': 4,
-    '/correnteskits': 5,
-    '/pulseiras': 6,
-    '/pingentes': 7
+    '/prata': 'Aliança pra namoro',
+    '/aliancabanhadas': 'Aliança de casamento',
+    '/solitariocordourado': 'Solitários Cor Dourada',
+    '/solitariocorprata': 'Solitários Cor Prata',
+    '/moedaantiga': 'Alianças de Moeda Antiga',
+    '/moedaantigaforro': 'Aliança de Moeda Antiga COM FORRO INTERNO',
+    '/correnteskits': 'Correntes, Kits e Conjuntos 18K',
+    '/pulseiras': 'Pulseiras Masculinas 18K',
+    '/pingentes': 'Pingentes Masculinos 18K'
   };
   const ROTAS_REVERSE = Object.fromEntries(Object.entries(ROTAS).map(([k, v]) => [v, k]));
 
   function abrirPorRota(path) {
-    const idx = ROTAS[path];
-    if (idx !== undefined && COLECOES[idx]) {
-      abrir(COLECOES[idx]);
-      return true;
-    }
-    return false;
+    const nome = ROTAS[path];
+    if (!nome) return false;
+    const colecao = COLECOES.find(c => c.nome === nome);
+    if (!colecao) return false;
+    abrir(colecao);
+    return true;
   }
 
   const abrir = (c) => {
@@ -3959,8 +3990,7 @@ const itemCard = (p) => {
     modal.hidden = false;
     modalAberto = true;
     
-    const idx = COLECOES.indexOf(c);
-    const rota = ROTAS_REVERSE[idx];
+    const rota = ROTAS_REVERSE[c.nome];
     if (rota) {
       history.pushState({ modal: true, rota }, '', rota);
     } else {
