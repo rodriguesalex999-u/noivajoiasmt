@@ -4,6 +4,24 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-25 — Correção: rotas de produto voltaram a abrir direto (404 no link do WhatsApp)
+
+**O que era:** o `vercel.json` reescrevia só 5 rotas exatas (`/faq`, `/obrigado`, `/checkout`,
+`/painel`, `/masculino`). Todas as rotas de produto — `/moedaantigaforro` (novidade de hoje),
+`/moedaantiga`, `/prata`, `/correnteskits`, `/pulseiras`, `/pingentes`, `/solitariocordourado`,
+`/solitariocorprata`, `/aliancabanhadas` — davam **404 em acesso direto**. Navegando dentro do
+site funcionava (o JS trocha a URL com `pushState` ao abrir o modal), mas o link aberto de
+fora — WhatsApp do cliente, robô, anúncio — caía no 404. Foi o que impediu o robô do ALEX de
+mandar o link da Moeda Antiga com Forro Interno.
+
+**O que foi feito:** catch-all `/(.*)` → `/index.html` no fim das rewrites do `vercel.json`
+(arquivo estático sempre ganha da rewrite, então imagens e API continuam normais). O JS do
+`index.html` já abria o modal da rota no carregamento (`abrirPorRota(location.pathname)`) —
+só faltava o servidor entregar o `index.html` nesses caminhos. Commit + push na `main`
+(deploy automático).
+
+---
+
 ## 2026-10-25 — Nova categoria: Moeda Antiga COM FORRO INTERNO (e o pote de limpeza R$ 9,99)
 
 **A moeda antiga comum mancha o dedo de verde. A versão com forro interno não mancha — e isso
