@@ -4,6 +4,31 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-27 — Navegação e compra inspiradas na Aliança Silveira, adaptadas à Noiva Joias MT
+
+Analisadas a home, a categoria de alianças e uma ficha de produto de `https://www.aliancasilveira.com.br/`. Foram adaptados padrões de navegação, não a marca, seus dados, suas fotos, garantias, promoções ou avaliações. A aparência preto/dourado e o HTML autocontido da Noiva Joias MT foram preservados.
+
+- Cabeçalho persistente com busca, atalhos das nove coleções, central de atendimento e contador do carrinho.
+- Categorias compactas com fotos reais, quantidade de modelos, preço inicial e botão “Explorar coleção”; todas as coleções e rotas existentes continuam disponíveis.
+- Três banners alternáveis com produtos reais do catálogo, atendimento sem cadastro, entrega local e envio nacional; pausa manual, movimento reduzido e interrupção quando um diálogo/visor está aberto.
+- Busca sem distinção de acentos/maiúsculas, filtros opcionais de categoria/faixa de preço e ordenação crescente/decrescente; “Limpar filtros” recupera os 182 cards da vitrine misturada, sem paginação.
+- Carrinho no navegador com quantidades, remoção, subtotal em centavos, resumo para o WhatsApp e seleção persistida por até 30 dias; funciona na visita mesmo se o armazenamento estiver bloqueado. Limites: 40 modelos e 99 unidades por modelo.
+- Cidade e observações do carrinho são opcionais e não ficam salvas; nenhuma conta é exigida. “Enviar pedido no WhatsApp” prepara uma mensagem e não afirma compra ou pagamento confirmado. O checkout online individual e os preços protegidos no servidor permanecem intactos.
+- Visor ampliado mostra as notas originais do produto, botão de adicionar ao carrinho e ajuda com medida/entrega; “Falar com o entregador” foi substituído por “Falar com o atendente”. Galerias, teclado e arrasto foram preservados, com alvos de toque maiores.
+- Voltar/Avançar, Escape e X respeitam as camadas de atendimento, foto e coleção; links diretos de coleção também permitem fechar o catálogo com Voltar sem abandonar a loja imediatamente.
+- Entrega no mesmo dia/pagamento ao receber em Cuiabá, Rondonópolis e Sinop ficaram distintos do envio para outras cidades. Taxas e condições existentes foram mantidas: entrega local pelo WhatsApp R$ 14,99, compra online individual com frete grátis e Sedex a Cobrar R$ 44,99.
+- Mensagens de produto agora pedem confirmação de medida e entrega na cidade do cliente, sem presumir que todo visitante quer entrega imediata nas três cidades. Os resumos da home foram alinhados às opções reais do checkout.
+- Música ambiente passou a ser opcional, ativada somente no botão do rodapé, sem reprodução automática ao navegar/tocar na página; eliminados controladores duplicados e funções antigas que referiam elementos inexistentes.
+- Métricas corrigidas: `AddToCart`, `Contact` e `InitiateCheckout` refletem intenção; removido o falso `Purchase` no clique do checkout e os falsos leads por rolagem/tempo.
+- Política de Privacidade explica a seleção local do carrinho. Rodapé, CNPJ, endereço 31B, WhatsApp, links legais e metatag Search Console permanecem presentes e acessíveis; links legais quebram corretamente em telas estreitas.
+- Removidos dois caracteres NUL ao final do HTML e corrigida a intercalação que calculava, mas não utilizava, a cópia embaralhada dos grupos.
+
+**Verificação:** dados de `CONFIG`, `PRODUTOS` e `COLECOES` idênticos ao original, incluindo preços/fotos/notas; 182 cards e 9 coleções preservados. Passaram 43 testes de interface em 320/390/768/1440 px, 13 regressões de histórico/foco/banners/armazenamento e 17 verificações existentes de checkout/webhook/rastreio com mocks. JavaScript válido, sem erros de execução nos testes e sem IDs duplicados. Nenhuma compra, envio de mensagem ou cobrança real foi feita nos testes. Revisão independente de leitura apontou quatro ajustes de foco/histórico/banners, corrigidos e retestados.
+
+**Arquivos:** `index.html`, `privacidade.html`, `AGENTS.md`, `CHANGELOG.md`. Nenhum produto/preço foi alterado, portanto o catálogo do servidor e os PDFs não precisaram ser regenerados. A pendência de indexação de `/termos` continua para 28/10, conforme o registro anterior; nenhuma rota pública nova foi criada.
+
+---
+
 ## 2026-10-27 — Verificação do anunciante do Google Ads: site agora tem endereço, Política de Privacidade e Trocas/Devoluções
 
 **Por que:** a conta do Google Ads `841-847-7591` está **pausada** por falta da verificação do
