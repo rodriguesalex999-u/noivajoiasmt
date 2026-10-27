@@ -4,6 +4,50 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-27 — Verificação do anunciante do Google Ads: site agora tem endereço, Política de Privacidade e Trocas/Devoluções
+
+**Por que:** a conta do Google Ads `841-847-7591` está **pausada** por falta da verificação do
+anunciante (o prazo venceu). A reprovação veio da conta ter o nome "Etevalda Alianças MT" e um
+site de teste no lugar do site real. O Google compara **documento ⇔ perfil de pagamentos ⇔ campos
+do formulário ⇔ site** e exige que o site mostre os dados da empresa (razão social, CNPJ, endereço
+e política de privacidade). O site tinha CNPJ, mas **não tinha endereço nem política de
+privacidade** — o que reprovaria de novo.
+
+**O que foi feito:**
+
+- **Conta do Google Ads renomeada** de "Etevalda Alianças MT" para **"ALEX IMPORTS MT"** — que é
+  literalmente o *nome de fantasia* no Cartão CNPJ do CNPJ 31.186.957/0001-06. Isso tira o vínculo
+  com a Etevalda e alinha nome da conta = documento = perfil de pagamentos. A marca **Noiva Joias
+  MT** continua intacta para o cliente (site, anúncio, WhatsApp, embalagem) — o nome da conta do
+  Google Ads não aparece para o cliente.
+- **Nova página `/privacidade`** (`privacidade.html`) — Política de Privacidade completa conforme a
+  LGPD: controlador (razão social + CNPJ + endereço), dados coletados, base legal por uso (art. 7º),
+  compartilhamentos (Mercado Pago, Melhor Envios/Correios, WhatsApp), prazos de guarda, direitos do
+  titular (art. 18), segurança, cookies, menores de idade e contato.
+- **Nova página `/termos`** (`termos.html`) — Termos de Uso, Trocas e Devoluções conforme o CDC:
+  preços e pagamento (Mercado Pago / na entrega), tabela de entrega e frete por região, garantia de
+  3 meses (e a regra de que solitários/aparadores **não** têm garantia), direito de arrependimento de
+  7 dias (aplicado à compra à distância; compra presencial sem devolução após o pagamento), trocas,
+  devoluções, avaria no transporte, canal de reclamação e foro.
+- **Endereço completo no rodapé de todas as páginas** (`index.html`, `masculino.html`, `faq.html`,
+  `checkout.html`, `obrigado.html`, `404.html`, `painel.html`): *Rua Santa Terezinha, nº 31, Dom
+  Aquino, Cuiabá/MT, CEP 78.015-140* + WhatsApp (65) 9294-2810 + rodriguesalex999@gmail.com.
+  Endereço tirado do Cartão CNPJ (nº **31**). O Alvará municipal de 10/10/2024 registra **31B** —
+  divergência que será explicada no formulário de verificação, com os dois documentos anexados.
+- **Links legais no rodapé** de todas as páginas: Política de Privacidade, Trocas e Devoluções e
+  Perguntas Frequentes.
+- **Rotas e sitemap** — `/privacidade` e `/termos` adicionadas ao `vercel.json` (antes do catch-all)
+  e ao `sitemap.xml`. `robots.txt` não bloqueia nenhuma das duas.
+- **Conferência de indexação de 27/10 (pendência do `AGENTS.md`) — FECHADA:** Search Console
+  "Indexação das páginas" → **0 não indexadas, 1 indexada, nenhum problema nos últimos 90 dias**. A
+  home está indexada. Próxima revisão periódica: **2027-04-27**.
+
+**Arquivos:** `privacidade.html` (novo), `termos.html` (novo), `index.html`, `masculino.html`,
+`faq.html`, `checkout.html`, `obrigado.html`, `404.html`, `painel.html`, `vercel.json`,
+`sitemap.xml`, `AGENTS.md`, `CHANGELOG.md`.
+
+---
+
 ## 2026-10-25 — Correção: rotas de produto voltaram a abrir direto (404 no link do WhatsApp)
 
 **O que era:** o `vercel.json` reescrevia só 5 rotas exatas (`/faq`, `/obrigado`, `/checkout`,

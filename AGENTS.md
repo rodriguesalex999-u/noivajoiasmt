@@ -11,9 +11,9 @@
 
 ## Tecnologia
 - Site em **HTML único autocontido** (`index.html`)
-- Páginas: `index.html` (loja) e `faq.html` (dúvidas frequentes) — ambas autocontidas, sem build
+- Páginas: `index.html` (loja), `faq.html` (dúvidas frequentes), `privacidade.html` (Política de Privacidade / LGPD) e `termos.html` (Trocas, Devoluções e Termos de Uso / CDC) — todas autocontidas, sem build
 - Fonte canônica da FAQ: `faq.html` nesta pasta. A cópia em `..\FAQ - PERGUNTAS FREQUENTES\FAQ-NOIVA-JOIAS-MT\index.html` é rascunho — sempre editar o `faq.html` e rodar o commit + push na `main` (deploy automático)
-- Rotas: `/faq` → `faq.html` (rewrite em `vercel.json`); os demais caminhos caem no `index.html`
+- Rotas: `/faq` → `faq.html`, `/privacidade` → `privacidade.html`, `/termos` → `termos.html` (rewrite em `vercel.json`); os demais caminhos caem no `index.html`
 - `api/_lib/` guarda módulos (não rotas): o Vercel transforma tudo que está em `api/` numa rota, e um módulo sem handler vira rota quebrada (500). O prefixo `_` tira do roteamento mas o Node empacota junto no import.
 - Sem build, sem framework (React/Vite/npm só se o usuário pedir)
 - Referência de formato: site do **Grupo Etevalda MT** (empresa diferente)
@@ -44,21 +44,12 @@ O caminho completo, com os comandos e as armadilhas, está em **`COMO-COLOCAR-PR
 no `index.html` — nunca remover — e `sitemap.xml` enviado). Passo a passo completo,
 fluxo de "página nova" e armadilhas: **`COMO-INDEXAR-NO-GOOGLE.md`**.
 
-### ⏳ PENDÊNCIA COM PRAZO (resolver ANTES de atender o usuário, e depois pedir a palavra)
-- **Conferência marcada para 2026-10-27** (feita a pedido do dono, 4 dias após a
-  configuração): verificar se a home `https://noivajoiasmt.vercel.app/` **já foi
-  indexada**. Se ainda não → clicar em "Solicitar indexação" no Search Console
-  (se aparecer "cota excedida", repetir no dia seguinte) e registrar o resultado
-  no `CHANGELOG.md`.
-- **Como saber se já foi feita:** a entrada do `CHANGELOG.md` com data
-  **≥ 2026-10-27** e título que fale de conferência de indexação. Se não existir,
-  a pendência está ABERTA — mesmo que o usuário tenha perguntado outra coisa,
-  **faça a conferência primeiro**, depois responda o que ele pediu e, na mesma
-  resposta, diga: *"fiz a conferência de indexação marcada para 27/10 — deu
-  tudo certo"* ou *"precisei X / ainda não indexou"*.
-- **Se a conferência der certo:** adicionar linha no `CHANGELOG.md`
-  (`Fechada a conferência de indexação de 27/10 — home indexada`) e mudar a data
-  da próxima revisão periódica abaixo.
+### ✅ CONFERÊNCIA DE 2026-10-27 — FEITA (pendência encerrada)
+- **Resultado:** Search Console → "Indexação das páginas" → **0 não indexadas, 1 indexada**,
+  "Nenhum problema foi detectado nos últimos 90 dias". A home `https://noivajoiasmt.vercel.app/`
+  **está indexada**. Conferido em 27/10/2026.
+- **Registro:** entrada no `CHANGELOG.md` de 27/10/2026.
+- **Próxima revisão periódica:** **2027-04-27** (e depois a cada 6 meses).
 
 ### 🔁 REVISÃO PERIÓDICA (a cada 6 meses, pedido do dono = 2× ao ano)
 - Próxima revisão: **2027-04-27** (e depois a cada 6 meses).
@@ -72,6 +63,26 @@ indexação" no Search Console (ver `COMO-INDEXAR-NO-GOOGLE.md`). Produto novo
 dentro do catálogo **não** precisa de nada disso. Quando subir uma página nova,
 se a conferência/pendência estiver aberta, resolva-a junto (mesmo raciocínio:
 pendente primeiro, depois a tarefa pedida, relatando as duas).
+
+## Verificação do anunciante do Google Ads (conta 841-847-7591) — CONTEXTO PERMANENTE
+
+A conta do Google Ads `841-847-7591` (Google Ads, CNPJ 31.186.957/0001-06) está **pausada** até
+passar da verificação do anunciante. O Google compara **documento ⇔ perfil de pagamentos ⇔ campos
+do formulário ⇔ site**, e o site precisa mostrar os dados da empresa.
+
+- **Nome da conta:** "ALEX IMPORTS MT" (renomeado de "Etevalda Alianças MT" em 27/10/2026). É o
+  *nome de fantasia* do Cartão CNPJ — alinha conta = documento = perfil de pagamentos. A marca
+  **Noiva Joias MT** é a do cliente (site/anúncio/WhatsApp) e não depende do nome da conta.
+- **Endereço oficial (Cartão CNPJ):** Rua Santa Terezinha, **nº 31**, Dom Aquino, Cuiabá/MT,
+  CEP 78.015-140. **O Alvará municipal de 10/10/2024 registra nº 31B** — divergência real entre
+  os dois documentos; ao responder o formulário, usar **31** e anexar os dois documentos.
+- **Documentos aceitos no Brasil:** Licença comercial, Extrato do CNPJ, Certificado de MEI + RG/CNH
+  do representante. Análise leva de 1 a 10 dias.
+- **Páginas legais (criadas em 27/10/2026):** `/privacidade` (LGPD) e `/termos` (CDC). **Não
+  remover** — o formulário pede link de política de privacidade e o site precisa ter endereço.
+- **Regra de ouro:** qualquer mudança de nome, CNPJ, endereço ou dono no site precisa ser
+  refletida nas duas páginas legais **e** no rodapé de todas as páginas, senão a verificação
+  reprova de novo.
 
 ## Capacidades já testadas e aprovadas (registrar aqui também, não só no CHANGELOG)
 - **Preço no servidor (checkout):** `/api/checkout` ignora o preço que vier do navegador e cobra o de `api/_lib/catalogo-precos.json` (gerado por `scripts/gerar_catalogo_precos.js` a partir do `index.html` + `masculino.html`). Produto fora do catálogo = 400. Testado com 18 casos locais (2026-10-22).
