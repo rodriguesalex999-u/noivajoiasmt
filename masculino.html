@@ -899,7 +899,55 @@ Object.keys(COLLECTION_MAP).forEach((key, i) => {
             priceCurrency: 'BRL',
             availability: 'https://schema.org/InStock',
             url: url,
-            seller: { '@type': 'Organization', name: CONFIG.empresa }
+            itemCondition: 'https://schema.org/NewCondition',
+            seller: {
+              '@type': 'Organization',
+              name: CONFIG.empresa,
+              vatID: CONFIG.cnpj,
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Rua Santa Terezinha, 31',
+                addressLocality: 'Cuiabá',
+                addressRegion: 'MT',
+                postalCode: '78015-140',
+                addressCountry: 'BR'
+              }
+            },
+            shippingDetails: {
+              '@type': 'OfferShippingDetails',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: '0.00',
+                currency: 'BRL'
+              },
+              shippingDestination: {
+                '@type': 'DefinedRegion',
+                addressCountry: 'BR'
+              },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 1,
+                  maxValue: 3,
+                  unitCode: 'DAY'
+                },
+                transitTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 3,
+                  maxValue: 7,
+                  unitCode: 'DAY'
+                }
+              }
+            },
+            hasMerchantReturnPolicy: {
+              '@type': 'MerchantReturnFiniteReturnPolicy',
+              applicableCountry: 'BR',
+              returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnPolicy',
+              merchantReturnDays: 7,
+              returnMethod: 'https://schema.org/ReturnByMail',
+              returnFees: 'https://schema.org/ReturnShippingFees'
+            }
           }
         }
       };

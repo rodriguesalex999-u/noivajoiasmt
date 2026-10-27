@@ -38,9 +38,21 @@ privacidade** — o que reprovaria de novo.
   Perguntas Frequentes.
 - **Rotas e sitemap** — `/privacidade` e `/termos` adicionadas ao `vercel.json` (antes do catch-all)
   e ao `sitemap.xml`. `robots.txt` não bloqueia nenhuma das duas.
+- **Dados estruturados corrigidos (Search Console → Compras)** — o relatório "Listagens do
+  comerciante" e "Snippets do produto" mostravam **181 itens válidos e 0 erros críticos**, mas com 2
+  melhorias pendentes que o Google aponta: `shippingDetails` e `hasMerchantReturnPolicy` ausentes em
+  `offers`. Agora o `ItemList`/`Product` do `masculino.html` (é de lá que saem os 181 produtos)
+  declara **frete grátis para todo o Brasil** (`shippingRate` 0,00), **prazo de entrega** (1–3 dias
+  de preparo + 3–7 dias de trânsito), **devolução em 7 dias** (`MerchantReturnFiniteReturnPolicy`,
+  art. 49 do CDC) e o **vendedor com CNPJ e endereço** (`vatID` + `PostalAddress`). O
+  `JewelryStore` do `index.html` também passou a ter `streetAddress`, `postalCode`, `email` e
+  `vatID` — é o mesmo endereço do Cartão CNPJ que o Google compara na verificação do anunciante.
+  As `aggregateRating`/`review` que faltam são **opcionais** (notas e avaliações de clientes) e
+  não são problema: os itens já são válidos.
 - **Conferência de indexação de 27/10 (pendência do `AGENTS.md`) — FECHADA:** Search Console
   "Indexação das páginas" → **0 não indexadas, 1 indexada, nenhum problema nos últimos 90 dias**. A
-  home está indexada. Próxima revisão periódica: **2027-04-27**.
+  home está indexada (confirmado também na inspeção de URL: "O URL está no Google" / "A página está
+  indexada" / "A página é exibida por HTTPS"). Próxima revisão periódica: **2027-04-27**.
 
 **Arquivos:** `privacidade.html` (novo), `termos.html` (novo), `index.html`, `masculino.html`,
 `faq.html`, `checkout.html`, `obrigado.html`, `404.html`, `painel.html`, `vercel.json`,
