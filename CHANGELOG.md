@@ -19,13 +19,14 @@ Analisadas a home, a categoria de alianças e uma ficha de produto de `https://w
 - Entrega no mesmo dia/pagamento ao receber em Cuiabá, Rondonópolis e Sinop ficaram distintos do envio para outras cidades. Taxas e condições existentes foram mantidas: entrega local pelo WhatsApp R$ 14,99, compra online individual com frete grátis e Sedex a Cobrar R$ 44,99.
 - Mensagens de produto agora pedem confirmação de medida e entrega na cidade do cliente, sem presumir que todo visitante quer entrega imediata nas três cidades. Os resumos da home foram alinhados às opções reais do checkout.
 - Música ambiente passou a ser opcional, ativada somente no botão do rodapé, sem reprodução automática ao navegar/tocar na página; eliminados controladores duplicados e funções antigas que referiam elementos inexistentes.
+- A CSP de produção passou a permitir áudio somente do próprio site e de `https://rodriguesalex999-u.github.io`, origem das músicas já utilizadas; o bloqueio anterior por `default-src 'self'` impediria o botão de funcionar em produção.
 - Métricas corrigidas: `AddToCart`, `Contact` e `InitiateCheckout` refletem intenção; removido o falso `Purchase` no clique do checkout e os falsos leads por rolagem/tempo.
 - Política de Privacidade explica a seleção local do carrinho. Rodapé, CNPJ, endereço 31B, WhatsApp, links legais e metatag Search Console permanecem presentes e acessíveis; links legais quebram corretamente em telas estreitas.
 - Removidos dois caracteres NUL ao final do HTML e corrigida a intercalação que calculava, mas não utilizava, a cópia embaralhada dos grupos.
 
 **Verificação:** dados de `CONFIG`, `PRODUTOS` e `COLECOES` idênticos ao original, incluindo preços/fotos/notas; 182 cards e 9 coleções preservados. Passaram 43 testes de interface em 320/390/768/1440 px, 13 regressões de histórico/foco/banners/armazenamento e 17 verificações existentes de checkout/webhook/rastreio com mocks. JavaScript válido, sem erros de execução nos testes e sem IDs duplicados. Nenhuma compra, envio de mensagem ou cobrança real foi feita nos testes. Revisão independente de leitura apontou quatro ajustes de foco/histórico/banners, corrigidos e retestados.
 
-**Arquivos:** `index.html`, `privacidade.html`, `AGENTS.md`, `CHANGELOG.md`. Nenhum produto/preço foi alterado, portanto o catálogo do servidor e os PDFs não precisaram ser regenerados. A pendência de indexação de `/termos` continua para 28/10, conforme o registro anterior; nenhuma rota pública nova foi criada.
+**Arquivos:** `index.html`, `privacidade.html`, `AGENTS.md`, `CHANGELOG.md`, `vercel.json` (CSP de áudio). Nenhum produto/preço foi alterado, portanto o catálogo do servidor e os PDFs não precisaram ser regenerados. A pendência de indexação de `/termos` continua para 28/10, conforme o registro anterior; nenhuma rota pública nova foi criada.
 
 ---
 
