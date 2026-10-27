@@ -64,6 +64,14 @@ dentro do catálogo **não** precisa de nada disso. Quando subir uma página nov
 se a conferência/pendência estiver aberta, resolva-a junto (mesmo raciocínio:
 pendente primeiro, depois a tarefa pedida, relatando as duas).
 
+### ⏳ PENDÊNCIA COM PRAZO (2026-10-28) — indexação manual de `/termos`
+- Em 27/10/2026 as páginas `/privacidade` e `/termos` foram criadas e o `sitemap.xml` reenviado
+  ("Sitemap enviado", **3 → 5 páginas encontradas**). A indexação manual de `/privacidade` foi
+  pedida; a de **`/termos` devolveu "A cota foi excedida"** (limite diário do Google).
+- **Em 2026-10-28:** abrir a inspeção de URL de `https://noivajoiasmt.vercel.app/termos` e clicar
+  em "Solicitar indexação". Se a cota ainda estiver excedida, repetir no dia seguinte.
+- **Não é urgente:** as duas páginas já estão no sitemap, então o Google as encontra sozinho.
+
 ## Verificação do anunciante do Google Ads (conta 841-847-7591) — CONTEXTO PERMANENTE
 
 A conta do Google Ads `841-847-7591` (Google Ads, CNPJ 31.186.957/0001-06) está **pausada** até

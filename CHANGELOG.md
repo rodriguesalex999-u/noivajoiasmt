@@ -37,7 +37,11 @@ privacidade** — o que reprovaria de novo.
 - **Links legais no rodapé** de todas as páginas: Política de Privacidade, Trocas e Devoluções e
   Perguntas Frequentes.
 - **Rotas e sitemap** — `/privacidade` e `/termos` adicionadas ao `vercel.json` (antes do catch-all)
-  e ao `sitemap.xml`. `robots.txt` não bloqueia nenhuma das duas.
+  e ao `sitemap.xml`. `robots.txt` não bloqueia nenhuma das duas. O sitemap foi **reenviado** pelo
+  Search Console em 27/10 ("Sitemap enviado") e passou de **3 → 5 páginas encontradas**, então o
+  Google já conhece as duas páginas novas. A indexação manual de `/privacidade` foi pedida; a de
+  `/termos` devolveu **"A cota foi excedida"** (limite diário do Google) — se ela não aparecer
+  indexada, repetir a solicitação em 28/10.
 - **Dados estruturados corrigidos (Search Console → Compras)** — o relatório "Listagens do
   comerciante" e "Snippets do produto" mostravam **181 itens válidos e 0 erros críticos**, mas com 2
   melhorias pendentes que o Google aponta: `shippingDetails` e `hasMerchantReturnPolicy` ausentes em
