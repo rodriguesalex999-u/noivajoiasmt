@@ -81,9 +81,12 @@ do formulário ⇔ site**, e o site precisa mostrar os dados da empresa.
 - **Nome da conta:** "ALEX IMPORTS MT" (renomeado de "Etevalda Alianças MT" em 27/10/2026). É o
   *nome de fantasia* do Cartão CNPJ — alinha conta = documento = perfil de pagamentos. A marca
   **Noiva Joias MT** é a do cliente (site/anúncio/WhatsApp) e não depende do nome da conta.
-- **Endereço oficial (Cartão CNPJ):** Rua Santa Terezinha, **nº 31**, Dom Aquino, Cuiabá/MT,
-  CEP 78.015-140. **O Alvará municipal de 10/10/2024 registra nº 31B** — divergência real entre
-  os dois documentos; ao responder o formulário, usar **31** e anexar os dois documentos.
+- **Endereço oficial:** Rua Santa Terezinha, **nº 31B**, Dom Aquino, Cuiabá/MT, CEP 78.015-140.
+  Confirmado em **dois documentos atuais, ambos de 10/10/2024**: o Cartão CNPJ (emitido 10/10/2024,
+  campo "NÚMERO" = **31B**) e o Alvará/2024 da Prefeitura de Cuiabá ("Rua Santa Terezinha, **31B** —
+  Bairro: Dom Aquino — CEP: 78015140 — Cuiabá — MT"). O Cartão CNPJ de **2020**, ainda arquivado,
+  dizia nº **31** — está **desatualizado**, não usar. O nº 31B é o que está no rodapé do site e no
+  JSON-LD.
 - **Documentos aceitos no Brasil:** Licença comercial, Extrato do CNPJ, Certificado de MEI + RG/CNH
   do representante. Análise leva de 1 a 10 dias.
 - **Páginas legais (criadas em 27/10/2026):** `/privacidade` (LGPD) e `/termos` (CDC). **Não

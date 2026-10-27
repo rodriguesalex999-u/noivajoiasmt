@@ -30,10 +30,11 @@ privacidade** — o que reprovaria de novo.
   7 dias (aplicado à compra à distância; compra presencial sem devolução após o pagamento), trocas,
   devoluções, avaria no transporte, canal de reclamação e foro.
 - **Endereço completo no rodapé de todas as páginas** (`index.html`, `masculino.html`, `faq.html`,
-  `checkout.html`, `obrigado.html`, `404.html`, `painel.html`): *Rua Santa Terezinha, nº 31, Dom
+  `checkout.html`, `obrigado.html`, `404.html`, `painel.html`): *Rua Santa Terezinha, nº 31B, Dom
   Aquino, Cuiabá/MT, CEP 78.015-140* + WhatsApp (65) 9294-2810 + rodriguesalex999@gmail.com.
-  Endereço tirado do Cartão CNPJ (nº **31**). O Alvará municipal de 10/10/2024 registra **31B** —
-  divergência que será explicada no formulário de verificação, com os dois documentos anexados.
+  Endereço conferido nos **dois documentos atuais, ambos de 10/10/2024**: o Cartão CNPJ (campo
+  "NÚMERO" = **31B**) e o Alvará/2024 da Prefeitura de Cuiabá ("Rua Santa Terezinha, **31B**"). O
+  Cartão CNPJ de 2020, ainda arquivado, dizia nº **31** — desatualizado, não usado.
 - **Links legais no rodapé** de todas as páginas: Política de Privacidade, Trocas e Devoluções e
   Perguntas Frequentes.
 - **Rotas e sitemap** — `/privacidade` e `/termos` adicionadas ao `vercel.json` (antes do catch-all)
