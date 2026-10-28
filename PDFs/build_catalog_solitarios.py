@@ -8,8 +8,8 @@ nome no site e rodar de novo atualiza o PDF.
 
 Layout (identico aos outros catalogos): A4 exato, 2 colunas x 2 slots por pagina.
 As paginas de produto sao paginadas por contagem (4 slots), na ordem douradas
-depois prata — com 10 + 3 = 13 isso fecha em 3 paginas cheias e uma ultima com
-1 card, cujos slots vazios entram banners informativos. A ultima pagina e
+depois prata — com 11 + 3 = 14 isso fecha em 3 paginas cheias e uma ultima com
+2 cards, cujos slots vazios entram banners informativos. A ultima pagina e
 sempre a do Sr. Fernandes.
 
 A identidade visual e as travas de validacao moram em `catalogo_base.py`.
@@ -42,7 +42,7 @@ SECOES = [
     ('Solitários Cor Prata', 'Solitários Cor Prata'),
 ]
 
-ESPERADO = {'Solitários Cor Dourada': 10, 'Solitários Cor Prata': 3}
+ESPERADO = {'Solitários Cor Dourada': 11, 'Solitários Cor Prata': 3}
 
 SLOTS_PAGINA = 4
 
@@ -65,8 +65,11 @@ OBS = {
     'Solitários Cor Prata': 'anel na cor prata não tem garantia · a aliança tem 3 meses · compre se quiser · é opcional',
 }
 
+# o aparador nao e um anel: o aviso dele e proprio (nao acompanha alianca).
+OBS_APARADOR = 'aparador banhado a ouro · não acompanha aliança · a aliança é vendida separada'
+
 # Banners que fecham os slots vazios da ultima pagina de produtos
-# (13 produtos = 3 paginas cheias + 1 card). Mesmo componente da moeda antiga.
+# (14 produtos = 3 paginas cheias + 2 cards). Mesmo componente da moeda antiga.
 BANNERS = [
     build_banner(
         'Antes de comprar',
@@ -148,7 +151,7 @@ def build_pages():
           % (len(dourada), len(prata), len(dourada) + len(prata)))
 
     # douradas primeiro, pratas depois: os cards sao paginados na ordem, sem
-    # buraco. Com 9 + 3 = 12 fecha em 3 paginas cheias de 4.
+    # buraco. Com 11 + 3 = 14 fecha em 3 paginas cheias de 4 + 1 com 2 cards.
     ordem = ([(p, SECOES[0][0]) for p in dourada]
              + [(p, SECOES[1][0]) for p in prata])
     cards = [build_card(p,
@@ -156,7 +159,9 @@ def build_pages():
                                else 'Mais vendido'
                                if p['imagem'].rsplit('/', 1)[-1] in MAIS_VENDIDOS
                                else 'Opcional'),
-                        obs=OBS[colecao], parcelas=p['parcelas'])
+                        obs=(OBS_APARADOR if 'Aparador' in p['nome']
+                             else OBS[colecao]),
+                        parcelas=p['parcelas'])
              for p, colecao in ordem]
 
     # o rotulo do cabecalho acompanha o que caiu na pagina

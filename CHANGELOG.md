@@ -4,6 +4,19 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-28 — Dois produtos novos: aliança ultra grossa 10mm e par de aparadores
+
+**Por que:** o dono mandou as fotos novas do Downloads para entrar no catálogo.
+
+- **Par Aliança ULTRA GROSSA 10mm Banhada a Ouro 18k — R$ 689,99** (2x de R$ 344,99): novo item da coleção **Aliança de casamento** (`/aliancabanhadas`). Foto nova no R2 (`aliancas-banhadas-par-alianca-ultra-grossa-10mm-banhada-a-ouro-18k-1.webp`), nota com a garantia de 3 meses do par e o aviso de que o banhado escurece com o tempo e pode manchar o dedo de verde.
+- **Par de Aparadores Banhado a Ouro — R$ 99,99**: novo item da coleção **Solitários Cor Dourada** (`/solitariocordourado`). Foto nova no R2 (`solitario-dourada-par-de-aparadores-banhado-a-ouro-1.webp`) e o aviso de que **não acompanha aliança** — a aliança é vendida separada.
+- Catálogo de preços do servidor (`api/_lib/catalogo-precos.json`) regenerado: os dois produtos já podem ser pagos pelo checkout (sem isso o pagamento seria recusado).
+- Catálogo PDF “Solitário e Aparadores” refeito: 14 produtos (11 cor dourada + 3 cor prata), 5 páginas. O card do aparador passou a usar o aviso próprio dele, em vez do aviso de “anel sem garantia”. O PDF não é versionado no Git.
+
+**Arquivos:** `index.html`, `api/_lib/catalogo-precos.json`, `PDFs/build_catalog_solitarios.py`, `CHANGELOG.md`.
+
+---
+
 ## 2026-10-27 — Navegação e compra inspiradas na Aliança Silveira, adaptadas à Noiva Joias MT
 
 Analisadas a home, a categoria de alianças e uma ficha de produto de `https://www.aliancasilveira.com.br/`. Foram adaptados padrões de navegação, não a marca, seus dados, suas fotos, garantias, promoções ou avaliações. A aparência preto/dourado e o HTML autocontido da Noiva Joias MT foram preservados.
