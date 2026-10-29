@@ -360,7 +360,10 @@ async function consultar(codigo) {
     s.dataset.rastreio = d.rastreio || '';
     s.dataset.link = d.link_rastreio || '#';
     desenharEtapas(d.etapas);
-    dispararPixel();
+    /* Purchase só com pagamento aprovado (Pix/boleto pendente não conta). */
+    if (['Pagamento aprovado', 'Em tr\u00e2nsito', 'Entregue'].includes(d.status)) {
+      dispararPixel(d.payment_id || codigo);
+    }
 
     /* Se o pedido est\u00e1 esperando o CPF, mostra a caixa para enviar. */
     if ((d.etapas || []).some(e => e.bloqueio) || d.precisa_cpf) {
@@ -421,9 +424,10 @@ if (pagId) {
        Tenta de novo em 6 segundos e, depois, em 20. */
     setTimeout(() => consultar(pagId).then(o => { if (!o) setTimeout(() => consultar(pagId), 14000); }), 6000);
   });
-} else {
-  dispararPixel();
 }
+/* Sem código do pagamento não há compra confirmada: nada de Purchase.
+   (Antes chamava dispararPixel() aqui, antes de a variável existir, e o
+   erro travava o resto da página — inclusive o botão do CPF.) */
 
 /* ==========================================================================
    CPF \u2014 a Melhor Envios exige; o Mercado Pago n\u00e3o pede
@@ -488,12 +492,18 @@ document.getElementById('cpfCampo').addEventListener('input', function () {
    Dispara SÓ depois que o banco respondeu, para mandar o valor
    certo (e não o R$ 0,00 que vinha da URL).
    ========================================================================== */
-let pixelDisparado = false;
-function dispararPixel() {
-  if (pixelDisparado || !window.fbqTrackRich) return;
+var pixelDisparado = false;
+function dispararPixel(idPagamento) {
+  const idPag = String(idPagamento || pagId || '');
+  if (pixelDisparado || !idPag || !window.fbqTrackRich) return;
+  /* Uma compra = um Purchase: se o cliente reabrir esta página ou
+     clicar em Consultar de novo, não conta outra venda. */
+  const chave = 'nj_purchase_' + idPag;
+  try { if (localStorage.getItem(chave)) return; } catch (e) {}
   pixelDisparado = true;
+  try { localStorage.setItem(chave, '1'); } catch (e) {}
   window.fbqTrackRich('Purchase', {
-    content_ids: ['noivajoias_' + (pagId || Date.now())],
+    content_ids: ['noivajoias_' + idPag],
     content_name: nome,
     content_category: 'aliancas',
     content_type: 'product',
@@ -511,10 +521,10 @@ function dispararPixel() {
       pagamento_agora: num,
       valor_produto: valorProd,
       payment_gateway: 'mercado_pago',
-      payment_id: pagId || null,
+      payment_id: idPag,
       purchase_confirmed: true
     }
-  });
+  }, 'purchase_' + idPag);
 }
 </script>
 </body>
