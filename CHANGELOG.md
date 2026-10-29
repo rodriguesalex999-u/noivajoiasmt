@@ -4,6 +4,23 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-29 — Meta Pixel: ID corrigido, Pixel no checkout/obrigado e compra contada só com pagamento aprovado
+
+**Por que:** auditoria do tráfego pago (Meta Ads). O site mandava eventos para um Pixel que não existe e nenhuma compra feita no site chegava ao Facebook.
+
+- `index.html`: Pixel `186922223282687` (faltava o "1") → `1186922223282687`, o Pixel "Relogio Feminino" da conta de anúncios 492598744185537. Commit `2ccfae6`.
+- `checkout.html` e `obrigado.html`: não tinham o código base do Pixel — o `fbqTrackRich('Purchase')` da página de obrigado nunca rodava. Instalado o mesmo bloco do `index.html`. Commits `e607056` e `282225d`.
+- `obrigado.html` (commit `741c60d`):
+  - sem código do pagamento na URL, a página chamava `dispararPixel()` antes de `pixelDisparado` existir e o erro parava o resto do script (botão do CPF incluso). Agora não dispara nada sem código;
+  - `Purchase` só com o pedido em "Pagamento aprovado", "Em trânsito" ou "Entregue" (Pix/boleto pendente não conta);
+  - um `Purchase` por pagamento: `eventID` = `purchase_<id do pagamento>` + trava `nj_purchase_<id>` no navegador (reabrir ou consultar de novo não conta outra venda).
+- Fora do código: Pixel com lista de permissão só para `noivajoiasmt.vercel.app` (o etevaldajoias.com tinha mandado 4 eventos).
+- **Pendente (decisão do dono):** `masculino.html` mostra preço diferente do que o servidor cobra em 16 cordões (ex.: Cordão Cadeado 2mm aparece R$ 105,00 e o checkout cobra R$ 204,99, que é o preço do `index.html`).
+
+**Arquivos:** `index.html`, `checkout.html`, `obrigado.html`, `CHANGELOG.md`.
+
+---
+
 ## 2026-10-28 — Dois produtos novos: aliança ultra grossa 10mm e par de aparadores
 
 **Por que:** o dono mandou as fotos novas do Downloads para entrar no catálogo.
