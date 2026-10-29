@@ -15,9 +15,10 @@ Formato: data curta · o que mudou · por quê.
   - `Purchase` só com o pedido em "Pagamento aprovado", "Em trânsito" ou "Entregue" (Pix/boleto pendente não conta);
   - um `Purchase` por pagamento: `eventID` = `purchase_<id do pagamento>` + trava `nj_purchase_<id>` no navegador (reabrir ou consultar de novo não conta outra venda).
 - Fora do código: Pixel com lista de permissão só para `noivajoiasmt.vercel.app` (o etevaldajoias.com tinha mandado 4 eventos).
-- **Pendente (decisão do dono):** `masculino.html` mostra preço diferente do que o servidor cobra em 16 cordões (ex.: Cordão Cadeado 2mm aparece R$ 105,00 e o checkout cobra R$ 204,99, que é o preço do `index.html`).
+- **Preço dos 16 cordões (decisão do dono, 29/10):** valem os preços da página `/masculino` (ex.: Cordão Cadeado 2mm R$ 105,00; Cordão Friso S 13mm R$ 405,00). `index.html` passou a usar o mesmo preço e parcelas nesses 16 itens e o `api/_lib/catalogo-precos.json` foi regenerado (`node scripts/gerar_catalogo_precos.js`): o checkout cobra o mesmo valor que a vitrine e a página masculina mostram. Os outros 141 produtos não mudaram. Commits `330ba98` e `b865a3e`.
+- **Atenção (gerador):** `scripts/gerar_catalogo_precos.js` lê "0 produtos" do `masculino.html` (o formato do `COLLECTION_MAP` mudou). Hoje não faz falta porque todos os itens da página masculina também estão no `index.html`; se um produto entrar só na página masculina, o checkout vai recusá-lo até o gerador ser ajustado.
 
-**Arquivos:** `index.html`, `checkout.html`, `obrigado.html`, `CHANGELOG.md`.
+**Arquivos:** `index.html`, `checkout.html`, `obrigado.html`, `api/_lib/catalogo-precos.json`, `CHANGELOG.md`.
 
 ---
 
