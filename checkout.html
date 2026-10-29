@@ -130,6 +130,78 @@ h1{font-family:var(--font-display);font-size:clamp(1.9rem,7vw,2.5rem);font-weigh
 
 @media(prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
 </style>
+<!-- Meta Pixel — Noiva Joias MT (senior config) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+/* Configuração avançada do Pixel */
+fbq('init', '1186922223282687', {
+  em: '',           // email (quando disponível via formulário futuro)
+  ph: '',           // telefone (quando disponível)
+  fn: '',           // primeiro nome
+  ln: '',           // último nome
+  ct: '',           // cidade
+  st: '',           // estado
+  zp: '',           // CEP
+  country: 'BR',    // país
+  external_id: ''   // ID interno do cliente (futuro CRM)
+}, {
+  // Configurações de processamento
+  processSingleEvents: true,
+  useImageOnly: false
+});
+
+/* PageView automático + deduplication_id para evitar duplicatas */
+fbq('track', 'PageView', {}, {eventID: 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)});
+
+/* Função helper para gerar eventID único */
+window.fbqEventID = function(prefix) {
+  return prefix + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+};
+
+/* Helper para extrair dados do produto do contexto do clique */
+window.fbqExtractProduct = function(element) {
+  const card = element.closest('.prod, .mi, .cat-card');
+  if (!card) return null;
+
+  const nameEl = card.querySelector('.prod-name, .mi-name, .modal-h');
+  const priceEl = card.querySelector('.prod-price-val, .mi-price-val');
+  const imgEl = card.querySelector('.prod-img, .mi-media img, .modal-main-media img');
+
+  return {
+    name: nameEl ? nameEl.textContent.trim() : null,
+    price: priceEl ? parseFloat(priceEl.textContent.replace(/[^\d,.]/g, '').replace(',', '.')) : null,
+    image: imgEl ? imgEl.src : null,
+    category: card.classList.contains('cat-card') ? 'colecao' : 'produto'
+  };
+};
+
+/* Helper para trackear eventos padrão com parâmetros ricos */
+window.fbqTrackRich = function(eventName, customParams, eventID) {
+  if (!window.fbq) return;
+
+  const baseParams = {
+    content_type: 'product',
+    currency: 'BRL',
+    page_location: window.location.href,
+    page_title: document.title,
+    ...customParams
+  };
+
+  fbq('track', eventName, baseParams, {eventID: eventID || window.fbqEventID(eventName)});
+};
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 <div class="bg-glow" aria-hidden="true"></div>
