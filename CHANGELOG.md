@@ -15,10 +15,10 @@ Formato: data curta · o que mudou · por quê.
   - `Purchase` só com o pedido em "Pagamento aprovado", "Em trânsito" ou "Entregue" (Pix/boleto pendente não conta);
   - um `Purchase` por pagamento: `eventID` = `purchase_<id do pagamento>` + trava `nj_purchase_<id>` no navegador (reabrir ou consultar de novo não conta outra venda).
 - Fora do código: Pixel com lista de permissão só para `noivajoiasmt.vercel.app` (o etevaldajoias.com tinha mandado 4 eventos).
-- **Preço dos 16 cordões (decisão do dono, 29/10):** valem os preços da página `/masculino` (ex.: Cordão Cadeado 2mm R$ 105,00; Cordão Friso S 13mm R$ 405,00). `index.html` passou a usar o mesmo preço e parcelas nesses 16 itens e o `api/_lib/catalogo-precos.json` foi regenerado (`node scripts/gerar_catalogo_precos.js`): o checkout cobra o mesmo valor que a vitrine e a página masculina mostram. Os outros 141 produtos não mudaram. Commits `330ba98` e `b865a3e`.
+- **Preço dos 16 cordões (decisão do dono, 29/10):** vale sempre o **maior** entre o preço antigo do `index.html` e o da página `/masculino`. 12 cordões ficam no preço antigo, em 2x (ex.: Cadeado 2mm R$ 204,99; Grumet 13mm Fecho Santa R$ 854,99) e 4 ficam no preço da página masculina (Balão 8mm R$ 255,00; Friso S 13mm R$ 405,00; Lacraia 10mm R$ 285,00; Tijolinho 6mm R$ 225,00). `index.html`, `masculino.html` e `api/_lib/catalogo-precos.json` iguais: vitrine, página masculina e checkout mostram/cobram o mesmo valor. Os outros 141 produtos não mudaram. Commits `5848afc`, `e81b688`, `ef66550` (substituem `330ba98`/`b865a3e`, que tinham baixado os preços).
 - **Atenção (gerador):** `scripts/gerar_catalogo_precos.js` lê "0 produtos" do `masculino.html` (o formato do `COLLECTION_MAP` mudou). Hoje não faz falta porque todos os itens da página masculina também estão no `index.html`; se um produto entrar só na página masculina, o checkout vai recusá-lo até o gerador ser ajustado.
 
-**Arquivos:** `index.html`, `checkout.html`, `obrigado.html`, `api/_lib/catalogo-precos.json`, `CHANGELOG.md`.
+**Arquivos:** `index.html`, `masculino.html`, `checkout.html`, `obrigado.html`, `api/_lib/catalogo-precos.json`, `CHANGELOG.md`.
 
 ---
 
