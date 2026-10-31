@@ -74,6 +74,10 @@ pendente primeiro, depois a tarefa pedida, relatando as duas).
 
 ## Verificação do anunciante do Google Ads (conta 841-847-7591) — CONTEXTO PERMANENTE
 
+> 🧠 **Status vivo do caso (etapa atual, linha do tempo, documentos enviados):** `G:\Meu Drive\GOOGLE-ADS\STATUS_VERIFICACAO.md`.
+> Leia antes de mexer em nome, CNPJ, endereço ou rodapé, e atualize-o quando algo mudar.
+> A empresa é **ME (não MEI)**: o site precisa mostrar a razão social ALEX RODRIGUES FERNANDES DE MELO no rodapé de todas as páginas.
+
 A conta do Google Ads `841-847-7591` (Google Ads, CNPJ 31.186.957/0001-06) está **pausada** até
 passar da verificação do anunciante. O Google compara **documento ⇔ perfil de pagamentos ⇔ campos
 do formulário ⇔ site**, e o site precisa mostrar os dados da empresa.
