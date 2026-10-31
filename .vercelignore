@@ -1,0 +1,16 @@
+# O que NAO vai para o site publicado (a Vercel publica a pasta inteira).
+# Sem isto, qualquer pessoa abria /AGENTS.md, /CHANGELOG.md, /scripts/... no navegador.
+
+# documentacao interna e anotacoes
+*.md
+docs/
+marketing/
+
+# ferramentas internas (catalogos, fotos, automacoes)
+PDFs/
+scripts/
+fotos-origem/
+node_modules/
+
+# segredos e modelos de segredo
+.env*
