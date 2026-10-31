@@ -4,6 +4,16 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-10-31 — Razão social no rodapé de todas as páginas e natureza jurídica corrigida (verificação do Google Ads)
+
+**Por que:** a verificação de operações comerciais do Google Ads (conta 841-847-7591) reprovou por "dados não batem com a conta" e "falta informação sobre quem fornece o produto". O site só mostrava "Noiva Joias MT + CNPJ" no rodapé e as páginas legais diziam "MEI", mas a Alex Imports é ME desde o desenquadramento de 2020.
+
+- `privacidade.html` e `termos.html`: natureza jurídica "MEI" → "Microempresa (ME), optante pelo Simples Nacional" (igual ao Cartão CNPJ).
+- Rodapé de `index.html`, `masculino.html`, `faq.html`, `checkout.html`, `obrigado.html` e `404.html`: passa a mostrar a razão social ALEX RODRIGUES FERNANDES DE MELO (nome fantasia ALEX IMPORTS MT) junto do CNPJ.
+- `index.html`: FAQ "Vocês são uma empresa registrada?" explica que Noiva Joias MT é a loja dessa empresa; JSON-LD ganhou `legalName` e `alternateName`.
+
+---
+
 ## 2026-10-29 — Meta Pixel: ID corrigido, Pixel no checkout/obrigado e compra contada só com pagamento aprovado
 
 **Por que:** auditoria do tráfego pago (Meta Ads). O site mandava eventos para um Pixel que não existe e nenhuma compra feita no site chegava ao Facebook.
