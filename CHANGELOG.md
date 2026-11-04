@@ -4,6 +4,15 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-04 — Nota da aliança banhada 10mm corrigida e aviso de "sem garantia" em solitários e aparadores
+
+**Por que:** pedido do dono. A nota da Par Aliança ULTRA GROSSA 10mm dizia que o banhado escurece e mancha o dedo de verde — isso é da moeda antiga comum, não da banhada.
+
+- `index.html`: nota da 10mm banhada → não fica preta, não mancha o dedo; o banho pode se desgastar com os anos, conforme os cuidados.
+- `index.html`: nota de todos os anéis solitários (dourada, prata e o Monaco) e de todos os pares de aparadores → vendidos em valor simbólico porque não têm garantia ("praticamente o valor de um lanche"), "compre se quiser / se se sentir confortável". Preços não mudaram.
+
+---
+
 ## 2026-10-31 — Razão social no rodapé de todas as páginas e natureza jurídica corrigida (verificação do Google Ads)
 
 **Por que:** a verificação de operações comerciais do Google Ads (conta 841-847-7591) reprovou por "dados não batem com a conta" e "falta informação sobre quem fornece o produto". O site só mostrava "Noiva Joias MT + CNPJ" no rodapé e as páginas legais diziam "MEI", mas a Alex Imports é ME desde o desenquadramento de 2020.
