@@ -4,6 +4,20 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-04 — Vídeo do Sr. Fernandes (VSL) no topo do site, no lugar do carrossel
+
+**Por que:** pedido do dono. O vídeo de apresentação passa a ser a primeira coisa que o cliente vê, como uma landing page.
+
+- `index.html`: o carrossel de 3 banners do topo foi trocado pelo vídeo quadrado (3min52s). Ele começa rodando no mudo; um botão dourado "Seu vídeo já começou — toque aqui para ouvir com som" reinicia do começo com áudio. Sem linha do tempo. Tocar no vídeo pausa/continua; botão para tirar o som; ao terminar aparece "Chamar no WhatsApp" e "Assistir de novo".
+- Se o cliente rolar a página ouvindo, o vídeo vira um mini player no canto (com botão de fechar). Pausa sozinho se a aba for trocada; se a música ambiente for ligada, o vídeo pausa (e vice-versa).
+- Mesmo título H1 "Alianças que marcam histórias", botões "Falar no WhatsApp" (dispara o Contact do Pixel, como os outros) e "Ver alianças".
+- Pixel: só eventos personalizados do vídeo (`VSL_Assistir_Com_Som`, `VSL_25/50/75_Porcento`, `VSL_Assistiu_Ate_O_Fim`). Nenhum evento padrão novo.
+- Quem usa "reduzir movimento" ou economia de dados não recebe autoplay (vê a capa e o botão).
+- Vídeo e capa no R2: `vsl-noiva-fernandes.mp4` (720×720, 17 MB, voz +30% com limitador, sem distorção) e `vsl-noiva-fernandes-poster.jpg`. Não entram no repositório.
+- `vercel.json`: CSP `media-src` passa a aceitar o R2 (`pub-30377154a86f42f9be74defe556d3deb.r2.dev`).
+
+---
+
 ## 2026-11-04 — Nota da aliança banhada 10mm corrigida e aviso de "sem garantia" em solitários e aparadores
 
 **Por que:** pedido do dono. A nota da Par Aliança ULTRA GROSSA 10mm dizia que o banhado escurece e mancha o dedo de verde — isso é da moeda antiga comum, não da banhada.

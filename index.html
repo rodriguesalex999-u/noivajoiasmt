@@ -932,6 +932,53 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
 @media(max-width:1000px){.topbar-in{gap:12px}.shop-action{padding:8px}.shop-action-label{display:none}.cat-card-shell{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-copy{padding:32px 26px}.feature-slide{min-height:300px}}
 @media(max-width:600px){html{scroll-padding-top:164px}.shell{padding-left:16px;padding-right:16px}.topbar-in{grid-template-columns:1fr auto;padding:10px 16px;gap:8px}.topbar-mark{width:28px;height:28px}.topbar-name{font-size:.8rem;letter-spacing:.025em}.shop-actions{gap:5px}.shop-action{padding:6px;min-height:42px;border:0}.shop-search{grid-column:1/-1;grid-row:2}.shop-nav{padding:0 16px 8px;gap:3px}.shop-nav button{font-size:.71rem;min-height:32px}.hero{padding-top:18px}.feature-slide{display:flex;flex-direction:column-reverse;min-height:0}.feature-controls{padding:8px 12px}.feature-controls button{min-width:32px;padding:6px;font-size:.7rem}.feature-dots button{min-width:32px}.feature-arrows{gap:0}.feature-photo{height:200px}.feature-photo img{object-fit:contain}.feature-photo:after{background:linear-gradient(0deg,#17120e,transparent 40%)}.feature-copy{padding:18px 24px 25px}.feature h1,.feature h2{font-size:2.35rem}.feature p{font-size:.83rem}.feature-kicker{font-size:.6rem;margin-bottom:10px}.feature a,.feature-copy button{margin-top:16px;padding:11px 16px}.trust-strip{display:grid;grid-template-columns:1fr 1fr;gap:13px;font-size:.72rem;padding:18px 0}.category-intro{align-items:start;flex-direction:column;gap:4px;margin-top:25px}.category-intro h2{font-size:1.6rem}.cat-card-shell{gap:9px}.cat-card-shell .prod.cat-card{display:flex;flex-direction:column}.cat-card-shell .prod-media{height:auto;aspect-ratio:1.25;min-height:0}.cat-card-shell .prod-body{padding:12px}.cat-card-shell .prod-name{font-size:.8rem}.cat-card-shell .prod.cat-card .prod-cta{font-size:.7rem;margin-top:auto;padding-top:9px}.category-start{font-size:.74rem}.catalog-controls{grid-template-columns:1fr 1fr}.catalog-controls label:first-child{grid-column:1/-1}.catalog-tools{padding:14px}.catalog-status{align-items:start;font-size:.76rem}.sec-sub{max-width:45ch}.cart-dialog{margin:auto}.shop-dialog-head{padding:18px}.shop-dialog-body{padding:18px}.dock-cart{padding:8px 12px}.lbx{padding:10px}.lbx-stage{flex-shrink:0;height:32vh;min-height:180px}.lbx-img{height:100%;object-fit:contain}.lbx-info{padding:18px}.lbx-name{font-size:1.28rem}.lbx-price{font-size:1.7rem}.lbx-desc{font-size:.78rem}.lbx-inst{font-size:.75rem}.lbx-x{z-index:5}.toast{bottom:96px}}
 @media(prefers-reduced-motion:reduce){.feature *{transition:none!important;animation:none!important}}
+/* VSL no topo (substitui o carrossel) */
+.vsl{display:grid;grid-template-columns:minmax(0,500px) minmax(0,1fr);gap:44px;align-items:center;border:1px solid var(--line);border-radius:22px;background:#17120e;padding:22px 44px 22px 22px;text-align:left}
+.vsl-player{position:relative;aspect-ratio:1/1;width:100%}
+.vsl-frame{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:#0b0907;box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 0 1px var(--line)}
+.vsl-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.vsl-frame button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.vsl-unmute{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:radial-gradient(circle at center,rgba(11,9,7,.15) 0,rgba(11,9,7,.55) 100%);text-align:center;padding:20px}
+.vsl-ring{display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:var(--gold-grad);color:#100d0b;box-shadow:0 0 0 0 rgba(201,167,91,.6);animation:vslPulse 1.8s ease-out infinite}
+.vsl-ring svg{width:42px;height:42px;margin-left:5px}
+.vsl-ring-sm{width:72px;height:72px;animation:none}.vsl-ring-sm svg{width:32px;height:32px}
+.vsl-unmute-txt{display:flex;flex-direction:column;gap:4px;background:rgba(11,9,7,.78);border:1px solid var(--line-strong);border-radius:14px;padding:12px 18px;backdrop-filter:blur(4px)}
+.vsl-unmute-txt strong{font-size:1.05rem;color:var(--cream);font-weight:600}
+.vsl-unmute-txt span{font-size:.86rem;color:var(--gold-light)}
+@keyframes vslPulse{0%{box-shadow:0 0 0 0 rgba(201,167,91,.65)}70%{box-shadow:0 0 0 22px rgba(201,167,91,0)}100%{box-shadow:0 0 0 0 rgba(201,167,91,0)}}
+.vsl-paused{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(11,9,7,.5);font-size:.95rem;color:var(--cream)}
+.vsl-mute,.vsl-close{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;display:none;place-items:center;background:rgba(11,9,7,.65)!important;border:1px solid var(--line-strong)!important;color:var(--gold-light)!important}
+.vsl-mute svg{width:22px;height:22px}
+.vsl-close{left:8px;right:auto;top:8px;width:32px;height:32px;font-size:1.25rem;line-height:1}
+.vsl-end{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(11,9,7,.86);color:var(--cream)}
+.vsl-end p{margin:0;font-size:1.05rem;line-height:1.5}.vsl-end strong{color:var(--gold-light);font-family:var(--font-display);font-size:1.6rem;font-weight:500}
+.vsl-btn-link{background:none!important;box-shadow:none!important;color:var(--gold-light)!important;text-decoration:underline;font-size:.85rem;min-height:40px}
+.vsl-frame[data-state=preview] .vsl-unmute{display:flex}
+.vsl-frame:not([data-state=preview]) .vsl-unmute{display:none}
+.vsl-frame[data-state=paused] .vsl-paused{display:flex}
+.vsl-frame[data-state=playing] .vsl-mute,.vsl-frame[data-state=paused] .vsl-mute{display:grid}
+.vsl-frame[data-state=ended] .vsl-end{display:flex}
+.vsl-copy h1{font-family:var(--font-display);font-size:clamp(2.1rem,4.5vw,3.8rem);line-height:1.03;font-weight:500;margin:0 0 14px}
+.vsl-copy h1 em{display:inline}
+.vsl-copy p{font-size:.95rem;color:#c5bbac;line-height:1.7;max-width:44ch;margin:0}
+.vsl-hint{color:var(--gold-light);font-weight:500}
+.vsl-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.vsl-btn{display:inline-flex;gap:9px;align-items:center;justify-content:center;padding:13px 20px;border-radius:10px;font-size:.84rem;font-weight:600;min-height:48px;text-decoration:none;cursor:pointer;font-family:inherit}
+.vsl-btn svg{width:20px;height:20px}
+.vsl-btn-wa{background:var(--green);color:#fff;border:0}
+.vsl-btn-wa:hover{filter:brightness(1.08)}
+.vsl-btn-ghost{background:transparent;color:var(--gold-light);border:1px solid var(--line-strong)}
+.vsl-btn-ghost:hover{background:rgba(201,167,91,.1)}
+/* mini player flutuante enquanto o cliente rola a página ouvindo */
+.vsl-frame.is-mini{position:fixed;inset:auto 14px calc(96px + env(safe-area-inset-bottom)) auto;width:min(34vw,210px);height:auto;aspect-ratio:1/1;z-index:210;border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.6),0 0 0 1px var(--gold);animation:vslIn .25s ease-out}
+.vsl-frame.is-mini .vsl-close{display:grid}
+.vsl-frame.is-mini .vsl-mute{width:34px;height:34px;top:6px;right:6px}.vsl-frame.is-mini .vsl-mute svg{width:17px;height:17px}
+.vsl-frame.is-mini .vsl-paused span:last-child{display:none}.vsl-frame.is-mini .vsl-ring-sm{width:48px;height:48px}.vsl-frame.is-mini .vsl-ring-sm svg{width:22px;height:22px}
+@keyframes vslIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:1000px){.vsl{grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;padding:18px 28px 18px 18px}}
+@media(max-width:760px){.vsl{display:block;padding:0;border-radius:18px;overflow:hidden}.vsl-player{border-radius:0}.vsl-frame{border-radius:0;box-shadow:none}.vsl-frame.is-mini{border-radius:12px}.vsl-copy{padding:20px 20px 24px}.vsl-copy h1{font-size:2.3rem}.vsl-copy p{font-size:.86rem}.vsl-ring{width:80px;height:80px}.vsl-ring svg{width:36px;height:36px}.vsl-unmute-txt strong{font-size:1rem}.vsl-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}.vsl-btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.vsl-ring,.vsl-frame.is-mini{animation:none}}
+
 
 .footer-legal{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px}.footer-legal a{margin:0;white-space:normal;min-height:32px;display:inline-flex;align-items:center}
 </style>
@@ -1061,20 +1108,33 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
          botão). No desktop o CSS reorganiza com "order" para o botão do
          WhatsApp subir antes das coleções e continuar na primeira dobra. -->
     <section class="hero" aria-label="Destaques e categorias">
-  <div class="feature" id="feature" role="region" aria-roledescription="carrossel" aria-label="Destaques Noiva Joias MT">
-    <div class="feature-slide" role="group" aria-roledescription="slide" aria-label="1 de 3">
-      <div class="feature-copy"><span class="feature-kicker">Noiva Joias MT · alianças e semijoias</span><h1>Alianças que marcam <em class="gold-text">histórias</em></h1><p>Encontre o seu par, veja os preços e escolha com calma. Atendimento pelo WhatsApp, sem cadastro.</p><button type="button" data-banner-category="Aliança de casamento">Explorar alianças de casamento <span aria-hidden="true">→</span></button></div>
-      <div class="feature-photo"><img src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-01-par-de-alian-a-com-anel-solit-rio-quadrado-8mm---b.webp" alt="Par de alianças quadradas com solitário da Noiva Joias MT" width="1000" height="1000" fetchpriority="high" decoding="async"></div>
+  <div class="vsl" id="vsl">
+    <div class="vsl-player" id="vslPlayer">
+      <div class="vsl-frame" id="vslFrame" data-state="preview">
+        <video id="vslVideo" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes.mp4" poster="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen" width="720" height="720" aria-label="Vídeo do Sr. Fernandes explicando como escolher e receber sua aliança na Noiva Joias MT"></video>
+        <button type="button" class="vsl-unmute" id="vslUnmute" aria-label="Assistir o vídeo com som desde o começo">
+          <span class="vsl-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+          <span class="vsl-unmute-txt"><strong>Seu vídeo já começou</strong><span>Toque aqui para ouvir com som</span></span>
+        </button>
+        <button type="button" class="vsl-paused" id="vslPaused" aria-label="Continuar o vídeo"><span class="vsl-ring vsl-ring-sm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span><span>Continuar assistindo</span></button>
+        <button type="button" class="vsl-mute" id="vslMute" aria-label="Tirar o som" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg></button>
+        <button type="button" class="vsl-close" id="vslClose" aria-label="Fechar o vídeo flutuante">×</button>
+        <div class="vsl-end" id="vslEnd">
+          <p>Ficou com alguma dúvida?<br><strong>Fale com a gente agora.</strong></p>
+          <a class="vsl-btn vsl-btn-wa" href="https://wa.me/556592942810?text=Ol%C3%A1%21%20Assisti%20o%20v%C3%ADdeo%20do%20site%20e%20quero%20escolher%20minha%20alian%C3%A7a." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg> Chamar no WhatsApp</a>
+          <button type="button" class="vsl-btn-link" id="vslReplay">Assistir de novo</button>
+        </div>
+      </div>
     </div>
-    <div class="feature-slide" role="group" aria-roledescription="slide" aria-label="2 de 3" hidden>
-      <div class="feature-copy"><span class="feature-kicker">Cuiabá · Rondonópolis · Sinop</span><h2>O seu par.<br><em class="gold-text">Na sua casa, hoje.</em></h2><p>Nessas três cidades, combine pelo WhatsApp e pague ao receber. Taxa de entrega: R$ 14,99. Confirme disponibilidade e horário com o atendente.</p><button type="button" data-help="deliveryDialog">Como funciona a entrega <span aria-hidden="true">→</span></button></div>
-      <div class="feature-photo"><img src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/par-alianca-chanfrada-escovada-com-anel-solitario-cor-prata-399-99.webp" alt="Alianças de namoro com anel solitário, cor prata" width="1000" height="1000" loading="lazy" decoding="async"></div>
+    <div class="vsl-copy">
+      <span class="feature-kicker">Noiva Joias MT · alianças e semijoias</span>
+      <h1>Alianças que marcam <em class="gold-text">histórias</em></h1>
+      <p>O Sr. Fernandes explica, em poucos minutos, como escolher o seu par com segurança e receber em casa. <strong class="vsl-hint">Toque no vídeo para ouvir.</strong></p>
+      <div class="vsl-actions">
+        <a class="vsl-btn vsl-btn-wa" href="https://wa.me/556592942810?text=Ol%C3%A1%21%20Assisti%20o%20v%C3%ADdeo%20do%20site%20e%20quero%20escolher%20minha%20alian%C3%A7a." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg> Falar no WhatsApp</a>
+        <button type="button" class="vsl-btn vsl-btn-ghost" data-banner-category="Aliança de casamento">Ver alianças <span aria-hidden="true">→</span></button>
+      </div>
     </div>
-    <div class="feature-slide" role="group" aria-roledescription="slide" aria-label="3 de 3" hidden>
-      <div class="feature-copy"><span class="feature-kicker">Para outras cidades e estados</span><h2>Seu próximo capítulo.<br><em class="gold-text">Em qualquer lugar.</em></h2><p>Enviamos para todo o Brasil pelos Correios. Compra online com frete grátis e prazo aproximado de 4 a 7 dias úteis. Veja as opções de pagamento no produto.</p><button type="button" data-banner-category="Alianças de Moeda Antiga">Conhecer alianças de moeda antiga <span aria-hidden="true">→</span></button></div>
-      <div class="feature-photo"><img src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/moeda-antiga-forrada/moeda-antiga-forrada-par-alianca-com-forro-interno-moeda-antiga-1.webp" alt="Par de alianças de moeda antiga com forro interno" width="1000" height="1000" loading="lazy" decoding="async"></div>
-    </div>
-    <div class="feature-controls"><div class="feature-dots" aria-label="Escolher destaque"><button type="button" data-feature-slide aria-label="Mostrar destaque 1" aria-pressed="true">1</button><button type="button" data-feature-slide aria-label="Mostrar destaque 2" aria-pressed="false">2</button><button type="button" data-feature-slide aria-label="Mostrar destaque 3" aria-pressed="false">3</button></div><div class="feature-arrows"><button type="button" id="featurePrev" aria-label="Destaque anterior">←</button><button type="button" id="featurePause" aria-pressed="false">Pausar</button><button type="button" id="featureNext" aria-label="Próximo destaque">→</button></div></div>
   </div>
   <div class="trust-strip"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 6h12v11H2zM14 10h4l4 4v3h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>Envio para todo o Brasil</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7Z"/><path d="m7 12 3 3 7-7"/></svg>Pague na entrega nas 3 cidades</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 4h16v13H9l-5 4Z"/></svg>Pedido no WhatsApp, sem cadastro</span></div>
   <div class="category-intro" id="colecoes"><h2>Encontre por categoria</h2><p>Abra uma coleção e veja todos os modelos e preços.</p></div>
@@ -4210,42 +4270,89 @@ const itemCard = (p) => {
   document.getElementById('showCategories').addEventListener('click', () => document.getElementById('colecoes').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
   filtrarVitrine();
 
-  /* Alternância controlada, sem efeitos agressivos ou ofertas inventadas. */
-  const feature = document.getElementById('feature');
-  const slides = [...feature.querySelectorAll('.feature-slide')];
-  const dots = [...feature.querySelectorAll('[data-feature-slide]')];
-  const featurePause = document.getElementById('featurePause');
-  let bannerAtual = 0;
-  let bannerTimer;
-  let bannerPausado = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let bannerNaTela = true;
-  function atualizarBanner(index) {
-    bannerAtual = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => { slide.hidden = i !== bannerAtual; });
-    dots.forEach((dot, i) => dot.setAttribute('aria-pressed', String(i === bannerAtual)));
-  }
-  function timerBanner() {
-    clearInterval(bannerTimer);
-    if (!bannerPausado && bannerNaTela && !document.hidden && !feature.matches(':hover') && !feature.contains(document.activeElement) && !document.querySelector('.shop-dialog[open]') && lbx.hidden && modal.hidden) bannerTimer = setInterval(() => { if (!document.querySelector('.shop-dialog[open]') && lbx.hidden && modal.hidden) atualizarBanner(bannerAtual + 1); else clearInterval(bannerTimer); }, 7000);
-    featurePause.textContent = bannerPausado ? 'Reproduzir' : 'Pausar';
-    featurePause.setAttribute('aria-label', bannerPausado ? 'Reproduzir alternância dos banners' : 'Pausar alternância dos banners');
-    featurePause.setAttribute('aria-pressed', String(bannerPausado));
-  }
-  function escolherBanner(i) { atualizarBanner(i); bannerPausado = true; timerBanner(); }
-  dots.forEach((dot,i) => dot.addEventListener('click', () => escolherBanner(i)));
-  document.getElementById('featurePrev').addEventListener('click', () => escolherBanner(bannerAtual - 1));
-  document.getElementById('featureNext').addEventListener('click', () => escolherBanner(bannerAtual + 1));
-  featurePause.addEventListener('click', () => { bannerPausado = !bannerPausado; timerBanner(); });
-  feature.addEventListener('mouseenter', () => clearInterval(bannerTimer));
-  feature.addEventListener('mouseleave', timerBanner);
-  feature.addEventListener('focusin', () => clearInterval(bannerTimer));
-  feature.addEventListener('focusout', () => setTimeout(timerBanner, 0));
-  document.addEventListener('visibilitychange', timerBanner);
-  if ('IntersectionObserver' in window) new IntersectionObserver(entries => { bannerNaTela = entries[0].isIntersecting; timerBanner(); }).observe(feature);
-  feature.querySelectorAll('[data-banner-category]').forEach(b => b.addEventListener('click', () => { const c = COLECOES.find(c => c.nome === b.dataset.bannerCategory); if (c) abrir(c); }));
-  const bannerLayers = new MutationObserver(timerBanner);
-  [lbx, modal, ...document.querySelectorAll('.shop-dialog')].forEach(n => bannerLayers.observe(n, {attributes:true, attributeFilter:['hidden','open']}));
-  atualizarBanner(0); timerBanner();
+  /* VSL do topo: começa mudo; o toque reinicia do começo com som. */
+  (() => {
+    const frame = document.getElementById('vslFrame');
+    const player = document.getElementById('vslPlayer');
+    const v = document.getElementById('vslVideo');
+    if (!frame || !v) return;
+    const btnMute = document.getElementById('vslMute');
+    const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const economia = navigator.connection && navigator.connection.saveData;
+    let estado = 'preview';
+    let naTela = true;
+    let fechadoMini = false;
+    const marcos = {};
+    const evento = (nome, extra) => { try { if (window.fbq) fbq('trackCustom', nome, Object.assign({ video: 'VSL Sr. Fernandes' }, extra || {})); } catch (e) {} };
+    const setEstado = e => { estado = e; frame.dataset.state = e; atualizarMini(); };
+    function iconeSom() {
+      btnMute.innerHTML = v.muted ? MUDO : SOM;
+      btnMute.setAttribute('aria-label', v.muted ? 'Ligar o som' : 'Tirar o som');
+      btnMute.setAttribute('aria-pressed', String(v.muted));
+    }
+    const SOM = btnMute.innerHTML;
+    const MUDO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="m17 9 5 6m0-6-5 6"/></svg>';
+    function pararMusica() {
+      const bg = document.getElementById('bgMusic');
+      const t = document.getElementById('musicToggle');
+      if (bg && !bg.paused && t) t.click();
+    }
+    async function tentarPreview() {
+      if (estado !== 'preview' || reduzir || economia || !naTela || document.hidden) return;
+      v.muted = true;
+      try { await v.play(); } catch (e) {}
+    }
+    async function comecarComSom() {
+      pararMusica();
+      fechadoMini = false;
+      v.loop = false;
+      v.muted = false;
+      v.volume = 1;
+      try { v.currentTime = 0; } catch (e) {}
+      setEstado('playing');
+      iconeSom();
+      try { await v.play(); evento('VSL_Assistir_Com_Som'); }
+      catch (e) { v.muted = true; iconeSom(); try { await v.play(); } catch (e2) { setEstado('paused'); } }
+    }
+    function pausar() { v.pause(); setEstado('paused'); }
+    async function continuar() { pararMusica(); setEstado('playing'); try { await v.play(); } catch (e) { setEstado('paused'); } }
+    document.getElementById('vslUnmute').addEventListener('click', comecarComSom);
+    document.getElementById('vslPaused').addEventListener('click', continuar);
+    document.getElementById('vslReplay').addEventListener('click', comecarComSom);
+    v.addEventListener('click', () => {
+      if (estado === 'preview') comecarComSom();
+      else if (estado === 'playing') pausar();
+      else if (estado === 'paused') continuar();
+    });
+    btnMute.addEventListener('click', e => { e.stopPropagation(); v.muted = !v.muted; iconeSom(); });
+    document.getElementById('vslClose').addEventListener('click', e => { e.stopPropagation(); fechadoMini = true; pausar(); });
+    v.addEventListener('ended', () => { if (estado !== 'preview') { setEstado('ended'); evento('VSL_Assistiu_Ate_O_Fim'); } });
+    v.addEventListener('timeupdate', () => {
+      if (estado === 'preview' || !v.duration) return;
+      const pct = Math.floor(v.currentTime / v.duration * 100);
+      [25, 50, 75].forEach(m => { if (pct >= m && !marcos[m]) { marcos[m] = true; evento('VSL_' + m + '_Porcento'); } });
+    });
+    /* Mini player: se o cliente rolar a página ouvindo, o vídeo acompanha no canto. */
+    function atualizarMini() {
+      const mini = !naTela && !fechadoMini && (estado === 'playing' || estado === 'paused');
+      frame.classList.toggle('is-mini', mini);
+    }
+    if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+      naTela = entries[0].isIntersecting;
+      if (naTela) fechadoMini = false;
+      if (estado === 'preview') { if (naTela) tentarPreview(); else v.pause(); }
+      atualizarMini();
+    }, { threshold: 0.35 }).observe(player);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { if (estado === 'playing') pausar(); else v.pause(); }
+      else tentarPreview();
+    });
+    const bgMusicEl = document.getElementById('bgMusic');
+    if (bgMusicEl) bgMusicEl.addEventListener('play', () => { if (estado === 'playing') pausar(); });
+    if (reduzir || economia) { v.removeAttribute('autoplay'); v.preload = 'metadata'; v.pause(); }
+    else tentarPreview();
+    document.querySelectorAll('.vsl [data-banner-category]').forEach(b => b.addEventListener('click', () => { const c = COLECOES.find(c => c.nome === b.dataset.bannerCategory); if (c) abrir(c); }));
+  })();
 
   /* A música só começa quando o visitante escolhe ativar. */
   const bgMusic = document.getElementById('bgMusic');
