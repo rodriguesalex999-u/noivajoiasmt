@@ -178,6 +178,30 @@ window.fbqTrackRich = function(eventName, customParams, eventID) {
 src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel -->
+<script id="nj-origem">
+/* 05/11/2026 — ORIGEM DO ANÚNCIO ATÉ O WHATSAPP. Os anúncios da Meta mandam
+   ad_id/utm na URL; guardamos 30 dias e colocamos "Ref.: AD-<id>" no fim de
+   toda mensagem de WhatsApp. O robô (BATE-PAPO-ALEX) lê essa referência e sabe
+   de qual criativo o cliente veio (mesmo pelo site, onde o WhatsApp não manda
+   o código do anúncio). Nada é enviado a servidor nenhum. */
+(function(){
+  var K='nj_origem', DIAS=30;
+  function ler(){ try{ var o=JSON.parse(localStorage.getItem(K)||'null'); if(o&&o.em&&Date.now()-o.em<DIAS*864e5) return o; }catch(e){} return null; }
+  try{
+    var p=new URLSearchParams(location.search);
+    var ad=(p.get('ad_id')||'').replace(/\D/g,'');
+    if(ad.length>=8){
+      var o={ad:ad, campanha:p.get('utm_campaign')||p.get('campaign_id')||'', criativo:p.get('utm_content')||'', conjunto:p.get('adset_id')||'', em:Date.now()};
+      localStorage.setItem(K, JSON.stringify(o));
+    }
+  }catch(e){}
+  window.njOrigem=ler;
+  window.njRefTag=function(){ var o=ler(); return (o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; };
+  /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
+  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var tag=window.njRefTag(); if(!tag) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
+  document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
+})();
+</script>
 </head>
 <body>
 <div class="bg-glow" aria-hidden="true"></div>
@@ -323,7 +347,7 @@ function pintar() {
     (pagId ? 'Código do pagamento: ' + pagId + '\n' : '') +
     '\nPodem me passar a medida do meu dedo?';
   document.getElementById('btnWa').href =
-    'https://wa.me/556592942810?text=' + encodeURIComponent(waMsg);
+    'https://wa.me/556592942810?text=' + encodeURIComponent(waMsg + (window.njRefTag ? window.njRefTag() : '')); // 05/11 — Ref.: AD-<id>
 }
 pintar();
 
