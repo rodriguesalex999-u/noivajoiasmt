@@ -487,9 +487,16 @@ h1 em{font-style:italic;display:block;font-weight:600}
     }
   }catch(e){}
   window.njOrigem=ler;
-  window.njRefTag=function(){ var o=ler(); return (o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; };
+  /* 05/11 (noite) — CLIENTE DE FORA: se o anúncio é da campanha SITE-MT (Mato Grosso
+     inteiro, fora de Cuiabá/VG/Rondonópolis/Sinop), a mensagem do WhatsApp avisa
+     "Vocês enviam para todo o Mato Grosso?" — o robô lê a frase e já atende como
+     cliente de fora (fluxo dos Correios), mesmo que a linha "Ref.:" seja apagada.
+     Campanha de cidade (CBA, SINOP, RONDO) ou origem desconhecida: mensagem normal. */
+  window.njForaDaRota=function(){ var o=ler(); if(!o||!o.ad) return false; var c=String(o.campanha||'').toUpperCase(); if(/CBA|CUIAB|SINOP|RONDO|VARZEA|\bVG\b/.test(c)) return false; return /SITE|\bMT\b|MATO/.test(c); };
+  window.njFraseFora='Vocês enviam para todo o Mato Grosso?';
+  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
   /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
-  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var tag=window.njRefTag(); if(!tag) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
+  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; var tag=window.njRefTag(t); if(!tag) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
   document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
 })();
 </script>
@@ -636,7 +643,7 @@ const CONFIG = {
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const waLink = (msg) =>
-  'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg + (window.njRefTag ? window.njRefTag() : '')); // 05/11 — Ref.: AD-<id> do anúncio
+  'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg + (window.njRefTag ? window.njRefTag(msg) : '')); // 05/11 — Ref.: AD-<id> do anúncio
 
 const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23141110'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3' opacity='.5'%3E%3Ccircle cx='170' cy='215' r='58'/%3E%3Ccircle cx='230' cy='215' r='58'/%3E%3C/g%3E%3Cpath d='M200 104l20 22-20 22-20-22z' fill='none' stroke='%23F0DCA4' stroke-width='2.5' opacity='.75'/%3E%3Ctext x='200' y='330' fill='%239C9384' font-family='Jost,sans-serif' font-size='15' letter-spacing='3' text-anchor='middle'%3ENoiva Joias MT%3C/text%3E%3C/svg%3E";
 
@@ -789,7 +796,7 @@ function abrirColecao(key){
     const ctas=document.createElement('div');
     ctas.style.display='flex';ctas.style.flexDirection='column';ctas.style.gap='6px';
 
-    const msg='Quero este modelo: '+p.nome+'\nValor: '+brl.format(p.preco)+'\nConsegue me entregar agora ?';
+    const msg='Quero este modelo: '+p.nome+'\nValor: '+brl.format(p.preco)+((window.njForaDaRota && window.njForaDaRota()) ? '\nSou de outra cidade do Mato Grosso. Vocês enviam para todo o Mato Grosso?' : '\nConsegue me entregar agora ?'); // 05/11 — cliente da campanha SITE-MT (fora da rota)
     const ctaWA=document.createElement('a');
     ctaWA.href=waLink(msg);
     ctaWA.target='_blank';
