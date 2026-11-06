@@ -4,6 +4,20 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-05 (noite) — Cliente de fora avisa no WhatsApp ("Vocês enviam para todo o Mato Grosso?")
+
+**Por que:** pedido do dono. Até agora, quem vinha da campanha **SITE-MT** (Mato Grosso inteiro, fora de Cuiabá/VG/Rondonópolis/Sinop) saía do site com a mesma mensagem de um cliente de Cuiabá; o robô só sabia que era de fora pela linha `Ref.: AD-<id>`, que o cliente pode apagar.
+
+**O que mudou (index, masculino, checkout, obrigado, faq):**
+- `window.njForaDaRota()` — lê a origem guardada (`nj_origem`) e diz se a campanha é a do site/MT (não é CBA, SINOP, RONDO, VG).
+- `window.njRefTag(msg)` — além da `Ref.: AD-<id>`, acrescenta `Vocês enviam para todo o Mato Grosso?` quando o cliente é de fora (não repete se a mensagem já tem a frase ou já traz `Minha cidade:`).
+- Mensagem do produto (index) e do carrinho sem cidade escolhida: para cliente de fora vira `Sou de outra cidade do Mato Grosso. Vocês enviam para todo o Mato Grosso? ...`. Em masculino, troca `Consegue me entregar agora ?` pela frase de fora.
+- Campanha de cidade ou origem desconhecida: mensagem **igual à de antes**.
+
+**Lado do robô (BATE-PAPO-ALEX, mesmo dia):** passou a reconhecer a mensagem real do site (`Produto:`/`Valor:`) e a frase de fora → responde o modelo/valor e dispara o fluxo dos Correios (--enviamos) em vez de pedir endereço. Doc: `BATE-PAPO-ALEX/OPERACAO-NUVEM/LINKS-QUALIFICACAO-POR-CRIATIVO.md`.
+
+---
+
 ## 2026-11-05 — Origem do anúncio chega ao WhatsApp ("Ref.: AD-<id>")
 
 **Por que:** pedido do dono. O robô do WhatsApp (BATE-PAPO-ALEX) manda ao cliente, no fim do atendimento, o link de qualificação do **mesmo criativo** pelo qual ele chegou. Quem clica no anúncio e vai para o WhatsApp direto já traz o código do anúncio; quem passa pelo site (campanha SITE-MT) não trazia — o WhatsApp não manda o código nesse caminho.
