@@ -469,6 +469,30 @@ h1 em{font-style:italic;display:block;font-weight:600}
   .rule::after{transform:none;opacity:.7}
 }
 </style>
+<script id="nj-origem">
+/* 05/11/2026 — ORIGEM DO ANÚNCIO ATÉ O WHATSAPP. Os anúncios da Meta mandam
+   ad_id/utm na URL; guardamos 30 dias e colocamos "Ref.: AD-<id>" no fim de
+   toda mensagem de WhatsApp. O robô (BATE-PAPO-ALEX) lê essa referência e sabe
+   de qual criativo o cliente veio (mesmo pelo site, onde o WhatsApp não manda
+   o código do anúncio). Nada é enviado a servidor nenhum. */
+(function(){
+  var K='nj_origem', DIAS=30;
+  function ler(){ try{ var o=JSON.parse(localStorage.getItem(K)||'null'); if(o&&o.em&&Date.now()-o.em<DIAS*864e5) return o; }catch(e){} return null; }
+  try{
+    var p=new URLSearchParams(location.search);
+    var ad=(p.get('ad_id')||'').replace(/\D/g,'');
+    if(ad.length>=8){
+      var o={ad:ad, campanha:p.get('utm_campaign')||p.get('campaign_id')||'', criativo:p.get('utm_content')||'', conjunto:p.get('adset_id')||'', em:Date.now()};
+      localStorage.setItem(K, JSON.stringify(o));
+    }
+  }catch(e){}
+  window.njOrigem=ler;
+  window.njRefTag=function(){ var o=ler(); return (o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; };
+  /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
+  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var tag=window.njRefTag(); if(!tag) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
+  document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
+})();
+</script>
 </head>
 
 <body>
@@ -612,7 +636,7 @@ const CONFIG = {
 
 const brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 const waLink = (msg) =>
-  'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg);
+  'https://wa.me/' + CONFIG.telefone + '?text=' + encodeURIComponent(msg + (window.njRefTag ? window.njRefTag() : '')); // 05/11 — Ref.: AD-<id> do anúncio
 
 const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23141110'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3' opacity='.5'%3E%3Ccircle cx='170' cy='215' r='58'/%3E%3Ccircle cx='230' cy='215' r='58'/%3E%3C/g%3E%3Cpath d='M200 104l20 22-20 22-20-22z' fill='none' stroke='%23F0DCA4' stroke-width='2.5' opacity='.75'/%3E%3Ctext x='200' y='330' fill='%239C9384' font-family='Jost,sans-serif' font-size='15' letter-spacing='3' text-anchor='middle'%3ENoiva Joias MT%3C/text%3E%3C/svg%3E";
 
