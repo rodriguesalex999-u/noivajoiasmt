@@ -220,9 +220,16 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     }
   }catch(e){}
   window.njOrigem=ler;
-  window.njRefTag=function(){ var o=ler(); return (o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; };
+  /* 05/11 (noite) — CLIENTE DE FORA: se o anúncio é da campanha SITE-MT (Mato Grosso
+     inteiro, fora de Cuiabá/VG/Rondonópolis/Sinop), a mensagem do WhatsApp avisa
+     "Vocês enviam para todo o Mato Grosso?" — o robô lê a frase e já atende como
+     cliente de fora (fluxo dos Correios), mesmo que a linha "Ref.:" seja apagada.
+     Campanha de cidade (CBA, SINOP, RONDO) ou origem desconhecida: mensagem normal. */
+  window.njForaDaRota=function(){ var o=ler(); if(!o||!o.ad) return false; var c=String(o.campanha||'').toUpperCase(); if(/CBA|CUIAB|SINOP|RONDO|VARZEA|\bVG\b/.test(c)) return false; return /SITE|\bMT\b|MATO/.test(c); };
+  window.njFraseFora='Vocês enviam para todo o Mato Grosso?';
+  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
   /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
-  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var tag=window.njRefTag(); if(!tag) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
+  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; var tag=window.njRefTag(t); if(!tag) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
   document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
 })();
 </script>
@@ -433,7 +440,7 @@ el('btnHoje').addEventListener('click', function (e) {
     'Estou ciente de que o frete grátis vale só para compras feitas no site, ' +
     'com prazo de ' + ENTREGA.prazoLocal + '.\n' +
     'Consigo receber hoje?';
-  window.open('https://wa.me/' + ENTREGA.whatsapp + '?text=' + encodeURIComponent(msg + (window.njRefTag ? window.njRefTag() : '')), '_blank'); // 05/11 — Ref.: AD-<id>
+  window.open('https://wa.me/' + ENTREGA.whatsapp + '?text=' + encodeURIComponent(msg + (window.njRefTag ? window.njRefTag(msg) : '')), '_blank'); // 05/11 — Ref.: AD-<id>
 });
 
 /* ---------- passarinho: não tenho pressa, compro no site ---------- */
