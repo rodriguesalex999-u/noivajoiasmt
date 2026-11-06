@@ -129,6 +129,11 @@ h1{font-family:var(--font-display);font-size:clamp(1.9rem,7vw,2.5rem);font-weigh
 .rodape b{color:var(--cream);font-weight:500}
 
 @media(prefers-reduced-motion:reduce){*{transition-duration:.001ms !important}}
+/* 06/11 — medida do dedo + quem recebe o pagamento */
+.nj-medida{margin:14px 0 10px;padding:12px 14px;border:1px solid rgba(212,175,55,.45);border-radius:12px;background:rgba(212,175,55,.07);font-size:.84rem;line-height:1.5;color:#efe6d6}
+.nj-medida b{color:#e9cf87}
+.nj-confianca{margin:0 0 12px;font-size:.76rem;line-height:1.5;color:#c5bbac;text-align:center}
+.nj-confianca b{color:#efe6d6}
 </style>
 <!-- Meta Pixel — Noiva Joias MT (senior config) -->
 <script>
@@ -304,7 +309,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
         <span class="opt-dot" aria-hidden="true"></span>
         <span class="opt-b">
           <span class="opt-t">Quero pagar só o frete e pagar o produto ao retirar</span>
-          <span class="opt-d"><b>Sedex a Cobrar:</b> você paga <b>apenas R$ 44,99 de frete</b> aqui no site. A encomenda vai pelos Correios e você <b>retira na agência</b> e paga o <b>valor do produto</b> ao atendente, que repassa para a Noiva Joias MT. Nossos atendentes te ligam antes para confirmar a medida do seu dedo.</span>
+          <span class="opt-d"><b>Sedex a Cobrar:</b> você paga <b>apenas R$ 44,99 de frete</b> aqui no site. A encomenda vai pelos Correios e você <b>retira na agência</b> e paga o <b>valor do produto</b> ao atendente, que repassa para a Noiva Joias MT. <span class="nj-so-alianca">Você não precisa saber a medida do dedo.</span></span>
         </span>
         <span class="opt-p"><b>R$ 44,99</b><small>só o frete</small></span>
       </button>
@@ -322,11 +327,13 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
 
       <div class="aviso" id="aviso" hidden>
         <div class="aviso-t">Você receberá apenas o frete agora</div>
-        <p>Ao pagar R$ 44,99 você quita somente o envio. O <b>valor do produto</b> será pago na agência dos Correios, ao retirar a encomenda. Nossos atendentes entram em contato para confirmar a medida do seu dedo antes de postar.</p>
+        <p>Ao pagar R$ 44,99 você quita somente o envio. O <b>valor do produto</b> será pago na agência dos Correios, ao retirar a encomenda. Nossos atendentes entram em contato para combinar o envio antes de postar.</p>
       </div>
 
+      <div class="nj-medida nj-so-alianca"><b>Não precisa saber a medida do dedo.</b> Enviamos cerca de 6 alianças do mesmo modelo em tamanhos diferentes: você prova em casa, fica com o par certo e devolve as outras pelos Correios.</div>
+      <p class="nj-confianca">🔒 Pagamento seguro pelo Mercado Pago. Na tela de pagamento aparece <b>ALEX IMPORTS MT</b>: é a empresa do Sr. Alex Rodrigues Fernandes, dono da Noiva Joias MT (CNPJ 31.186.957/0001-06).</p>
       <a class="cta cta-azul" id="checkoutBtn" href="#" role="button">Pagar com Mercado Pago</a>
-      <p class="rodape" id="rodapeTexto">Depois do pagamento você volta para cá e nosso time confirma a medida do seu dedo e o envio.</p>
+      <p class="rodape" id="rodapeTexto">Depois do pagamento você volta para cá e nosso time confirma o envio com você.</p>
 
       <!-- ---------- rastreio ---------- -->
       <div class="acompanhar">
@@ -484,8 +491,8 @@ function montarPagamento({ frete, prazo, aviso }) {
   el('rsTotal').textContent = brl.format(total);
   el('aviso').hidden = !aviso;
   el('rodapeTexto').textContent = aviso
-    ? 'Depois do pagamento do frete, nossos atendentes entram em contato para confirmar a medida do seu dedo e postar a encomenda.'
-    : 'Depois do pagamento você volta para cá e nosso time confirma a medida do seu dedo e o envio.';
+    ? 'Depois do pagamento do frete, nossos atendentes entram em contato para combinar o envio e postar a encomenda.'
+    : 'Depois do pagamento você volta para cá e nosso time confirma o envio com você.';
 
   el('checkoutBtn').dataset.total = total.toFixed(2);
   el('checkoutBtn').dataset.frete  = frete.toFixed(2);
@@ -582,6 +589,10 @@ el('btnRastreio').addEventListener('click', async function () {
 });
 
 passos();
+</script>
+<script id="nj-so-alianca">
+/* 06/11 — o aviso da medida do dedo só aparece quando o produto é aliança */
+(function(){ try{ var n=new URLSearchParams(location.search).get('nome')||''; if(!/alian/i.test(n)) document.querySelectorAll('.nj-so-alianca').forEach(function(e){ e.style.display='none'; }); }catch(e){} })();
 </script>
 </body>
 </html>
