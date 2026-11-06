@@ -981,6 +981,10 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
 
 
 .footer-legal{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px}.footer-legal a{margin:0;white-space:normal;min-height:32px;display:inline-flex;align-items:center}
+/* 06/11 — medida do dedo + cliente de fora (SITE-MT) */
+.nj-medida{display:flex;gap:12px;align-items:flex-start;margin:16px 0 4px;padding:14px 16px;border:1px solid rgba(212,175,55,.45);border-radius:14px;background:rgba(212,175,55,.07);color:#efe6d6;font-size:.86rem;line-height:1.5}
+.nj-medida b{color:var(--gold-light,#e9cf87)}.nj-medida .nj-ico{font-size:1.25rem;line-height:1}
+@media(max-width:600px){.nj-medida{font-size:.8rem;padding:12px 13px}}
 </style>
 
 <!-- Meta Pixel — Noiva Joias MT (senior config) -->
@@ -1168,6 +1172,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     </div>
   </div>
   <div class="trust-strip"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 6h12v11H2zM14 10h4l4 4v3h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>Envio para todo o Brasil</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7Z"/><path d="m7 12 3 3 7-7"/></svg>Pague na entrega nas 3 cidades</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 4h16v13H9l-5 4Z"/></svg>Pedido no WhatsApp, sem cadastro</span></div>
+  <div class="nj-medida" id="njMedida" role="note"><span class="nj-ico" aria-hidden="true">💍</span><span><b>Não precisa saber a medida do dedo.</b> <span id="njMedidaTxt">Em Cuiabá, Rondonópolis e Sinop o entregador leva vários tamanhos até você. Para as outras cidades, enviamos cerca de 6 alianças do mesmo modelo: você prova em casa, fica com o par certo e devolve as outras pelos Correios.</span></span></div>
   <div class="category-intro" id="colecoes"><h2>Encontre por categoria</h2><p>Abra uma coleção e veja todos os modelos e preços.</p></div>
   <div class="hero-cat"><div class="cat-card-shell" id="heroCat"></div></div>
 </section>
@@ -1241,7 +1246,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
       </div>
       <div class="step reveal d2">
         <p class="step-t">Fale no WhatsApp</p>
-        <p class="step-p">Envie sua seleção com a mensagem pronta. O atendente confirma as medidas, a disponibilidade e a entrega.</p>
+        <p class="step-p">Envie sua seleção com a mensagem pronta. Não precisa saber a medida: você prova vários tamanhos antes de ficar com o seu par.</p>
       </div>
       <div class="step reveal d3">
         <p class="step-t">Receba e pague</p>
@@ -1291,7 +1296,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
       </details>
       <details class="reveal d3">
         <summary>Como sei o tamanho certo da aliança?</summary>
-        <p class="faq-a">Escolha seu modelo e chame no WhatsApp. Nosso atendente <b>orienta a conferência da medida</b> antes de concluir o pedido. Não precisa informar o aro para navegar ou usar o carrinho.</p>
+        <p class="faq-a"><b>Você não precisa saber a medida do dedo.</b> Em Cuiabá, Rondonópolis e Sinop o entregador leva vários tamanhos para você provar na hora. Para as outras cidades, enviamos <b>cerca de 6 alianças do mesmo modelo</b> em tamanhos diferentes: você prova em casa, fica com o par que serviu e devolve as outras pelos Correios.</p>
       </details>
       <details class="reveal d3">
         <summary>Vocês são uma empresa registrada?</summary>
@@ -1410,7 +1415,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
       <p id="cartDelivery">Entrega e pagamento serão confirmados pelo atendente no WhatsApp. O subtotal não inclui eventual taxa de entrega.</p>
       <div class="cart-options">
         <label>Sua cidade <small>Opcional — você pode informar no WhatsApp</small><select id="cartCity"><option value="">Informar no atendimento</option><option>Cuiabá</option><option>Rondonópolis</option><option>Sinop</option><option value="outra">Outra cidade ou estado</option></select></label>
-        <label>Medidas ou observações <small>Não sabe o aro? Nosso atendente ajuda você.</small><textarea id="cartNotes" maxlength="240" placeholder="Ex.: preciso de ajuda com a medida das alianças"></textarea></label>
+        <label>Medidas ou observações <small>Não precisa saber o aro: você prova antes de ficar com a aliança.</small><textarea id="cartNotes" maxlength="240" placeholder="Ex.: preciso de ajuda com a medida das alianças"></textarea></label>
       </div>
       <a class="cart-send" id="cartSend" href="#" target="_blank" rel="noopener noreferrer">Enviar pedido no WhatsApp</a>
       <p class="cart-online">Este botão prepara sua mensagem; o pedido só é confirmado no atendimento. Para pagamento online com frete grátis, use “Comprar — Frete Grátis” no produto.</p>
@@ -1431,7 +1436,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
 </dialog>
 <dialog class="shop-dialog" id="sizeDialog" aria-labelledby="sizeTitle">
   <div class="shop-dialog-head"><h2 id="sizeTitle">Não sabe sua medida?</h2><button type="button" class="dialog-close" data-dialog-close aria-label="Fechar ajuda de medida">×</button></div>
-  <div class="shop-dialog-body"><p>Você pode escolher o modelo agora e confirmar o aro com nosso atendente antes de concluir o pedido. Não é necessário preencher a medida para navegar ou usar o carrinho.</p><p>Envie suas dúvidas pelo WhatsApp. A equipe orienta a conferência da medida de cada aliança ou anel antes da entrega ou do envio.</p><div class="help-links"><a class="help-wa" href="https://wa.me/556592942810?text=Ol%C3%A1%21%20Preciso%20de%20ajuda%20para%20confirmar%20a%20medida%20da%20minha%20alian%C3%A7a." target="_blank" rel="noopener noreferrer">Pedir ajuda com a medida</a><a href="/faq">Ver mais dúvidas frequentes</a></div></div>
+  <div class="shop-dialog-body"><p><b>Você não precisa saber a medida do dedo.</b> Escolha só o modelo.</p><p>Em Cuiabá, Rondonópolis e Sinop o entregador leva vários tamanhos para você provar na hora. Para as outras cidades, enviamos <b>cerca de 6 alianças do mesmo modelo</b> em tamanhos diferentes: você prova em casa, fica com o par que serviu e devolve as outras pelos Correios.</p><div class="help-links"><a class="help-wa" href="https://wa.me/556592942810?text=Ol%C3%A1%21%20Preciso%20de%20ajuda%20para%20confirmar%20a%20medida%20da%20minha%20alian%C3%A7a." target="_blank" rel="noopener noreferrer">Pedir ajuda com a medida</a><a href="/faq">Ver mais dúvidas frequentes</a></div></div>
 </dialog>
 <div class="toast" id="shopToast" role="status" aria-live="polite" hidden></div>
 
@@ -4454,6 +4459,48 @@ const itemCard = (p) => {
 
 
 
+})();
+</script>
+<script id="nj-fora-site">
+/* 06/11 — visitante da campanha SITE-MT (fora de Cuiabá/Rondonópolis/Sinop): o site fala de
+   frete grátis para todo o Mato Grosso e de provar em casa, em vez de "entrega hoje / paga na entrega". */
+(function(){
+  function fora(){ try{ return !!(window.njForaDaRota && window.njForaDaRota()); }catch(e){ return false; } }
+  function trocaTexto(root){
+    if(!root) return;
+    var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n, re=/Entrega hoje e pagamento na entrega\.?/g;
+    while((n=w.nextNode())){ if(re.test(n.nodeValue)){ n.nodeValue=n.nodeValue.replace(re,'Frete grátis para todo o Mato Grosso.'); } re.lastIndex=0; }
+  }
+  function aplicar(){
+    if(!fora()) return;
+    document.title='Noiva Joias MT — Alianças com frete grátis para todo o Mato Grosso';
+    var t=document.getElementById('njMedidaTxt');
+    if(t) t.textContent='Enviamos cerca de 6 alianças do mesmo modelo em tamanhos diferentes: você prova em casa, fica com o par certo e devolve as outras pelos Correios.';
+    var p=document.getElementById('diferencial');
+    if(p && !p.dataset.njFora){
+      p.dataset.njFora='1';
+      var h=p.querySelector('.promo-h'); if(h) h.innerHTML='Frete <strong class="gold-text">grátis</strong><br>para todo o Mato Grosso';
+      var pp=p.querySelector('.promo-p'); if(pp) pp.textContent='Pague por Pix ou cartão e receba em casa pelos Correios, ou pague só R$ 44,99 de frete (Sedex a Cobrar) e o valor das alianças na hora de retirar. Você não precisa saber a medida do dedo.';
+      var c=p.querySelector('.cities'); if(c) c.style.display='none';
+      var se=p.querySelectorAll('.seal'), novos=['Frete grátis no MT','Prove antes de ficar','Sedex a Cobrar'];
+      for(var i=0;i<se.length&&i<3;i++){ var tn=se[i].lastChild; if(tn&&tn.nodeType===3) tn.nodeValue=' '+novos[i]; }
+    }
+    document.querySelectorAll('.card').forEach(function(card){
+      var t=card.querySelector('.card-t'), d=card.querySelector('.card-p'); if(!t||!d||card.dataset.njFora) return;
+      if(/Entrega no mesmo dia/.test(t.textContent)){ card.dataset.njFora='1'; t.textContent='Frete grátis para todo o MT'; d.textContent='Comprando pelo site com Pix ou cartão, o frete é grátis para qualquer cidade do Mato Grosso. Prazo de 4 a 7 dias úteis.'; }
+      else if(/paga na entrega/i.test(t.textContent)){ card.dataset.njFora='1'; t.textContent='Prove antes de ficar'; d.textContent='Enviamos cerca de 6 alianças do mesmo modelo: você escolhe o tamanho em casa e devolve as outras pelos Correios.'; }
+    });
+    trocaTexto(document.getElementById('catalogo'));
+  }
+  function iniciar(){
+    aplicar();
+    if(window.MutationObserver && fora()){
+      var pend=false;
+      new MutationObserver(function(){ if(pend) return; pend=true; setTimeout(function(){ pend=false; trocaTexto(document.getElementById('catalogo')); document.querySelectorAll('.lbx,.lbx-desc,dialog').forEach(trocaTexto); },120); })
+        .observe(document.body,{childList:true,subtree:true,characterData:true});
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',iniciar); else iniciar();
 })();
 </script>
 </body>
