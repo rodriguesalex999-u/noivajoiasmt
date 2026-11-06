@@ -4,6 +4,17 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-05 — Origem do anúncio chega ao WhatsApp ("Ref.: AD-<id>")
+
+**Por que:** pedido do dono. O robô do WhatsApp (BATE-PAPO-ALEX) manda ao cliente, no fim do atendimento, o link de qualificação do **mesmo criativo** pelo qual ele chegou. Quem clica no anúncio e vai para o WhatsApp direto já traz o código do anúncio; quem passa pelo site (campanha SITE-MT) não trazia — o WhatsApp não manda o código nesse caminho.
+
+- Todas as páginas (`index.html`, `masculino.html`, `checkout.html`, `obrigado.html`, `faq.html`): novo bloco `<script id="nj-origem">` no `<head>`. Lê `ad_id` (+ `utm_campaign`, `utm_content`, `adset_id`) da URL do anúncio, guarda 30 dias no navegador (`localStorage` `nj_origem`) e expõe `window.njRefTag()`.
+- Toda mensagem/link de WhatsApp do site passa a terminar com `Ref.: AD-<ad_id>` quando o cliente veio de um anúncio (carrinho, produto, dock, rodapé, checkout, obrigado e o botão da FAQ). Sem anúncio, nada muda.
+- O robô lê essa referência (`src/metricasAnuncio.js`), descobre campanha/criativo pelo mapa da Meta, e cliente da SITE-MT (fora de Cuiabá/Rondonópolis/Sinop) recebe o fluxo dos Correios (--enviamos) em vez do pedido de endereço.
+- Nada é enviado a servidor nenhum; é só texto na mensagem que o próprio cliente manda.
+
+---
+
 ## 2026-11-04 — Vídeo do Sr. Fernandes (VSL) no topo do site, no lugar do carrossel
 
 **Por que:** pedido do dono. O vídeo de apresentação passa a ser a primeira coisa que o cliente vê, como uma landing page.
