@@ -1,6 +1,6 @@
 # Projeto Noiva Joias MT — site de alianças
 
-**Caminho:** `C:\Users\rodri\OneDrive\Documents\NOIVA_JOIAS_MT`
+**Caminho:** `G:\Meu Drive\GERAL\NOIVA_JOIAS_MT` (Google Drive — a pasta antiga em Documentos não é mais usada)
 
 ## Identidade
 - **Nome:** Noiva Joias MT
