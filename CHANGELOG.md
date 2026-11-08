@@ -4,6 +4,18 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-07 — Visita do site SEM anúncio também chega identificada ("Ref.: SITE-<canal>")
+
+**Por que:** pedido do dono. 17 clientes chegaram no WhatsApp só com "Quero conhecer as alianças de vocês." (texto do botão verde do site) e o robô não sabia de onde vinham: quem entra no site sem o código do anúncio (perfil do Instagram, Google, link salvo/compartilhado, outro navegador) não levava referência nenhuma.
+
+**O que mudou (index, masculino, checkout, obrigado, faq):**
+- Sem anúncio guardado, toda mensagem de WhatsApp do site termina com `Ref.: SITE-<canal>` — `instagram`, `facebook`, `google`, `tiktok`, `youtube`, `whatsapp` ou `direto` (de `utm_source`, do site de onde a pessoa veio ou do `fbclid`). O canal fica 30 dias no navegador (`nj_canal`); navegação dentro do próprio site não troca o canal.
+- Com anúncio guardado: igual a antes (`Ref.: AD-<id>` e, na SITE-MT, "Vocês enviam para todo o Mato Grosso?").
+
+**Lado do robô (BATE-PAPO-ALEX, mesmo dia):** `Ref.: SITE-<canal>` vira a campanha `SITE-ORGANICO` nas métricas (só se o chat ainda não tem origem de anúncio — quem veio do anúncio direto no WhatsApp e passou pelo site mantém o criativo). As linhas `Ref.:` saem do texto antes do atendimento. Cliente do anúncio SITE-MT que apagou a frase, ou visitante sem anúncio com DDD de fora do MT, recebe a abertura de envio.
+
+---
+
 ## 2026-11-05 (noite) — Cliente de fora avisa no WhatsApp ("Vocês enviam para todo o Mato Grosso?")
 
 **Por que:** pedido do dono. Até agora, quem vinha da campanha **SITE-MT** (Mato Grosso inteiro, fora de Cuiabá/VG/Rondonópolis/Sinop) saía do site com a mesma mensagem de um cliente de Cuiabá; o robô só sabia que era de fora pela linha `Ref.: AD-<id>`, que o cliente pode apagar.

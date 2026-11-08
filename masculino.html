@@ -494,9 +494,23 @@ h1 em{font-style:italic;display:block;font-weight:600}
      Campanha de cidade (CBA, SINOP, RONDO) ou origem desconhecida: mensagem normal. */
   window.njForaDaRota=function(){ var o=ler(); if(!o||!o.ad) return false; var c=String(o.campanha||'').toUpperCase(); if(/CBA|CUIAB|SINOP|RONDO|VARZEA|\bVG\b/.test(c)) return false; return /SITE|\bMT\b|MATO/.test(c); };
   window.njFraseFora='Vocês enviam para todo o Mato Grosso?';
-  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:''; var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
+  /* 07/11/2026 — VISITA SEM ANÚNCIO: a mensagem termina com "Ref.: SITE-<canal>"
+     (instagram, facebook, google, tiktok, youtube, whatsapp ou direto). O robô separa
+     quem veio do site sem anúncio de quem veio do anúncio e não troca a origem de quem
+     já tinha chegado por um anúncio direto no WhatsApp. */
+  try{
+    var pc=new URLSearchParams(location.search);
+    var us=(pc.get('utm_source')||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    var rf=String(document.referrer||'').toLowerCase();
+    var interno=!!(rf && rf.indexOf(location.host)>=0);
+    var cn=us || (interno?'':(/instagram/.test(rf)?'instagram':/facebook|fb\.com/.test(rf)?'facebook':/google/.test(rf)?'google':/tiktok/.test(rf)?'tiktok':/youtube|youtu\.be/.test(rf)?'youtube':/whatsapp|wa\.me/.test(rf)?'whatsapp':''));
+    if(!cn && pc.get('fbclid')) cn='facebook';
+    if(cn) localStorage.setItem('nj_canal', JSON.stringify({c:cn.slice(0,20), em:Date.now()}));
+  }catch(e){}
+  function njCanal(){ try{ var c=JSON.parse(localStorage.getItem('nj_canal')||'null'); if(c&&c.c&&Date.now()-c.em<30*864e5) return c.c; }catch(e){} return 'direto'; }
+  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:'\n\nRef.: SITE-'+njCanal(); var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
   /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
-  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: AD-\d+/.test(t)) return; var tag=window.njRefTag(t); if(!tag) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
+  function marcar(a){ try{ if(!a||a.dataset.njRef) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: (AD-\d+|SITE-)/.test(t)) return; var tag=window.njRefTag(t); if(!tag) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
   document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
 })();
 </script>
