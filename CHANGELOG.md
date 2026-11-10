@@ -4,6 +4,18 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-10 — FAQ enxuto e completo (de 12 respostas longas para 9 curtas)
+
+**Por que:** pedido do dono. O FAQ tinha cerca de 2.700 palavras, repetia o mesmo assunto em várias perguntas e não explicava direito a compra de quem é de outra cidade (preço da aliança, 6 numerações, devolução das que sobram, nome no Pix). Cliente quer ler e resolver rápido.
+
+**O que mudou (faq.html):**
+- 9 perguntas curtas em 3 grupos: valores, entrega nas 3 cidades, compra de outra cidade (pagar antes com frete grátis ou só o frete de R$ 44,99 e o resto na agência; 6 numerações; devolução ~R$ 15), formas de pagamento (dinheiro, Pix, cartão até 2x; por que aparece ALEX IMPORTS MT), tamanho, garantia (solitário e aparador sem garantia), fica preta/dedo verde (tabela), cuidados e reembolso.
+- Taxa de entrega corrigida para R$ 14,99 (o FAQ dizia R$ 15,00; site e robô já usavam R$ 14,99).
+- Cada pergunta tem âncora (`/faq#valores`, `#entrega`, `#fora`, `#pagamento`, `#tamanho`, `#garantia`, `#material`, `#cuidados`, `#reembolso`): o link abre a pergunta já aberta e rola até ela. O robô ALEX manda o link com a âncora do assunto.
+- JSON-LD (FAQPage) refeito com as 9 respostas. Rodapé legal, script de origem (`nj-origem`) e estilo mantidos.
+
+---
+
 ## 2026-11-07 — Visita do site SEM anúncio também chega identificada ("Ref.: SITE-<canal>")
 
 **Por que:** pedido do dono. 17 clientes chegaram no WhatsApp só com "Quero conhecer as alianças de vocês." (texto do botão verde do site) e o robô não sabia de onde vinham: quem entra no site sem o código do anúncio (perfil do Instagram, Google, link salvo/compartilhado, outro navegador) não levava referência nenhuma.
