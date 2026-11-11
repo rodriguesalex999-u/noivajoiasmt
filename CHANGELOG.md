@@ -4,6 +4,16 @@ Formato: data curta · o que mudou · por quê.
 
 ---
 
+## 2026-11-11 — Código do Google Ads chega ao WhatsApp (`?nj=<código>`)
+
+**Por que:** pedido do dono. A campanha de Pesquisa do Google Ads (Cuiabá, raio de 80 km) terá 4 grupos de palavras-chave; o robô precisa saber de qual grupo veio cada cliente para cruzar com as vendas.
+
+**O que mudou (index, masculino, checkout, obrigado, faq):** o parâmetro `nj` da URL (ex.: `?nj=gadsp1`) passa a ser o canal guardado em `nj_canal`, e a mensagem do WhatsApp termina com `Ref.: SITE-gadsp1`. Sem `nj`, nada muda. Anúncio da Meta guardado (`Ref.: AD-<id>`) continua tendo prioridade.
+
+**Lado do robô (BATE-PAPO-ALEX):** `SITE-gads...` vira a campanha `GOOGLE-PESQUISA-CBA` (criativo = código), com cidade Cuiabá.
+
+---
+
 ## 2026-11-10 — FAQ enxuto e completo (de 12 respostas longas para 9 curtas)
 
 **Por que:** pedido do dono. O FAQ tinha cerca de 2.700 palavras, repetia o mesmo assunto em várias perguntas e não explicava direito a compra de quem é de outra cidade (preço da aliança, 6 numerações, devolução das que sobram, nome no Pix). Cliente quer ler e resolver rápido.

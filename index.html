@@ -1095,6 +1095,8 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     var interno=!!(rf && rf.indexOf(location.host)>=0);
     var cn=us || (interno?'':(/instagram/.test(rf)?'instagram':/facebook|fb\.com/.test(rf)?'facebook':/google/.test(rf)?'google':/tiktok/.test(rf)?'tiktok':/youtube|youtu\.be/.test(rf)?'youtube':/whatsapp|wa\.me/.test(rf)?'whatsapp':''));
     if(!cn && pc.get('fbclid')) cn='facebook';
+    /* 11/11/2026 — GOOGLE ADS: o link do anúncio leva ?nj=<código> (ex.: gadsp1 = Pesquisa, grupo 1); o código vira o canal e chega como "Ref.: SITE-gadsp1". */
+    var njc=(pc.get('nj')||'').toLowerCase().replace(/[^a-z0-9]/g,''); if(njc) cn=njc;
     if(cn) localStorage.setItem('nj_canal', JSON.stringify({c:cn.slice(0,20), em:Date.now()}));
   }catch(e){}
   function njCanal(){ try{ var c=JSON.parse(localStorage.getItem('nj_canal')||'null'); if(c&&c.c&&Date.now()-c.em<30*864e5) return c.c; }catch(e){} return 'direto'; }
