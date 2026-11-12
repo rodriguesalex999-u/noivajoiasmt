@@ -1,5 +1,8 @@
 # Changelog — Noiva Joias MT
 
+## 2026-11-12
+- Google Ads: novo `gads.js` (tag do Google AW-11461352780) em todas as páginas; cada clique em link do WhatsApp conta como a conversão "Clique WhatsApp (site)" (Contato). CSP do `vercel.json` liberada para googletagmanager/googleadservices/doubleclick.
+
 Formato: data curta · o que mudou · por quê.
 
 ---
