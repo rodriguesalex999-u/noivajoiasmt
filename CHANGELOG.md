@@ -1,6 +1,7 @@
 # Changelog — Noiva Joias MT
 
 ## 2026-11-12
+- Visita vinda da Pesquisa do Google (`?nj=gads...`): novo bloco no topo do `index.html` com o preço do par (R$ 299,99), entrega hoje, pagamento só depois de receber e botão "Receber fotos e valores no WhatsApp". Motivo: em 2 dias foram 79 cliques no anúncio e só 3 conversas; quem pesquisa via só o vídeo e precisava rolar cerca de 5 telas até o primeiro modelo. O bloco não aparece para as outras visitas.
 - Google Ads: novo `gads.js` (tag do Google AW-11461352780) em todas as páginas; cada clique em link do WhatsApp conta como a conversão "Clique WhatsApp (site)" (Contato). CSP do `vercel.json` liberada para googletagmanager/googleadservices/doubleclick.
 
 Formato: data curta · o que mudou · por quê.
