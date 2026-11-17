@@ -3,6 +3,15 @@
    WhatsApp, abertura do checkout e compra aprovada. Manda só o tipo do evento, o
    canal, a página e um número aleatório do navegador. Nada que identifique a pessoa. */
 (function () {
+  /* NAVEGADOR INTERNO (dono, robôs, IAs): abrir o site uma vez com ?nj_interno=1 grava um
+     cookie e este navegador deixa de ser contado (nem visita, nem clique, nem /zap).
+     ?nj_interno=0 volta a contar. Assim teste e conferência não viram "cliente". */
+  try {
+    var qi = new URLSearchParams(location.search).get('nj_interno');
+    if (qi === '1') document.cookie = 'nj_interno=1; max-age=157680000; path=/; SameSite=Lax';
+    if (qi === '0') document.cookie = 'nj_interno=; max-age=0; path=/';
+    if (/(?:^|;\s*)nj_interno=1/.test(document.cookie)) return;
+  } catch (e) {}
   function canal() {
     try { var o = window.njOrigem && window.njOrigem(); if (o && o.ad) return 'anuncio-meta'; } catch (e) {}
     try { var c = JSON.parse(localStorage.getItem('nj_canal') || 'null'); if (c && c.c && Date.now() - c.em < 30 * 864e5) return c.c; } catch (e) {}

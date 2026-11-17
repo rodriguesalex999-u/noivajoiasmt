@@ -62,6 +62,11 @@ function ehRobo(req) {
   return !ua || ROBO.test(ua);
 }
 
+/* Navegador marcado como interno (cookie nj_interno=1, ver nj-metricas.js). */
+function ehInterno(req) {
+  return /(?:^|;\s*)nj_interno=1/.test(String(req.headers.cookie || ''));
+}
+
 async function registrar({ tipo, canal, pagina, vid }) {
   tipo = limpar(tipo, 12);
   if (!TIPOS.has(tipo)) return { ok: false, erro: 'tipo' };
@@ -105,7 +110,12 @@ async function resumo(dias) {
     [dias]
   );
   const primeiro = await p.query(`SELECT to_char(min(em) AT TIME ZONE 'America/Cuiaba','YYYY-MM-DD') AS d FROM eventos WHERE canal NOT LIKE 'teste%'`);
-  return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows };
+  /* Últimos eventos crus (para conferir se um número é cliente ou teste). */
+  const recentes = await p.query(
+    `SELECT to_char(em AT TIME ZONE 'America/Cuiaba','DD/MM HH24:MI:SS') AS quando, tipo, canal, pagina, right(coalesce(vid,''),4) AS nav
+       FROM eventos WHERE canal NOT LIKE 'teste%' ORDER BY em DESC LIMIT 60`
+  );
+  return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows, recentes: recentes.rows };
 }
 
-module.exports = { registrar, resumo, ehRobo, temBanco, limpar };
+module.exports = { registrar, resumo, ehRobo, ehInterno, temBanco, limpar };

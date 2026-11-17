@@ -9,7 +9,7 @@ const NOMES = { youtube: 'YouTube', pinterest: 'Pinterest', desapega: 'Desapega'
 module.exports = async function handler(req, res) {
   const canal = ev.limpar(req.query?.nj, 20) || 'direto';
   try {
-    if (!ev.ehRobo(req)) {
+    if (!ev.ehRobo(req) && !ev.ehInterno(req)) {
       await ev.registrar({ tipo: 'visita', canal, pagina: '/zap' });
       await ev.registrar({ tipo: 'whats', canal, pagina: '/zap' });
     }
