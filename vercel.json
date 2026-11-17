@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/zap",
+      "destination": "/api/zap"
+    },
+    {
       "source": "/faq",
       "destination": "/faq.html"
     },

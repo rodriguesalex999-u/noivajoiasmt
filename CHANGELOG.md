@@ -1,6 +1,7 @@
 # Changelog — Noiva Joias MT
 
 ## 2026-11-17
+- **Métricas orgânicas por canal (pedido do dono):** todo link divulgado leva `?nj=<canal>` (ex.: `/?nj=youtube`, `/?nj=pinterest`, `/?nj=desapega`). Novo `nj-metricas.js` (index, faq, masculino, checkout, obrigado) envia para `/api/t` os eventos visita, clique no WhatsApp, checkout e compra aprovada, com o canal. Ficam na tabela `eventos` do Postgres (criada sozinha; sem dado pessoal). Novo link curto `/zap?nj=<canal>` conta o clique e abre o WhatsApp com `Ref.: SITE-<canal>`. Resumo em `/api/metricas?k=<chave>&dias=30` (chave em `GERAL\CREDENCIAIS-SEGURAS\chaves\APIs\METRICAS-CANAIS.md`), lido pelo `GERAL\METRICAS-CANAIS\PAINEL-CANAIS.html`. Manual: `GERAL\METRICAS-CANAIS\LEIA-ME.md`.
 - FAQ, fim da página: saiu a linha de destaque com o nome completo acima do rodapé; razão social completa, CNPJ, endereço e e-mail foram juntos para uma linha bem pequena e clara no fim do rodapé. Pedido do dono (discrição). A razão social completa continua na página, como exige a verificação do Google Ads (ME, rodapé de todas as páginas).
 - FAQ (pergunta 04, pagamento): o nome completo do dono saiu da resposta; ficam as iniciais A. R. F. M. e o CNPJ, com "Alex Imports MT" em letra pequena no fim. Pedido do dono, para não expor o nome na página que vai para os clientes. A razão social completa continua no rodapé de todas as páginas (regra da empresa ME e do Google Ads).
 
