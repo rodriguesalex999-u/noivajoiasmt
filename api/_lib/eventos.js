@@ -76,7 +76,8 @@ async function registrar({ tipo, canal, pagina, vid }) {
   return { ok: true };
 }
 
-/* Resumo por canal e por dia (dia no horário de Cuiabá). */
+/* Resumo por canal e por dia (dia no horário de Cuiabá).
+   Canais que começam com "teste" ficam fora (usados para testar o sistema). */
 async function resumo(dias) {
   if (!temBanco()) return { ok: false, erro: 'sem_banco' };
   await preparar();
@@ -90,7 +91,7 @@ async function resumo(dias) {
             count(*) FILTER (WHERE tipo='whats')::int AS whats,
             count(*) FILTER (WHERE tipo='checkout')::int AS checkout,
             count(*) FILTER (WHERE tipo='compra')::int AS compras
-       FROM eventos WHERE em >= ${desde}
+       FROM eventos WHERE em >= ${desde} AND canal NOT LIKE 'teste%'
       GROUP BY canal ORDER BY visitas DESC, whats DESC`,
     [dias]
   );
@@ -99,11 +100,11 @@ async function resumo(dias) {
             count(*) FILTER (WHERE tipo='visita')::int AS visitas,
             count(*) FILTER (WHERE tipo='whats')::int AS whats,
             count(*) FILTER (WHERE tipo='compra')::int AS compras
-       FROM eventos WHERE em >= ${desde}
+       FROM eventos WHERE em >= ${desde} AND canal NOT LIKE 'teste%'
       GROUP BY 1,2 ORDER BY 1 DESC, 3 DESC`,
     [dias]
   );
-  const primeiro = await p.query(`SELECT to_char(min(em) AT TIME ZONE 'America/Cuiaba','YYYY-MM-DD') AS d FROM eventos`);
+  const primeiro = await p.query(`SELECT to_char(min(em) AT TIME ZONE 'America/Cuiaba','YYYY-MM-DD') AS d FROM eventos WHERE canal NOT LIKE 'teste%'`);
   return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows };
 }
 
