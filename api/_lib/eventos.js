@@ -87,6 +87,17 @@ async function registrar({ tipo, canal, pagina, vid }) {
 
 /* Resumo por canal e por dia (dia no horário de Cuiabá).
    Canais que começam com "teste" ficam fora (usados para testar o sistema). */
+/* Conferência do próprio sistema: últimos eventos dos canais "teste..." (fora do painel). */
+async function testes() {
+  if (!temBanco()) return { ok: false, erro: 'sem_banco' };
+  await preparar();
+  const r = await getPool().query(
+    `SELECT to_char(em AT TIME ZONE 'America/Cuiaba','DD/MM HH24:MI:SS') AS quando, tipo, canal, pagina
+       FROM eventos WHERE canal LIKE 'teste%' ORDER BY em DESC LIMIT 20`
+  );
+  return { ok: true, testes: r.rows };
+}
+
 async function resumo(dias) {
   if (!temBanco()) return { ok: false, erro: 'sem_banco' };
   await preparar();
@@ -122,4 +133,4 @@ async function resumo(dias) {
   return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows, recentes: recentes.rows };
 }
 
-module.exports = { registrar, resumo, ehRobo, ehInterno, temBanco, limpar };
+module.exports = { registrar, resumo, testes, ehRobo, ehInterno, temBanco, limpar };

@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
   const okDono = t && ((process.env.OWNER_TOKEN && t === process.env.OWNER_TOKEN) || sessao.verificarToken(t));
   if (!okChave && !okDono) return res.status(401).json({ erro: 'não autorizado' });
   try {
-    const r = await ev.resumo(req.query?.dias);
+    const r = req.query?.teste ? await ev.testes() : await ev.resumo(req.query?.dias);
     return res.status(r.ok ? 200 : 503).json(r);
   } catch (e) {
     console.error('metricas:', e);
