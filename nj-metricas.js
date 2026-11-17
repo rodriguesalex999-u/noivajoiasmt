@@ -34,7 +34,16 @@
     try { if (sessionStorage.getItem(chave)) return; sessionStorage.setItem(chave, '1'); } catch (e) {}
     enviar(tipo);
   }
-  umaVez('nj_m_visita', 'visita');
+  /* Robô que roda script (navegador automático) não conta. E a visita só conta depois de
+     3 segundos com a página visível na tela: quem "testa" link (YouTube, Google, Pinterest)
+     abre e fecha na hora, e não vira cliente. */
+  try { if (navigator.webdriver) return; } catch (e) {}
+  function visita() {
+    if (document.visibilityState !== 'visible') return;
+    setTimeout(function () { if (document.visibilityState === 'visible') umaVez('nj_m_visita', 'visita'); }, 3000);
+  }
+  visita();
+  document.addEventListener('visibilitychange', visita);
   if (/^\/checkout/.test(location.pathname)) umaVez('nj_m_checkout', 'checkout');
   if (/^\/obrigado/.test(location.pathname)) {
     try {

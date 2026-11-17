@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/zap",
-      "destination": "/api/zap"
+      "destination": "/zap.html"
     },
     {
       "source": "/faq",

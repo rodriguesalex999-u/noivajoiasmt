@@ -11,6 +11,10 @@
    Não guarda nome, telefone, IP nem nada que identifique a pessoa:
    só um número aleatório do navegador (vid) para contar visitantes.
    ============================================================ */
+/* 17/11/2026 14:30 (Cuiabá) — o dono mandou ZERAR e começar do zero: o que veio antes
+   era teste (do sistema, do OpenBot e do próprio YouTube conferindo o link). Nada é
+   apagado do banco; o resumo só conta do INICIO em diante. Para zerar de novo, mude a data. */
+const INICIO = '2026-11-17T14:30:00-04:00';
 const TIPOS = new Set(['visita', 'whats', 'checkout', 'compra']);
 const ROBO = /bot|crawl|spider|slurp|preview|facebookexternalhit|whatsapp\/|telegram|headless|lighthouse|pingdom|uptime|curl|wget|python|node-fetch|axios/i;
 
@@ -96,7 +100,7 @@ async function resumo(dias) {
             count(*) FILTER (WHERE tipo='whats')::int AS whats,
             count(*) FILTER (WHERE tipo='checkout')::int AS checkout,
             count(*) FILTER (WHERE tipo='compra')::int AS compras
-       FROM eventos WHERE em >= ${desde} AND canal NOT LIKE 'teste%'
+       FROM eventos WHERE em >= ${desde} AND em >= '${INICIO}' AND canal NOT LIKE 'teste%'
       GROUP BY canal ORDER BY visitas DESC, whats DESC`,
     [dias]
   );
@@ -105,15 +109,15 @@ async function resumo(dias) {
             count(*) FILTER (WHERE tipo='visita')::int AS visitas,
             count(*) FILTER (WHERE tipo='whats')::int AS whats,
             count(*) FILTER (WHERE tipo='compra')::int AS compras
-       FROM eventos WHERE em >= ${desde} AND canal NOT LIKE 'teste%'
+       FROM eventos WHERE em >= ${desde} AND em >= '${INICIO}' AND canal NOT LIKE 'teste%'
       GROUP BY 1,2 ORDER BY 1 DESC, 3 DESC`,
     [dias]
   );
-  const primeiro = await p.query(`SELECT to_char(min(em) AT TIME ZONE 'America/Cuiaba','YYYY-MM-DD') AS d FROM eventos WHERE canal NOT LIKE 'teste%'`);
+  const primeiro = await p.query(`SELECT to_char(min(em) AT TIME ZONE 'America/Cuiaba','YYYY-MM-DD') AS d FROM eventos WHERE em >= '${INICIO}' AND canal NOT LIKE 'teste%'`);
   /* Últimos eventos crus (para conferir se um número é cliente ou teste). */
   const recentes = await p.query(
     `SELECT to_char(em AT TIME ZONE 'America/Cuiaba','DD/MM HH24:MI:SS') AS quando, tipo, canal, pagina, right(coalesce(vid,''),4) AS nav
-       FROM eventos WHERE canal NOT LIKE 'teste%' ORDER BY em DESC LIMIT 60`
+       FROM eventos WHERE em >= '${INICIO}' AND canal NOT LIKE 'teste%' ORDER BY em DESC LIMIT 60`
   );
   return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows, recentes: recentes.rows };
 }

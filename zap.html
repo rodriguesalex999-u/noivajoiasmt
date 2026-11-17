@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Abrindo o WhatsApp · Noiva Joias MT</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#faf6ee;color:#1d1b16;font:17px/1.5 system-ui,Arial,sans-serif;text-align:center;padding:24px}a{display:inline-block;margin-top:14px;background:#1f7a4d;color:#fff;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:700}</style>
+</head>
+<body>
+<!-- LINK CURTO DO WHATSAPP COM CANAL — /zap?nj=<canal> (17/11/2026).
+     Conta 1 visita + 1 clique no WhatsApp para o canal e abre a conversa com
+     "Ref.: SITE-<canal>". A contagem é feita por este script (e não pelo servidor)
+     porque YouTube, Pinterest e outros sites "testam" o link sozinhos quando ele é
+     colado no perfil; esses testes não rodam o script e por isso não viram cliente. -->
+<main>
+  <p>Abrindo o WhatsApp da Noiva Joias MT…</p>
+  <a id="ir" href="https://wa.me/556592942810">Falar no WhatsApp</a>
+</main>
+<script>
+(function(){
+  var NOMES={youtube:'YouTube',pinterest:'Pinterest',desapega:'Desapega',tiktok:'TikTok',instagram:'Instagram',facebook:'Facebook',kwai:'Kwai',gmn:'Google'};
+  var canal='direto';
+  try{ canal=(new URLSearchParams(location.search).get('nj')||'').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,20)||'direto'; }catch(e){}
+  var texto='Olá!'+(NOMES[canal]?' Vim pelo '+NOMES[canal]+'.':'')+' Quero ver as fotos e os valores das alianças.\n\nRef.: SITE-'+canal;
+  var destino='https://wa.me/556592942810?text='+encodeURIComponent(texto);
+  document.getElementById('ir').href=destino;
+  var interno=false, robo=false;
+  try{ interno=/(?:^|;\s*)nj_interno=1/.test(document.cookie); }catch(e){}
+  try{ robo=!!navigator.webdriver; }catch(e){}
+  try{ if(canal!=='direto') localStorage.setItem('nj_canal', JSON.stringify({c:canal, em:Date.now()})); }catch(e){}
+  function vid(){ try{ var v=localStorage.getItem('nj_vid'); if(!v){ v=Math.random().toString(36).slice(2,12)+Date.now().toString(36); localStorage.setItem('nj_vid',v);} return v; }catch(e){ return ''; } }
+  function manda(t){ return fetch('/api/t',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({t:t,c:canal,p:'/zap',v:vid()}),keepalive:true}).catch(function(){}); }
+  var foi=false; function ir(){ if(foi) return; foi=true; location.replace(destino); }
+  if(interno||robo){ ir(); return; }
+  /* só conta quando a página está de fato na tela de alguém */
+  function contar(){ Promise.all([manda('visita'),manda('whats')]).then(ir); setTimeout(ir,1500); }
+  if(document.visibilityState==='visible') contar();
+  else { document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') contar(); }); setTimeout(ir,4000); }
+})();
+</script>
+</body>
+</html>
