@@ -17,6 +17,7 @@
   <p>Abrindo o WhatsApp da Noiva Joias MT…</p>
   <a id="ir" href="https://wa.me/556592942810">Falar no WhatsApp</a>
 </main>
+<script src="/nj-produtos.js"></script>
 <script>
 (function(){
   var NOMES={youtube:'YouTube',pinterest:'Pinterest',desapega:'Desapega',tiktok:'TikTok',instagram:'Instagram',facebook:'Facebook',kwai:'Kwai',gmn:'Google'};
@@ -26,10 +27,10 @@
      trouxer &p=banhada | moeda | ambas, qual aliança ela viu. O atendente lê isso na conversa. */
   var prod='';
   try{ prod=(new URLSearchParams(location.search).get('p')||'').toLowerCase().replace(/[^a-z]/g,''); }catch(e){}
-  var PROD={banhada:'as alianças banhadas a ouro',moeda:'as alianças de moeda antiga',ambas:'as alianças banhadas a ouro e as de moeda antiga'};
+  var PROD=window.NJ_PROD||{}; /* lista única em /nj-produtos.js */
   var VI={youtube:'Vi seu vídeo no YouTube',pinterest:'Vi seu pin no Pinterest',desapega:'Vi seu anúncio no Desapega',tiktok:'Vi seu vídeo no TikTok',kwai:'Vi seu vídeo no Kwai',instagram:'Vi sua publicação no Instagram',facebook:'Vi sua publicação no Facebook',gmn:'Achei vocês no Google'};
   var texto;
-  if(VI[canal] && PROD[prod]) texto='Oi, Sr. Fernandes! '+VI[canal]+' sobre '+PROD[prod]+'. Quero conhecer melhor, pode me mandar as fotos e os valores?';
+  if(VI[canal] && PROD[prod]) texto='Oi, Sr. Fernandes! '+VI[canal]+' sobre '+PROD[prod].sobre+'. Quero conhecer melhor, pode me mandar as fotos e os valores?';
   else if(NOMES[canal]) texto='Oi, Sr. Fernandes! Vim pelo '+NOMES[canal]+' e quero conhecer as alianças. Pode me mandar as fotos e os valores?';
   else texto='Olá! Quero ver as fotos e os valores das alianças.';
   texto+='\n\nRef.: SITE-'+canal;
