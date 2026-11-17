@@ -98,6 +98,19 @@ async function testes() {
   return { ok: true, testes: r.rows };
 }
 
+/* Apaga os eventos da última hora de UM navegador (4 últimos caracteres do vid, como
+   aparecem em "recentes"). Serve para tirar da conta um teste feito de propósito. */
+async function limparNav(nav) {
+  nav = limpar(nav, 4);
+  if (nav.length !== 4) return { ok: false, erro: 'nav' };
+  await preparar();
+  const r = await getPool().query(
+    `DELETE FROM eventos WHERE right(coalesce(vid,''),4) = $1 AND em >= now() - interval '1 hour'`,
+    [nav]
+  );
+  return { ok: true, apagados: r.rowCount };
+}
+
 async function resumo(dias) {
   if (!temBanco()) return { ok: false, erro: 'sem_banco' };
   await preparar();
@@ -133,4 +146,4 @@ async function resumo(dias) {
   return { ok: true, dias, medindo_desde: primeiro.rows[0]?.d || null, canais: porCanal.rows, por_dia: porDia.rows, recentes: recentes.rows };
 }
 
-module.exports = { registrar, resumo, testes, ehRobo, ehInterno, temBanco, limpar };
+module.exports = { registrar, resumo, testes, limparNav, ehRobo, ehInterno, temBanco, limpar };

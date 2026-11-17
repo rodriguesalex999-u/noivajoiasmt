@@ -683,7 +683,11 @@
     if(cn) localStorage.setItem('nj_canal', JSON.stringify({c:cn.slice(0,20), em:Date.now()}));
   }catch(e){}
   function njCanal(){ try{ var c=JSON.parse(localStorage.getItem('nj_canal')||'null'); if(c&&c.c&&Date.now()-c.em<30*864e5) return c.c; }catch(e){} return 'direto'; }
-  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:'\n\nRef.: SITE-'+njCanal(); var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
+  /* 17/11/2026 — a mensagem do WhatsApp diz de onde a pessoa veio (YouTube, Pinterest...) e,
+     se o link trouxe &p=banhada|moeda|ambas, qual aliança ela viu. O atendente lê na conversa. */
+  try{ var njp=(new URLSearchParams(location.search).get('p')||'').toLowerCase().replace(/[^a-z]/g,''); if(/^(banhada|moeda|ambas)$/.test(njp)) localStorage.setItem('nj_prod', JSON.stringify({p:njp, em:Date.now()})); }catch(e){}
+  function njVim(){ try{ var N={youtube:'YouTube',pinterest:'Pinterest',desapega:'Desapega',tiktok:'TikTok',kwai:'Kwai',instagram:'Instagram',facebook:'Facebook'}, P={banhada:'alianças banhadas a ouro',moeda:'alianças de moeda antiga',ambas:'alianças banhadas a ouro e de moeda antiga'}; var c=N[njCanal()]; if(!c) return ''; var pr=null; try{ pr=JSON.parse(localStorage.getItem('nj_prod')||'null'); }catch(e){} var pp=(pr&&pr.p&&Date.now()-pr.em<30*864e5)?P[pr.p]:''; return '\n\nVim pelo '+c+(pp?' (vi as '+pp+')':'')+'.'; }catch(e){ return ''; } }
+  window.njRefTag=function(msg){ var o=ler(); var ref=(o&&o.ad)?'\n\nRef.: AD-'+o.ad:njVim()+'\n\nRef.: SITE-'+njCanal(); var m=String(msg||''); var fora=window.njForaDaRota()&&!/todo o Mato Grosso|Minha cidade:/i.test(m); return (fora?'\n\n'+window.njFraseFora:'')+ref; };
   /* links wa.me já escritos no HTML (sem JS) também ganham a referência */
   function marcar(a){ try{ if(!a||a.dataset.njRef) return; var u=new URL(a.href); if(!/wa\.me|api\.whatsapp\.com/.test(u.host)) return; var t=u.searchParams.get('text')||''; if(/Ref\.: (AD-\d+|SITE-)/.test(t)) return; var tag=window.njRefTag(t); if(!tag) return; u.searchParams.set('text', t+tag); a.href=u.toString(); a.dataset.njRef='1'; }catch(e){} }
   document.addEventListener('click', function(e){ var a=e.target&&e.target.closest&&e.target.closest('a[href*="wa.me"],a[href*="api.whatsapp.com"]'); if(a) marcar(a); }, true);
