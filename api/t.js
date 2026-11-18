@@ -1,5 +1,7 @@
 /* Recebe os eventos do site (visita, clique no WhatsApp, checkout, compra).
-   Chamado pelo /nj-metricas.js. Não devolve nada útil de propósito. */
+   Chamado pelo /nj-metricas.js. Não devolve nada útil de propósito.
+   18/11/2026: o servidor passa a conferir a impressão digital anônima
+   da máquina (hash de IP + user-agent) para barrar rajadas de teste. */
 const ev = require('./_lib/eventos.js');
 
 module.exports = async function handler(req, res) {
@@ -10,7 +12,7 @@ module.exports = async function handler(req, res) {
     if (typeof b === 'string') {
       try { b = JSON.parse(b); } catch { b = {}; }
     }
-    await ev.registrar({ tipo: b.t, canal: b.c, pagina: b.p, vid: b.v });
+    await ev.registrar(req, { tipo: b.t, canal: b.c, pagina: b.p, vid: b.v });
   } catch (e) {
     console.error('evento:', e.message);
   }
