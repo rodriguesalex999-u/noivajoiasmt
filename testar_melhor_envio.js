@@ -9,9 +9,12 @@
 const fs = require('fs');
 const path = require('path');
 
+/* Onde o token do Melhor Envios esta guardado (18/11/2026, pedido do dono):
+   G:\Meu Drive\MELHOR ENVIOS TOKEN ACESSO TOTAL\TOKEN.txt — o dono pediu para
+   o arquivo continuar NESSE caminho. O caminho antigo (OneDrive) sumiu. */
 const ENV_ME =
   process.env.ME_ENV_PATH ||
-  'C:\\Users\\rodri\\OneDrive\\Documents\\00-VIDA-ALEX\\melhor_envio\\.env';
+  'G:\\Meu Drive\\MELHOR ENVIOS TOKEN ACESSO TOTAL\\TOKEN.txt';
 
 /* Le o token e monta o remetente (dados cadastrados na conta).
    Se as variaveis ja vierem do ambiente (por exemplo do .env puxado da
@@ -19,10 +22,19 @@ const ENV_ME =
    REAIS de producao. */
 function carregarEnv() {
   if (fs.existsSync(ENV_ME)) {
-    for (const linha of fs.readFileSync(ENV_ME, 'utf8').split(/\r?\n/)) {
-      const m = linha.match(/^\s*(?:ME_API_TOKEN|token)\s*[=:]\s*(.+?)\s*$/i);
+    const bruto = fs.readFileSync(ENV_ME, 'utf8');
+    /* O arquivo do dono (TOKEN.txt) e o token sozinho, sem "token=".
+       O arquivo antigo (.env) tinha "token = ...". Os dois formatos valem. */
+    const linhaEq = bruto.split(/\r?\n/).find((l) => /^\s*(?:ME_API_TOKEN|token)\s*[=:]\s*.+$/i.test(l));
+    if (linhaEq) {
+      const m = linhaEq.match(/^\s*(?:ME_API_TOKEN|token)\s*[=:]\s*(.+?)\s*$/i);
       if (m && !process.env.ME_API_TOKEN) {
         process.env.ME_API_TOKEN = m[1].replace(/^["']|["']$/g, '');
+      }
+    } else if (!process.env.ME_API_TOKEN) {
+      const tokenSozinho = bruto.trim().split(/\r?\n/).filter(Boolean)[0];
+      if (tokenSozinho && tokenSozinho.split('.').length === 3) {
+        process.env.ME_API_TOKEN = tokenSozinho;
       }
     }
   }
