@@ -1,6 +1,7 @@
 # Changelog — Noiva Joias MT
 
 ## 2026-11-20
+- **Alianças prata atualizadas com as novas fotos:** as imagens da pasta `FOTOS SITE ETEVALDA NOVO\Prata` foram publicadas no R2 e aplicadas aos modelos existentes "Par de Aliança Chanfrada" e "Par Aliança Cor Prata Quadrada 4mm Fina Discreta", ambos a R$ 299,99. Nenhum produto duplicado foi criado.
 - **Moeda antiga atualizada com as novas fotos:** 5 imagens da pasta `FOTOS SITE ETEVALDA NOVO\Moeda Antiga` foram publicadas no R2 e aplicadas na coleção "Alianças de Moeda Antiga". As fotos de Chanfrada 4mm, Chanfrada 6mm com Pedra e Chanfrada 8mm foram atualizadas. Também entraram "MOEDA TRADICIONAL 4MM" (R$ 489,99) e "PAR ALIANÇA COM PEDRA E SOLITÁRIO" (R$ 689,99), com a observação de que o solitário acompanha o par e não é de moeda antiga. Catálogo de preços do servidor regenerado com 156 produtos.
 
 ## 2026-11-19
