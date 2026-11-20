@@ -1,5 +1,8 @@
 # Changelog — Noiva Joias MT
 
+## 2026-11-20
+- **Moeda antiga atualizada com as novas fotos:** 5 imagens da pasta `FOTOS SITE ETEVALDA NOVO\Moeda Antiga` foram publicadas no R2 e aplicadas na coleção "Alianças de Moeda Antiga". As fotos de Chanfrada 4mm, Chanfrada 6mm com Pedra e Chanfrada 8mm foram atualizadas. Também entraram "MOEDA TRADICIONAL 4MM" (R$ 489,99) e "PAR ALIANÇA COM PEDRA E SOLITÁRIO" (R$ 689,99), com a observação de que o solitário acompanha o par e não é de moeda antiga. Catálogo de preços do servidor regenerado com 156 produtos.
+
 ## 2026-11-19
 - **3 produtos excluídos do catálogo (pedido do dono):** "Quadrada Duplo Friso Lateral 8mm - Banhadas a Ouro", "Aliança Inglesa 6mm - Banhadas a Ouro" e "Par Aliança Quadrada 4mm Cor Prata com Anel Solitário" saíram do `index.html` (vitrine PRODUTOS e coleções COLECOES) e do catálogo de preços do servidor, regenerado com `scripts/gerar_catalogo_precos.js` (154 produtos). O checkout desses modelos passa a recusar (400), como esperado para produto fora do catálogo.
 - **Descrição da moeda antiga com forro interno corrigida (pedido do dono):** as tags `<b>` apareciam escritas na tela (a descrição é renderizada como texto puro); foram removidas. A menção ao pote de limpeza de R$ 9,99 saiu, porque o dono agora dá o pote de graça e não quer menção a isso (nem que é grátis). O mesmo trecho do pote na descrição da coleção "Alianças de Moeda Antiga" (comum) também foi removido; a limpeza completa por máquina de R$ 90 continua mencionada.
