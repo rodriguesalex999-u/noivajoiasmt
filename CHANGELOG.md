@@ -1,4 +1,8 @@
-# Changelog — Noiva Joias MT
+# Changelog - Noiva Joias MT
+
+## 2026-11-22
+- **Duas coleções novas de relógios (pedido do dono):** entraram "Relógio masculino" (22 produtos) e "Relógio feminino" (9 produtos) no `index.html`, com 118 fotos publicadas no R2 (1000x1000 webp q90). Os modelos iguais viraram um só produto com galeria: a pessoa clica nas setinhas e vê as outras opções (Rolex preto/verde/branco com 8 fotos; DHP Titan Tourbillon com 6). Preços pela regra do dono: final `_99` e `_99.99` = R$ 99,99; `_399` = R$ 399,99; `_6689` e `_689.99` = R$ 689,99; sem valor no fim = R$ 249,99. Catálogo de preços do servidor regenerado com `scripts/gerar_catalogo_precos.js` (156 -> 187 produtos, 31 novos).
+- Conferido: 118 URLs do R2 respondendo 200, 31 produtos no `catalogo-precos.json`, sintaxe do `COLECOES` válida (lida pelo gerador de preços sem erro).
 
 ## 2026-11-20
 - **Todos os pingentes a R$ 99,99 (pedido do dono):** os 19 itens da coleção "Pingentes Masculinos 18K" passaram de R$ 174,99 a R$ 254,99 para R$ 99,99. Nenhum item de outra categoria foi alterado (conferido item a item no `index.html`) e o catálogo de preços do servidor foi regenerado (156 produtos, 19 chaves de pingente em R$ 99,99).
