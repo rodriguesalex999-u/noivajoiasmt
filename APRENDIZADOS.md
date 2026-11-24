@@ -2,6 +2,16 @@
 
 Problemas reais já resolvidos. Valem para a próxima vez que algo similar acontecer.
 
+## 2026-11-23 — Coleção nova = 3 arquivos, não 1 (rotas)
+- **Sintoma:** a coleção "Relógio masculino" existia no site, mas não tinha **página própria** (`/relogiomasculino`). O Alex não tinha link para mandar ao cliente, diferente de `/moedaantiga`, `/prata` etc.
+- **Não basta mexer no `index.html`.** Uma rota nova precisa de **3 lugares**, senão dá errado de um jeito diferente em cada um:
+  1. `index.html`, tabela `ROTAS`: `'/relogiomasculino': 'Relógio masculino'` — chave = caminho, valor = **nome da coleção** (nunca o índice).
+  2. `sitemap.xml`: a URL nova (o Google não acha rota que não está no sitemap).
+  3. `BATE-PAPO-ALEX/src/utils.js`: lista `ROTAS_OFICIAIS_SITE` **e** a regra em `rotaCertaSite`. Sem isso a barreira de links do robô **troca** o link novo por um parecido: `/relogiomasculino` virava `/correnteskits`, porque casava com a regra de "masculin".
+- **Como conferir:** `node tests/test_links_site_2011_alex.js` (28 conferências) e, no navegador, abrir a rota e clicar num produto — o modal tem que ser o da coleção certa.
+- **O servidor já resolve a rota:** `vercel.json` faz `/(.*)` → `/index.html`, então a rota funciona sem arquivo no servidor. **Mas** servidor local simples (`python -m http.server`) devolve **404** nessas rotas e não reproduz a produção — para testar local, use servidor com **fallback para `index.html`**.
+- **Cuidado ao mexer na barreira do robô:** qualquer coleção nova precisa ser conferida nos dois sentidos — o link novo passa intacto **e** um link solto como `/relogio` ainda cai na página certa.
+
 ## 2026-11-23 — Som do vídeo do relógio: `currentTime = 0` derrubava o download
 - **Sintoma:** o cliente clicava em "Ver vídeo" e o vídeo não tocava com som (às vezes ficava parado em 0).
 - **Causa:** `ligarSomLbx()` fazia `lbxVideo.currentTime = 0` logo depois de trocar o `src`. Com o arquivo ainda baixando, o navegador **aborta o download** e recarrega o arquivo — o vídeo fica parado.

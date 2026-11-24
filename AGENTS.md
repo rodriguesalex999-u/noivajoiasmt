@@ -1,3 +1,8 @@
+> **Esta pasta é um departamento da empresa do Alex (pasta `GERAL` do Google Drive).** Cargo: Responsável pelo site da Noiva Joias MT.
+> Antes do resto deste arquivo, leia a ficha `00-FUNCIONARIO.md` (nesta pasta) e o `APRENDIZADOS.md`, se existir: eles dizem por onde começar e com quais outros departamentos este se liga.
+> O chefe-geral e as regras de qualquer IA ficam na raiz da GERAL: `..\AGENTS.md`, `..\LEIA-ME_PARA_QUALQUER_IA.md` e `..\00-ORGANOGRAMA.md` (no PC: `G:\Meu Drive\GERAL`).
+> Se você só enxerga esta pasta e a tarefa depende de outro departamento, não adivinhe: diga ao Alex qual departamento falta. (Nota de 17/11/2026.)
+
 # Projeto Noiva Joias MT — site de alianças
 
 **Caminho:** `G:\Meu Drive\GERAL\NOIVA_JOIAS_MT` (Google Drive — a pasta antiga em Documentos não é mais usada)
@@ -37,6 +42,21 @@ O caminho completo, com os comandos e as armadilhas, está em **`COMO-COLOCAR-PR
 3. **Catálogo de preços do servidor** — `node scripts/gerar_catalogo_precos.js` (gera `api/_lib/catalogo-precos.json`; **sem esse passo o pagamento do produto novo é recusado**).
 4. **PDF** — `python PDFs/build_catalog_solitarios.py` (lê o `index.html`; falha se a quantidade de itens mudar).
 5. **Fechar** — `CHANGELOG.md` + commit + push na `main`. Fotos e PDFs **não** entram no repositório.
+
+## Regra de ouro das fotos (23/11/2026 —Aprendizado que evitou o "borrão preto")
+Existem **dois tipos de foto de produto**, e eles se comportam diferente:
+- **Recorte de catálogo** (aliança, anel, brinco isolado): fundo branco → o script troca o branco pelo preto do catálogo.
+- **Foto de cenário** (relógio na mão, na mesa, na vitrine): fundo **real**. A regra antiga pintava de preto todo pixel claro (≥ 238) e atingia o **reflexo claro dentro do produto** — cristal virava mancha, manga branca virava bordinho, luz de fundo virava borrão. O cliente achava que a foto estava "borrada".
+
+**Obrigatório em qualquer trabalho com foto:**
+1. **Nunca subir foto já processada.** As cópias em `PDFs/img/` **já têm** o artefato — não servem de original nem de conferência. Pegue o arquivo bruto.
+2. **Sempre pelo script.** Desde 23/11/2026, `scripts/preparar_fotos_produto.py` pinta de preto só o branco de **fundo** (pixel claro ligado à borda da foto), nunca o reflexo dentro do produto. O catálogo de alianças continua igual.
+3. **Conferir contra o original antes de publicar.** O teste que prova: processar o candidato com o pipeline e comparar com a foto publicada — erro médio baixo (≈ 1 a 4 de 255) significa que é o original certo. Cuidado com PNG **com transparência**: o script cola o PNG sobre fundo preto ANTES da regra.
+4. **Conserto de foto já publicada:** subir **na mesma chave** do R2 (`<colecao>-<slug>-<n>.webp`) — o link não muda, não duplica arquivo e nenhum link já enviado ao cliente quebra. Depois, conferir os bytes no ar contra os do arquivo local.
+
+**Originais dos relógios:** `E:\TUDO RELÓGIOS\RELOGIO-NOIVA-JOIAS-MT\RELOGIOS-NOIVA-JOIAS-{MASCULINO,FEMININO}`, `E:\TUDO RELÓGIOS\RELOG {MASC,FEMIN}\FOTOS` e `E:\TUDO ALIANCA\ORIGINAIS PRODUTOS SITE\produtos_relogio*`.
+
+Detalhes e histórico: `APRENDIZADOS.md` (23/11/2026) e `COMO-COLOCAR-PRODUTO-NO-SITE.md`.
 
 ## Indexação no Google (Search Console) — STATUS E PENDÊNCIAS
 **O site está verificado e configurado no Google Search Console desde 2026-10-23**

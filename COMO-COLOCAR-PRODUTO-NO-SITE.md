@@ -46,6 +46,43 @@
 
 ## Passo 1 — As fotos (comando só)
 
+### ⚠️ Antes de subir qualquer foto (armadilha real, 23/11/2026)
+
+Existem **dois tipos de foto de produto**, e eles se comportam diferente:
+
+| Tipo | Exemplo | Fundo |
+|---|---|---|
+| Recorte de catálogo | aliança, anel, brinco isolado | branco → vira preto |
+| Foto de cenário | relógio na mão, na mesa, na vitrine | real (não é branco) |
+
+A regra antiga do script pintava de preto **todo** pixel claro (≥ 238 nos três canais).
+Em foto de cenário isso atingia o **reflexo claro dentro do produto**: o cristal virava
+mancha preta, a manga branca virava bordinho preto e a luz de fundo virava borrão. O
+cliente achava que a foto estava "borrada" — a causa era o script, não a foto.
+
+**O que fazer sempre:**
+
+1. **Nunca subir foto já processada.** As cópias em `PDFs/img/` **já têm** o artefato:
+   não servem de original nem de conferência. Pegue o arquivo bruto.
+2. **Rode o script** (`scripts/preparar_fotos_produto.py`). Desde 23/11/2026 ele pinta de
+   preto só o branco de **fundo de catálogo** (pixel claro ligado à borda da foto),
+   nunca o reflexo dentro do produto. O catálogo de alianças continua igual.
+3. **Confira o resultado contra o original antes de publicar.** O teste que prova:
+   processar o candidato com o pipeline e comparar com a foto publicada — erro médio
+   baixo (≈ 1 a 4 de 255) = é o original certo. Cuidado com PNG **com transparência**:
+   o script cola o PNG sobre fundo preto ANTES da regra.
+4. **Foto já no ar e precisa de conserto:** subir na **mesma chave** do R2
+   (`<colecao>-<slug>-<n>.webp`). O link não muda, não duplica arquivo e nenhum link já
+   enviado ao cliente quebra. Conferir depois comparando os bytes no ar com os do local.
+5. **Depois de mudar a foto:** conferir as URLs no ar (200 e bytes novos) e registrar no
+   `CHANGELOG.md`.
+
+**Onde estão os originais dos relógios:**
+`E:\TUDO RELÓGIOS\RELOGIO-NOIVA-JOIAS-MT\RELOGIOS-NOIVA-JOIAS-{MASCULINO,FEMININO}`,
+`E:\TUDO RELÓGIOS\RELOG {MASC,FEMIN}\FOTOS` e
+`E:\TUDO ALIANCA\ORIGINAIS PRODUTOS SITE\produtos_relogio*`.
+
+
 ```bash
 python scripts/preparar_fotos_produto.py \
   --colecao solitario-dourada \
