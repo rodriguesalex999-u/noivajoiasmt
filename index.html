@@ -672,6 +672,30 @@ h1 em{font-style:italic;display:block;font-weight:600}
   background:rgba(10,8,7,.66);border:1px solid rgba(201,167,91,.28);
   color:var(--cream);font-size:.66rem;letter-spacing:.1em;line-height:1.2;
 }
+/* ---------- vídeo do produto (o cliente vê o relógio em movimento) ----------
+   O card ganha um botão "Vídeo" em cima da foto e o visor ampliado toca o
+   vídeo no mesmo lugar da foto, sem sair da página. */
+.lbx-video{width:100%;height:100%;object-fit:contain;background:#000;display:block}
+.lbx-video[hidden]{display:none}
+.lbx-img[hidden]{display:none}
+.lbx-play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+  border:1px solid rgba(201,167,91,.6);background:rgba(10,8,7,.74);color:var(--cream);
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
+  transition:background .18s,border-color .18s;
+}
+.lbx-play:hover{background:rgba(201,167,91,.26);border-color:rgba(201,167,91,.85)}
+.lbx-play[hidden]{display:none}
+.mi-video-btn{
+  position:absolute;right:8px;top:8px;z-index:4;
+  display:flex;align-items:center;gap:5px;padding:5px 9px;
+  border:1px solid rgba(201,167,91,.45);border-radius:999px;
+  background:rgba(10,8,7,.7);color:var(--cream);cursor:pointer;
+  font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;
+  opacity:.85;transition:opacity .18s,background .18s;
+}
+.mi-video-btn:hover{opacity:1;background:rgba(201,167,91,.24)}
 .lbx-info{padding:16px 18px calc(18px + env(safe-area-inset-bottom));overflow-y:auto}
 .lbx-name{font-family:var(--font-display);font-size:1.32rem;font-weight:600;line-height:1.25}
 .lbx-price{font-family:var(--font-display);font-size:1.52rem;font-weight:600;margin-top:6px}
@@ -1439,6 +1463,11 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     </button>
     <div class="lbx-stage" id="lbxStage">
       <img class="lbx-img" id="lbxImg" alt="">
+      <video class="lbx-video" id="lbxVideo" controls playsinline preload="none" hidden></video>
+      <button class="lbx-play" type="button" id="lbxPlay" hidden>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Ver vídeo
+      </button>
       <button class="lbx-nav lbx-prev" type="button" id="lbxPrev" aria-label="Foto anterior">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
@@ -1519,6 +1548,7 @@ const CONFIG = {
    preco     : valor em número (449.99)
    parcelas  : em quantas vezes parcelar no cartão (3 = "3x de R$ 149,99")
    imagem    : URL da foto no Cloudflare R2 (ex.: https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/minha-foto.webp)
+   video     : opcional, URL do vídeo .mp4 no Cloudflare R2 — aparece o botão "Vídeo" na foto
    selo      : etiqueta dourada no canto da foto
    desconto  : opcional, ex.: "-15%" — some se não colocar
    descricao : uma frase curta (aparece abaixo do nome)
@@ -3396,6 +3426,136 @@ const COLECOES = [
     tags: ['Masculino', 'Relógios'],
     itens: [
       {
+        nome: 'Relógio Automático Mecânico Importado',
+        preco: 489.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-importado-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-importado-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-importado-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-importado-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-importado-4.webp',
+        ],
+        descricao: 'Relógio automático mecânico importado, com movimento aparente e acabamento premium.',
+        tags: ['Masculino', 'Automático', 'Importado']
+      },
+      {
+        nome: 'Relógio Automático Skelletion',
+        preco: 489.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-skelletion-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-skelletion-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-skelletion-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-skelletion-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-skelletion-4.webp',
+        ],
+        descricao: 'Relógio automático esqueletizado, com o mecanismo à mostra.',
+        tags: ['Masculino', 'Automático', 'Esqueleto']
+      },
+      {
+        nome: 'Relógio Fun. Binbond Data',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-3.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data.mp4',
+        descricao: 'Relógio Fun. Binbond Data, com data e hora em destaque.',
+        tags: ['Masculino', 'Binbond', 'Data']
+      },
+      {
+        nome: 'Relógio Magnific Binbond 2027',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-magnific-binbond-2027-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-magnific-binbond-2027-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-magnific-binbond-2027-2.webp',
+        ],
+        descricao: 'Relógio Magnific Binbond 2027, edição especial do ano.',
+        tags: ['Masculino', 'Binbond', '2027']
+      },
+      {
+        nome: 'Relógio Masculino Alfa Função Data',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-4.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data.mp4',
+        descricao: 'Relógio masculino Alfa Função Data, com data e acabamento clássico.',
+        tags: ['Masculino', 'Alfa', 'Data']
+      },
+      {
+        nome: 'Relógio Masculino Black Wan',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-4.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-black-wan-5.webp',
+        ],
+        descricao: 'Relógio masculino Black Wan, todo em preto, robusto e discreto.',
+        tags: ['Masculino', 'Preto', 'Esportivo']
+      },
+      {
+        nome: 'Relógio Masculino Deep Gold',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-4.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-deep-gold-5.webp',
+        ],
+        descricao: 'Relógio masculino Deep Gold, dourado intenso com presença marcante.',
+        tags: ['Masculino', 'Dourado', 'Luxo']
+      },
+      {
+        nome: 'Relógio Masculino Poedagar Blue 2027',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-4.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-5.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027.mp4',
+        descricao: 'Relógio masculino Poedagar Blue 2027, com mostrador azul e detalhes dourados.',
+        tags: ['Masculino', 'Poedagar', 'Azul']
+      },
+      {
+        nome: 'Relógio Poedagar Nobre Realiza',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-4.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-nobre-realiza-5.webp',
+        ],
+        descricao: 'Relógio Poedagar Nobre Realiza, com acabamento nobre e mostrador trabalhado.',
+        tags: ['Masculino', 'Poedagar', 'Nobre']
+      },
+      {
         nome: 'Relógio Masculino DHP Militar Black Red',
         preco: 99.99,
         parcelas: 2,
@@ -3429,6 +3589,7 @@ const COLECOES = [
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-olevs-premium-1.webp',
         descricao: 'Relógio automático mecânico Olevs Premium, com mostrador vazado que mostra o mecanismo em movimento.',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-olevs-premium.mp4',
         tags: ['Masculino', 'Automático', 'Olevs']
       },
       {
@@ -3441,6 +3602,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir-3.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir.mp4',
         descricao: 'Relógio Chronos Noir, em tons escuros, para usar no dia a dia e à noite.',
         tags: ['Masculino', 'Chronos', 'Preto']
       },
@@ -3536,6 +3698,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond-2.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond.mp4',
         descricao: 'Relógio Imperium Chrono da Binbond, cronógrafo com acabamento sofisticado.',
         tags: ['Masculino', 'Cronógrafo', 'Binbond']
       },
@@ -3592,6 +3755,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond-3.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond.mp4',
         descricao: 'Relógio Monarch Slim da Binbond, fino e discreto no pulso.',
         tags: ['Masculino', 'Slim', 'Binbond']
       },
@@ -3604,6 +3768,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time-2.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time.mp4',
         descricao: 'Relógio Poedagar Velvet Time, com mostrador azul e pulseira em tecido.',
         tags: ['Masculino', 'Poedagar', 'Azul']
       },
@@ -3648,6 +3813,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold-3.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold.mp4',
         descricao: 'Relógio Sovereign Gold, todo em dourado, com presença marcante.',
         tags: ['Masculino', 'Dourado', 'Sovereign']
       },
@@ -3660,6 +3826,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige-2.webp',
         ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige.mp4',
         descricao: 'Relógio Vanguard Prestige, de estilo clássico e acabamento caprichado.',
         tags: ['Masculino', 'Vanguard', 'Clássico']
       },
@@ -3702,6 +3869,64 @@ const COLECOES = [
     descricao: '',
     tags: ['Feminino', 'Relógios'],
     itens: [
+      {
+        nome: 'Relógio Feminino Binbond Blue Elity',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-3.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity.mp4',
+        descricao: 'Relógio feminino Binbond Blue Elity, com pulseira metálica e detalhe azul no mostrador.',
+        tags: ['Feminino', 'Binbond', 'Azul']
+      },
+      {
+        nome: 'Relógio Feminino Excutivy Poedagar',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-3.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar.mp4',
+        descricao: 'Relógio feminino Excutivy Poedagar, com acabamento de luxo e brilho discreto.',
+        tags: ['Feminino', 'Poedagar', 'Luxo']
+      },
+      {
+        nome: 'Relógio Fran Green Rhuan',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-3.webp',
+        ],
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan.mp4',
+        descricao: 'Relógio Fran Green Rhuan, com mostrador verde e design sofisticado.',
+        tags: ['Feminino', 'Fran', 'Verde']
+      },
+      {
+        nome: 'Relógio Nobre Real Green',
+        preco: 249.99,
+        parcelas: 2,
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-1.webp',
+        fotos: [
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-1.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-2.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-3.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-4.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-5.webp',
+          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-nobre-real-green-6.webp',
+        ],
+        descricao: 'Relógio Nobre Real Green, com detalhes em verde e acabamento nobre.',
+        tags: ['Feminino', 'Nobre', 'Verde']
+      },
       {
         nome: 'Relógio Feminino Doluck Cor Prata',
         preco: 99.99,
@@ -4230,6 +4455,8 @@ const COLECOES = [
       abrirLightbox(p, galeriaCard ? parseInt(galeriaCard.dataset.fotoAtual || '0', 10) : 0);
     });
     media.appendChild(botaoZoom(p, galeriaCard));
+    const videoCard = botaoVideo(p);
+    if (videoCard) media.appendChild(videoCard);
     card.appendChild(media);
 
     /* corpo */
@@ -4482,6 +4709,9 @@ const itemCard = (p) => {
     });
     media.appendChild(botaoZoom(p, galeria));
 
+    const videoItem = botaoVideo(p);
+    if (videoItem) media.appendChild(videoItem);
+
     li.appendChild(media);
 
     const body = el('div', 'mi-body');
@@ -4549,12 +4779,40 @@ const itemCard = (p) => {
   const lbxPrev = document.getElementById('lbxPrev');
   const lbxNext = document.getElementById('lbxNext');
   const lbxStage = document.getElementById('lbxStage');
+  const lbxVideo = document.getElementById('lbxVideo');
+  const lbxPlay = document.getElementById('lbxPlay');
 
   let lbxFotos = [];
   let lbxIdx = 0;
   let lbxFoco = null;
   let lbxTravou = false;
   let lbxScrollAntes = 0;
+  let lbxVideoUrl = '';
+
+  /* vídeo do produto: toca no lugar da foto, dentro do visor */
+  function pararVideoLbx() {
+    if (!lbxVideo) return;
+    try { lbxVideo.pause(); } catch (e) {}
+    lbxVideo.hidden = true;
+    if (lbxVideo.getAttribute('src')) {
+      lbxVideo.removeAttribute('src');
+      try { lbxVideo.load(); } catch (e) {}
+    }
+    lbxImg.hidden = false;
+  }
+
+  function tocarVideoLbx() {
+    if (!lbxVideo || !lbxVideoUrl) return;
+    lbxImg.hidden = true;
+    lbxPlay.hidden = true;
+    lbxPrev.hidden = true;
+    lbxNext.hidden = true;
+    lbxCount.hidden = true;
+    lbxVideo.src = lbxVideoUrl;
+    lbxVideo.hidden = false;
+    const p = lbxVideo.play();
+    if (p && p.catch) p.catch(function () {});
+  }
 
   // botãozinho de lupa no canto da foto
   function botaoZoom(produto, galeria) {
@@ -4570,8 +4828,25 @@ const itemCard = (p) => {
     return b;
   }
 
+  /* botãozinho "Vídeo" no canto da foto do produto */
+  function botaoVideo(produto) {
+    if (!produto || !produto.video) return null;
+    const b = el('button', 'mi-video-btn',
+      '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Vídeo');
+    b.type = 'button';
+    b.title = 'Ver o vídeo do relógio';
+    b.setAttribute('aria-label', 'Ver o vídeo de ' + produto.nome);
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      abrirLightbox(produto, 0);
+      tocarVideoLbx();
+    });
+    return b;
+  }
+
   function lbxMostrarFoto() {
     if (!lbx || !lbxFotos.length) return;
+    pararVideoLbx();
     lbxImg.src = lbxFotos[lbxIdx];
     lbxImg.alt = (lbxNome.textContent || 'Produto') + ' — foto ' + (lbxIdx + 1);
     const multi = lbxFotos.length > 1;
@@ -4579,6 +4854,7 @@ const itemCard = (p) => {
     lbxNext.hidden = !multi;
     lbxCount.hidden = !multi;
     lbxCount.textContent = (lbxIdx + 1) + ' / ' + lbxFotos.length;
+    lbxPlay.hidden = !lbxVideoUrl;
   }
 
   function abrirLightbox(produto, indice, atualizarHistorico = true) {
@@ -4591,6 +4867,7 @@ const itemCard = (p) => {
     if (window.fbqTrackRich) window.fbqTrackRich('ViewContent', {content_name: produto.nome, value: produto.preco, currency: 'BRL'});
     lbxFotos = fotosDoProduto(produto);
     if (!lbxFotos.length) lbxFotos = [produto.imagem];
+    lbxVideoUrl = produto.video || '';
     lbxIdx = Math.max(0, Math.min(indice || 0, lbxFotos.length - 1));
     lbxFoco = document.activeElement;
 
@@ -4631,6 +4908,7 @@ const itemCard = (p) => {
   function fecharLightbox(atualizarHistorico = true) {
     if (!lbx || lbx.hidden) return;
     if (atualizarHistorico && history.state?.njVisor) { history.back(); return; }
+    pararVideoLbx();
     lbx.hidden = true;
     if (!lbxTravou) {
       document.documentElement.classList.remove('lock');
@@ -4648,6 +4926,8 @@ const itemCard = (p) => {
 
   if (lbx) {
     lbxWa.innerHTML = ICON_WA + '<span>Falar com o atendente</span>';
+    if (lbxPlay) lbxPlay.addEventListener('click', tocarVideoLbx);
+    if (lbxVideo) lbxVideo.addEventListener('ended', function () { lbxMostrarFoto(); });
     lbx.addEventListener('click', (e) => {
       if (e.target.closest('[data-lbx-close]')) fecharLightbox();
     });
