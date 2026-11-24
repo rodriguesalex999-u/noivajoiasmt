@@ -2,6 +2,18 @@
 
 Problemas reais já resolvidos. Valem para a próxima vez que algo similar acontecer.
 
+## 2026-11-23 — Som do vídeo do relógio: `currentTime = 0` derrubava o download
+- **Sintoma:** o cliente clicava em "Ver vídeo" e o vídeo não tocava com som (às vezes ficava parado em 0).
+- **Causa:** `ligarSomLbx()` fazia `lbxVideo.currentTime = 0` logo depois de trocar o `src`. Com o arquivo ainda baixando, o navegador **aborta o download** e recarrega o arquivo — o vídeo fica parado.
+- **Correção:** só reinicia o tempo quando `readyState > 0` (mídia já carregada). E o atributo `muted` do `<video>` passou a ser tirado/colocado junto com a propriedade `muted`, para o HTML e o estado real não divergirem.
+- **Como conferir um `<video>` controlado por JS:** ler `muted`, `paused`, `currentTime` e `currentSrc` depois de cada ação — o texto do botão sozinho não prova que o som está ligado.
+
+## 2026-11-23 — Antes de achar bug no site, teste localmente e confira a URL
+- **Armadilha da automação:** ao clicar por coordenada ou por referência antiga fora da tela, o clique pode acertar o **fundo do modal** (`data-close`) e fechar a coleção — aí a URL vai para a raiz e parece "bug do site". Foi assim que nasceu a suspeita de que o botão "Vídeo" perdia a rota.
+- **Teste que prova:** subir o site localmente com **fallback para `index.html`** (igual ao `vercel.json`: `/(.*)` → `/index.html`) e abrir a rota real. Sem esse fallback, `python -m http.server` devolve 404 em `/relogiomasculino` e o teste não reproduz a produção.
+- **Outro detalhe:** o `?v=<timestamp>` que aparecia na URL era **cache-buster do meu próprio teste**, não do site. Antes de investigar, conferir se a string existe no código (`grep` por `?v=`) — ela não existia, e o `location.search` era explain pelo `replaceState` de inicialização.
+- **Resultado:** o código estava certo. Clicar no "Vídeo" do card dentro do modal **não** perde a rota: o `history.pushState` guarda as camadas (coleção + visor) e a URL continua `/relogiomasculino`.
+
 ## 2026-11-23 — Foto de relógio com "borrão preto": a causa era o script, não a foto
 - **Sintoma:** manchas pretas dentro da foto do relógio (nos cristais, na manga branca da blusa, na luz de fundo). O cliente achava que a foto estava "borrada".
 - **Causa real (provada, não achismo):** `scripts/preparar_fotos_produto.py` pinta de preto **todo** pixel com os três canais ≥ 238 (`LIMIAR`) para transformar o fundo branco do catálogo em preto. Em **foto de relógio** (que é foto de cenário, com fundo real), essa regra atinge os **reflexos claros dentro do produto**. Reproduzindo o pipeline do site a partir do original, a foto publicada bate com erro médio de 1,17 (de 255) — era exatamente essa regra.

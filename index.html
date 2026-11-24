@@ -4915,6 +4915,7 @@ const itemCard = (p) => {
     lbxVideo.src = lbxVideoUrl;
     lbxVideo.hidden = false;
     lbxVideo.muted = true;
+    lbxVideo.setAttribute('muted', '');
     lbxVideo.loop = true;
     lbxVideo.volume = 1;
     const p = lbxVideo.play();
@@ -4931,9 +4932,14 @@ const itemCard = (p) => {
   function ligarSomLbx() {
     if (!lbxVideo) return;
     lbxVideo.muted = false;
+    lbxVideo.removeAttribute('muted');
     lbxVideo.volume = 1;
     lbxVideo.loop = false;
-    try { lbxVideo.currentTime = 0; } catch (e) {}
+    // reinicia do começo, mas só quando já tem mídia carregada
+    // (senão o navegador aborta o download e recarrega o arquivo)
+    try {
+      if (lbxVideo.readyState > 0) lbxVideo.currentTime = 0;
+    } catch (e) {}
     const p = lbxVideo.play();
     if (p && p.catch) p.catch(function () {});
     if (lbxSom) {
@@ -4945,6 +4951,7 @@ const itemCard = (p) => {
   function tirarSomLbx() {
     if (!lbxVideo) return;
     lbxVideo.muted = true;
+    lbxVideo.setAttribute('muted', '');
     lbxVideo.loop = true;
     if (lbxSom) {
       lbxSom.innerHTML = SOM_LB;
