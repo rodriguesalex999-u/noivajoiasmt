@@ -687,6 +687,17 @@ h1 em{font-style:italic;display:block;font-weight:600}
 }
 .lbx-play:hover{background:rgba(201,167,91,.26);border-color:rgba(201,167,91,.85)}
 .lbx-play[hidden]{display:none}
+.lbx-som,.lbx-fotos{
+  position:absolute;z-index:3;display:flex;align-items:center;gap:7px;
+  padding:11px 18px;border-radius:999px;
+  border:1px solid rgba(201,167,91,.6);background:rgba(10,8,7,.78);color:var(--cream);
+  font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+  transition:background .18s,border-color .18s;
+}
+.lbx-som{left:50%;top:50%;transform:translate(-50%,-50%)}
+.lbx-fotos{left:50%;bottom:16px;transform:translateX(-50%)}
+.lbx-som:hover,.lbx-fotos:hover{background:rgba(201,167,91,.26);border-color:rgba(201,167,91,.85)}
+.lbx-som[hidden],.lbx-fotos[hidden]{display:none}
 .mi-video-btn{
   position:absolute;right:8px;top:8px;z-index:4;
   display:flex;align-items:center;gap:5px;padding:5px 9px;
@@ -1463,11 +1474,16 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     </button>
     <div class="lbx-stage" id="lbxStage">
       <img class="lbx-img" id="lbxImg" alt="">
-      <video class="lbx-video" id="lbxVideo" controls playsinline preload="none" hidden></video>
+      <video class="lbx-video" id="lbxVideo" muted autoplay loop playsinline preload="metadata" hidden></video>
       <button class="lbx-play" type="button" id="lbxPlay" hidden>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
         Ver vídeo
       </button>
+      <button class="lbx-som" type="button" id="lbxSom" hidden aria-label="Ouvir o vídeo do relógio com som">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        Ouvir com som
+      </button>
+      <button class="lbx-fotos" type="button" id="lbxBtnFotos" hidden>Ver as fotos</button>
       <button class="lbx-nav lbx-prev" type="button" id="lbxPrev" aria-label="Foto anterior">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
@@ -3973,9 +3989,8 @@ const COLECOES = [
         nome: 'Relógio Feminino Pallyjane Dourado com Strass',
         preco: 99.99,
         parcelas: 2,
-        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-1.webp',
+        imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-2.webp',
         fotos: [
-          'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-3.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-pallyjane-dourado-com-strass-4.webp',
@@ -4781,6 +4796,10 @@ const itemCard = (p) => {
   const lbxStage = document.getElementById('lbxStage');
   const lbxVideo = document.getElementById('lbxVideo');
   const lbxPlay = document.getElementById('lbxPlay');
+  const lbxSom = document.getElementById('lbxSom');
+  const lbxBtnFotos = document.getElementById('lbxBtnFotos');
+  const SOM_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg> Ouvir com som';
+  const MUDO_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="m17 9 5 6m0-6-5 6"/></svg> Tirar o som';
 
   let lbxFotos = [];
   let lbxIdx = 0;
@@ -4789,7 +4808,10 @@ const itemCard = (p) => {
   let lbxScrollAntes = 0;
   let lbxVideoUrl = '';
 
-  /* vídeo do produto: toca no lugar da foto, dentro do visor */
+  /* vídeo do produto: toca no lugar da foto, dentro do visor.
+     Mesma regra do VSL do Sr. Fernandes (23/11/2026, pedido do dono):
+     o vídeo COMEÇA sozinho e mudo (sem o cliente precisar apertar play),
+     e o botão de som liga o áudio quando ele quiser. */
   function pararVideoLbx() {
     if (!lbxVideo) return;
     try { lbxVideo.pause(); } catch (e) {}
@@ -4799,6 +4821,8 @@ const itemCard = (p) => {
       try { lbxVideo.load(); } catch (e) {}
     }
     lbxImg.hidden = false;
+    if (lbxSom) lbxSom.hidden = true;
+    if (lbxBtnFotos) lbxBtnFotos.hidden = true;
   }
 
   function tocarVideoLbx() {
@@ -4810,8 +4834,48 @@ const itemCard = (p) => {
     lbxCount.hidden = true;
     lbxVideo.src = lbxVideoUrl;
     lbxVideo.hidden = false;
+    lbxVideo.muted = true;
+    lbxVideo.loop = true;
+    lbxVideo.volume = 1;
     const p = lbxVideo.play();
     if (p && p.catch) p.catch(function () {});
+    if (lbxSom) {
+      lbxSom.hidden = false;
+      lbxSom.innerHTML = SOM_LB;
+      lbxSom.setAttribute('aria-label', 'Ouvir o vídeo do relógio com som');
+    }
+    if (lbxBtnFotos) lbxBtnFotos.hidden = false;
+  }
+
+  /* o botão de som: liga o audio (e volta do começo, como o VSL) */
+  function ligarSomLbx() {
+    if (!lbxVideo) return;
+    lbxVideo.muted = false;
+    lbxVideo.volume = 1;
+    lbxVideo.loop = false;
+    try { lbxVideo.currentTime = 0; } catch (e) {}
+    const p = lbxVideo.play();
+    if (p && p.catch) p.catch(function () {});
+    if (lbxSom) {
+      lbxSom.innerHTML = MUDO_LB;
+      lbxSom.setAttribute('aria-label', 'Tirar o som do vídeo');
+    }
+  }
+
+  function tirarSomLbx() {
+    if (!lbxVideo) return;
+    lbxVideo.muted = true;
+    lbxVideo.loop = true;
+    if (lbxSom) {
+      lbxSom.innerHTML = SOM_LB;
+      lbxSom.setAttribute('aria-label', 'Ouvir o vídeo do relógio com som');
+    }
+  }
+
+  /* volta para as fotos (o video para) */
+  function voltarParaFotos() {
+    if (lbxPlay) lbxPlay.hidden = !lbxVideoUrl;
+    lbxMostrarFoto();
   }
 
   // botãozinho de lupa no canto da foto
@@ -4839,7 +4903,6 @@ const itemCard = (p) => {
     b.addEventListener('click', (e) => {
       e.stopPropagation();
       abrirLightbox(produto, 0);
-      tocarVideoLbx();
     });
     return b;
   }
@@ -4892,6 +4955,10 @@ const itemCard = (p) => {
 
     lbxMostrarFoto();
 
+    /* Produto com vídeo: o vídeo começa sozinho e mudo (23/11/2026, pedido do
+       dono). O cliente não precisa apertar play; o botão de som liga o áudio. */
+    if (lbxVideoUrl) tocarVideoLbx();
+
     /* trava a rolagem do fundo sem desfazer a trava do catálogo por cima */
     lbxTravou = document.documentElement.classList.contains('lock');
     if (!lbxTravou) {
@@ -4927,6 +4994,10 @@ const itemCard = (p) => {
   if (lbx) {
     lbxWa.innerHTML = ICON_WA + '<span>Falar com o atendente</span>';
     if (lbxPlay) lbxPlay.addEventListener('click', tocarVideoLbx);
+    if (lbxSom) lbxSom.addEventListener('click', function () {
+      if (lbxVideo && lbxVideo.muted) ligarSomLbx(); else tirarSomLbx();
+    });
+    if (lbxBtnFotos) lbxBtnFotos.addEventListener('click', voltarParaFotos);
     if (lbxVideo) lbxVideo.addEventListener('ended', function () { lbxMostrarFoto(); });
     lbx.addEventListener('click', (e) => {
       if (e.target.closest('[data-lbx-close]')) fecharLightbox();
@@ -4973,7 +5044,9 @@ const itemCard = (p) => {
     '/moedaantigaforro': 'Aliança de Moeda Antiga COM FORRO INTERNO',
     '/correnteskits': 'Correntes, Kits e Conjuntos 18K',
     '/pulseiras': 'Pulseiras Masculinas 18K',
-    '/pingentes': 'Pingentes Masculinos 18K'
+    '/pingentes': 'Pingentes Masculinos 18K',
+    '/relogiomasculino': 'Relógio masculino',
+    '/relogiofeminino': 'Relógio feminino'
   };
   const ROTAS_REVERSE = Object.fromEntries(Object.entries(ROTAS).map(([k, v]) => [v, k]));
 

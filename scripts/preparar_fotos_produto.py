@@ -49,7 +49,7 @@ def slug(texto):
     return '-'.join(txt.split())
 
 
-def converte(origem: Path, destino: Path) -> int:
+def converte(origem: Path, destino: Path, tratar_branco=True, encaixar=False) -> int:
     """1000x1000 webp q90, branco -> preto do catalogo, borda preta reforcada."""
     im = Image.open(origem)
     if im.mode in ('RGBA', 'LA', 'P'):
@@ -60,15 +60,47 @@ def converte(origem: Path, destino: Path) -> int:
     else:
         im = im.convert('RGB')
 
-    px = im.load()
-    for y in range(im.size[1]):
-        for x in range(im.size[0]):
-            r, g, b = px[x, y]
-            if r >= LIMIAR and g >= LIMIAR and b >= LIMIAR:
-                px[x, y] = PRETO
+    if tratar_branco:
+        # 23/11/2026 (correcao de causa-raiz): o branco so vira preto quando e
+        # FUNDO de catalogo (pixels claros ligados a borda da foto). Antes, TODO
+        # pixel claro virava preto e deixava manchas pretas nos reflexos do
+        # produto (cristais do relogio, manga de roupa clara, luz de fundo).
+        px = im.load()
+        w, h = im.size
+        br = [[px[x, y][0] >= LIMIAR and px[x, y][1] >= LIMIAR and px[x, y][2] >= LIMIAR
+               for x in range(w)] for y in range(h)]
+        visto = [[False] * w for _ in range(h)]
+        pilha = []
+        for x in range(w):
+            for y in (0, h - 1):
+                if br[y][x] and not visto[y][x]:
+                    visto[y][x] = True
+                    pilha.append((y, x))
+        for y in range(h):
+            for x in (0, w - 1):
+                if br[y][x] and not visto[y][x]:
+                    visto[y][x] = True
+                    pilha.append((y, x))
+        while pilha:
+            y, x = pilha.pop()
+            px[x, y] = PRETO
+            for ny, nx in ((y - 1, x), (y + 1, x), (y, x - 1), (y, x + 1)):
+                if 0 <= ny < h and 0 <= nx < w and br[ny][nx] and not visto[ny][nx]:
+                    visto[ny][nx] = True
+                    pilha.append((ny, nx))
 
+    if encaixar and im.size != (TAMANHO, TAMANHO):
+        escala = min(TAMANHO / im.size[0], TAMANHO / im.size[1])
+        novo = (max(1, round(im.size[0] * escala)), max(1, round(im.size[1] * escala)))
+        saida = Image.new('RGB', (TAMANHO, TAMANHO), PRETO)
+        saida.paste(im.resize(novo, Image.LANCZOS),
+                    ((TAMANHO - novo[0]) // 2, (TAMANHO - novo[1]) // 2))
+    else:
+        saida = im if im.size == (TAMANHO, TAMANHO) else im.resize((TAMANHO, TAMANHO), Image.LANCZOS)
+
+    px = saida.load()
     b = BORDA_PX
-    w, h = im.size
+    w, h = saida.size
     for x in range(w):
         for y in list(range(b)) + list(range(h - b, h)):
             px[x, y] = PRETO
@@ -76,7 +108,6 @@ def converte(origem: Path, destino: Path) -> int:
         for x in list(range(b)) + list(range(w - b, w)):
             px[x, y] = PRETO
 
-    saida = im if im.size == (TAMANHO, TAMANHO) else im.resize((TAMANHO, TAMANHO), Image.LANCZOS)
     destino.parent.mkdir(parents=True, exist_ok=True)
     saida.save(destino, 'WEBP', quality=90)
     return destino.stat().st_size
@@ -138,6 +169,8 @@ def main():
     ap.add_argument('--tags', default='')
     ap.add_argument('--pasta', default=None, help='destino local (padrao PDFs/img/<colecao>)')
     ap.add_argument('--sem-upload', action='store_true', help='nao sobe no R2')
+    ap.add_argument('--manter-branco', action='store_true', help='preserva areas claras da foto')
+    ap.add_argument('--encaixar', action='store_true', help='encaixa sem esticar a imagem')
     args = ap.parse_args()
 
     sl = slug(args.slug or args.nome)
@@ -158,7 +191,9 @@ def main():
             continue
         chave = '%s-%s-%d.webp' % (args.colecao, sl, i)
         destino = pasta / chave
-        tamanho = converte(origem, destino)
+        tamanho = converte(origem, destino,
+                           tratar_branco=not args.manter_branco,
+                           encaixar=args.encaixar)
         print('  %d) %s -> %s (%s KB)' % (i, origem.name, destino.name, format(tamanho // 1024, ',').replace(',', '.')))
         chaves.append(chave)
         locais.append(destino)

@@ -11,6 +11,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://noivajoiasmt.vercel.app/relogiomasculino</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://noivajoiasmt.vercel.app/relogiofeminino</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://noivajoiasmt.vercel.app/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
