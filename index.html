@@ -4983,8 +4983,9 @@ const itemCard = (p) => {
     b.addEventListener('click', (e) => {
       e.stopPropagation();
       abrirLightbox(produto, 0);
-      // O cliente tocou no "Vídeo": aqui o som entra (o fundo é sempre mudo).
-      if (lbxVideoUrl) ligarSomLbx();
+      // O cliente tocou no "Vídeo": o vídeo abre e o som entra junto.
+      // (no fundo dos cards o vídeo é sempre mudo — ver criarGaleria)
+      if (lbxVideoUrl) { tocarVideoLbx(); ligarSomLbx(); }
     });
     return b;
   }
