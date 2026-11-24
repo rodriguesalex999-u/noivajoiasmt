@@ -579,6 +579,13 @@ h1 em{font-style:italic;display:block;font-weight:600}
 .mi-gallery-track{display:flex;height:100%;transition:transform .3s var(--ease)}
 .mi-gallery-slide{position:relative;flex:0 0 100%;height:100%}
 .mi-gallery-slide img{width:100%;height:100%;object-fit:cover}
+/* ---------- video do relogio no card (23/11/2026, pedido do dono) ----------
+   O video comeca SOZINHO e MUDO quando o card entra na tela do cliente
+   (como o video do Sr. Fernandes no topo). O som so sai quando ele
+   clica no botao 'Ver video'. So carrega quando o card chega perto. */
+.mi-gallery-slide.mi-gallery-video{background:#0b0907}
+.mi-gallery-video video{width:100%;height:100%;object-fit:cover;display:block}
+.mi-gallery-indicator.mi-video-tag{left:8px;right:auto;letter-spacing:.1em;text-transform:uppercase}
 .mi-gallery-indicator{
   position:absolute;right:8px;bottom:8px;z-index:3;
   padding:3px 7px;border-radius:999px;
@@ -4451,11 +4458,12 @@ const COLECOES = [
 
     /* foto */
     const urlsFotos = fotosDoProduto(p);
-    const temGaleria = urlsFotos.length > 1;
+    const temVideo = !!p.video;
+    const temGaleria = urlsFotos.length > 1 || temVideo;
     const media = el('div', 'prod-media' + (temGaleria ? ' has-gallery' : ''));
     let galeriaCard = null;
     if (temGaleria) {
-      galeriaCard = criarGaleria(urlsFotos, p.nome);
+      galeriaCard = criarGaleria(urlsFotos, p.nome, p.video);
       if (galeriaCard) media.appendChild(galeriaCard);
       else media.appendChild(foto(p.imagem, p.nome + ' — Noiva Joias MT', i === 0, 'prod-img'));
     } else {
@@ -4599,71 +4607,142 @@ const COLECOES = [
     return detectarFotosSequenciais(p.imagem);
   }
   // Cria galeria/slider para fotos sequenciais
-  function criarGaleria(urls, nomeProduto) {
-    if (urls.length <= 1) return null;
+  function criarGaleria(urls, nomeProduto, videoUrl) {
+    const temVideo = !!videoUrl;
+    if (urls.length <= 1 && !temVideo) return null;
 
     const gallery = el('div', 'mi-gallery');
     // guarda qual foto está na tela: o visor ampliado abre na mesma foto
     gallery.dataset.fotoAtual = '0';
     const track = el('div', 'mi-gallery-track');
 
-    urls.forEach((url, idx) => {
-      const slide = el('div', 'mi-gallery-slide');
-      const img = el('img', 'mi-gallery-img');
-      img.src = url;
-      img.alt = nomeProduto + ' - Foto ' + (idx + 1);
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.addEventListener('error', function() {
-        this.onerror = null;
-        this.src = PLACEHOLDER;
-      });
-      slide.appendChild(img);
+    /* Slides: quando o produto tem vídeo, ele vem PRIMEIRO, e as fotos
+       depois. Assim o cliente vê o relógio se movendo já no card. */
+    const slides = [];
+    if (temVideo) slides.push({ tipo: 'video', url: videoUrl, fotoIdx: -1 });
+    urls.forEach((u, i) => slides.push({ tipo: 'foto', url: u, fotoIdx: i }));
 
-      // Indicador de qual foto (1/3, 2/3, etc.)
-      const indicador = el('div', 'mi-gallery-indicator', (idx + 1) + ' / ' + urls.length);
-      slide.appendChild(indicador);
+    let videoEl = null;
 
+    slides.forEach((s) => {
+      const slide = el('div', 'mi-gallery-slide' + (s.tipo === 'video' ? ' mi-gallery-video' : ''));
+      if (s.tipo === 'video') {
+        videoEl = document.createElement('video');
+        videoEl.className = 'mi-video-bg';
+        videoEl.muted = true;
+        videoEl.loop = true;
+        videoEl.playsInline = true;
+        videoEl.setAttribute('playsinline', '');
+        videoEl.setAttribute('webkit-playsinline', '');
+        videoEl.preload = 'none';
+        videoEl.dataset.src = s.url;
+        videoEl.setAttribute('aria-label', 'Vídeo de ' + nomeProduto);
+        slide.appendChild(videoEl);
+        slide.appendChild(el('div', 'mi-gallery-indicator mi-video-tag', '▶ Vídeo'));
+      } else {
+        const img = el('img', 'mi-gallery-img');
+        img.src = s.url;
+        img.alt = nomeProduto + ' - Foto ' + (s.fotoIdx + 1);
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.addEventListener('error', function() {
+          this.onerror = null;
+          this.src = PLACEHOLDER;
+        });
+        slide.appendChild(img);
+        // Indicador de qual foto (1/3, 2/3, etc.)
+        const indicador = el('div', 'mi-gallery-indicator', (s.fotoIdx + 1) + ' / ' + urls.length);
+        slide.appendChild(indicador);
+      }
       track.appendChild(slide);
     });
 
     gallery.appendChild(track);
 
+    /* O vídeo do relógio roda sozinho e MUDO quando o card entra no campo
+       de visão do cliente (igual ao vídeo do Sr. Fernandes no topo).
+       O som só sai quando ele clica no botão "Ver vídeo".
+       Só carrega o arquivo quando o card chega perto, para não pesar. */
+    if (videoEl) {
+      const reduzir = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const economia = navigator.connection && navigator.connection.saveData;
+      const carregar = () => {
+        if (!videoEl.getAttribute('src') && videoEl.dataset.src) {
+          videoEl.setAttribute('src', videoEl.dataset.src);
+        }
+      };
+      const darPlay = () => {
+        if (reduzir || economia || document.hidden) return;
+        carregar();
+        const p = videoEl.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entradas) => {
+          entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+              darPlay();
+            } else {
+              try { videoEl.pause(); } catch (e) {}
+            }
+          });
+        }, { rootMargin: '120px', threshold: 0.15 });
+        obs.observe(gallery);
+      } else {
+        carregar();
+      }
+      // nada de tocar aqui: o vídeo SÓ carrega e começa quando o
+      // card entra no campo de visão do cliente (ver o IntersectionObserver acima).
+    }
+
     // Navegação (setas)
-    if (urls.length > 1) {
+    if (slides.length > 1) {
       const btnPrev = el('button', 'mi-gallery-btn mi-gallery-prev',
         '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>');
       btnPrev.type = 'button';
-      btnPrev.setAttribute('aria-label', 'Foto anterior');
+      btnPrev.setAttribute('aria-label', 'Anterior');
 
       const btnNext = el('button', 'mi-gallery-btn mi-gallery-next',
         '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>');
       btnNext.type = 'button';
-      btnNext.setAttribute('aria-label', 'Próxima foto');
+      btnNext.setAttribute('aria-label', 'Próxima');
 
       gallery.appendChild(btnPrev);
       gallery.appendChild(btnNext);
 
-      // Indicador de pontos
+      // Indicador de pontos (um por slide: vídeo + fotos)
       const dots = el('div', 'mi-gallery-dots');
-      urls.forEach((_, idx) => {
+      slides.forEach((s, idx) => {
         const dot = el('button', 'mi-gallery-dot' + (idx === 0 ? ' active' : ''));
         dot.type = 'button';
-        dot.setAttribute('aria-label', 'Ir para foto ' + (idx + 1));
+        dot.setAttribute('aria-label', s.tipo === 'video' ? 'Ver o vídeo' : 'Ir para foto ' + (s.fotoIdx + 1));
         dots.appendChild(dot);
       });
       gallery.appendChild(dots);
 
       // Lógica do slider
       let currentSlide = 0;
-      const slides = track.querySelectorAll('.mi-gallery-slide');
       const modalDots = gallery.querySelectorAll('.mi-gallery-dot');
 
       function goToSlide(idx) {
-        currentSlide = Math.max(0, Math.min(idx, urls.length - 1));
+        currentSlide = Math.max(0, Math.min(idx, slides.length - 1));
         track.style.transform = 'translateX(' + (-currentSlide * 100) + '%)';
         modalDots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
-        gallery.dataset.fotoAtual = String(currentSlide);
+        // o visor ampliado abre na MESMA foto que o cliente estava vendo
+        gallery.dataset.fotoAtual = String(slides[currentSlide].tipo === 'video' ? 0 : slides[currentSlide].fotoIdx);
+        if (videoEl) {
+          if (slides[currentSlide].tipo === 'video') {
+            videoEl.muted = true;
+            videoEl.loop = true;
+            if (!videoEl.getAttribute('src') && videoEl.dataset.src) {
+              videoEl.setAttribute('src', videoEl.dataset.src);
+            }
+            const p = videoEl.play();
+            if (p && p.catch) p.catch(function () {});
+          } else {
+            try { videoEl.pause(); } catch (e) {}
+          }
+        }
       }
 
       const btnPrevEl = gallery.querySelector('.mi-gallery-prev');
@@ -4702,14 +4781,15 @@ const itemCard = (p) => {
     // Fotos do item: a lista explícita (fotos) manda; sem ela, tenta descobrir
     // pelo nome do arquivo (1), (2), (3)...
     const urlsFotos = fotosDoProduto(p);
-    const temGaleria = urlsFotos.length > 1;
+    const temVideo = !!p.video;
+    const temGaleria = urlsFotos.length > 1 || temVideo;
 
     const media = el('div', 'mi-media' + (temGaleria ? ' has-gallery' : ''));
 
     // Com galeria, as fotos ficam dentro do slider (a primeira é a capa)
     let galeria = null;
     if (temGaleria) {
-      galeria = criarGaleria(urlsFotos, p.nome);
+      galeria = criarGaleria(urlsFotos, p.nome, p.video);
       if (galeria) media.appendChild(galeria);
       else media.appendChild(foto(p.imagem, p.nome + ' — Noiva Joias MT', false));
     } else {
@@ -4903,6 +4983,8 @@ const itemCard = (p) => {
     b.addEventListener('click', (e) => {
       e.stopPropagation();
       abrirLightbox(produto, 0);
+      // O cliente tocou no "Vídeo": aqui o som entra (o fundo é sempre mudo).
+      if (lbxVideoUrl) ligarSomLbx();
     });
     return b;
   }
@@ -4955,10 +5037,6 @@ const itemCard = (p) => {
 
     lbxMostrarFoto();
 
-    /* Produto com vídeo: o vídeo começa sozinho e mudo (23/11/2026, pedido do
-       dono). O cliente não precisa apertar play; o botão de som liga o áudio. */
-    if (lbxVideoUrl) tocarVideoLbx();
-
     /* trava a rolagem do fundo sem desfazer a trava do catálogo por cima */
     lbxTravou = document.documentElement.classList.contains('lock');
     if (!lbxTravou) {
@@ -4993,7 +5071,7 @@ const itemCard = (p) => {
 
   if (lbx) {
     lbxWa.innerHTML = ICON_WA + '<span>Falar com o atendente</span>';
-    if (lbxPlay) lbxPlay.addEventListener('click', tocarVideoLbx);
+    if (lbxPlay) lbxPlay.addEventListener('click', function () { tocarVideoLbx(); ligarSomLbx(); });
     if (lbxSom) lbxSom.addEventListener('click', function () {
       if (lbxVideo && lbxVideo.muted) ligarSomLbx(); else tirarSomLbx();
     });
