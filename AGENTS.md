@@ -58,6 +58,15 @@ Existem **dois tipos de foto de produto**, e eles se comportam diferente:
 
 Detalhes e histórico: `APRENDIZADOS.md` (23/11/2026) e `COMO-COLOCAR-PRODUTO-NO-SITE.md`.
 
+## Regra de ouro dos VÍDEOS (26/11/2026 — vale para TODOS os sites do Alex)
+Regra completa e única: **`G:\Meu Drive\GERAL\REGRAS-VIDEOS-E-FOTOS-NOS-SITES.md`**. Resumo obrigatório, sem o dono precisar pedir:
+1. **Sempre comprimir antes de subir:** H.264 2 passagens, máx. 540 px, 24 fps, alvo 70% do bitrate (teto 420k), AAC 64k, `+faststart`; conferir SSIM ≥ 0,95. Áudio mudo → `-an`. Fornecedor > 60 s → cortar para 30 s.
+2. **Conferir se já está no ar** (mesmo nome/duração/imagem) antes de subir de novo.
+3. Ligar o `video:` **no item da vitrine `PRODUTOS` E no item de mesmo nome em `COLECOES[...].itens`** — senão não aparece na categoria.
+4. R2: backup do original em `backup-videos-AAAAMMDD/`, trocar na mesma chave, subir `?v=N` no link.
+5. Visor: abre no vídeo mudo; nenhum botão no meio; tocar no vídeo liga o som.
+6. Depois de publicar, abrir a **rota da categoria** (ex.: `/aliancabanhadas`) e ver os vídeos tocando.
+
 ## Regra de ouro: valide o JavaScript antes de publicar (25/11/2026)
 
 O `index.html` é um HTML único com ~4.000 linhas de JavaScript inline (arrays
