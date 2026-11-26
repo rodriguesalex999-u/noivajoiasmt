@@ -1,5 +1,13 @@
 # Changelog - Noiva Joias MT
 
+## 2026-11-25
+- **Catálogo quebrado no ar — CORRIGIDO (era isto que fazia "as fotos dos produtos não aparecerem").** Causa real: **erro de sintaxe JavaScript** no script inline do `index.html` (duas linhas quebradas em commits do mesmo dia: faltava o `],` que fecha a lista `itens` da coleção "Aliança pra namoro" e faltava a vírgula entre dois itens da coleção "Aliança de casamento"). Com o erro, **o script inteiro não executa**: a página abre, banner/menu/carrinho funcionam, mas `#catalogo` fica **vazio** — nenhum produto, nenhuma foto. Não era cache de navegador.
+  - **Correção:** commit `ed87acd` (push na `main` → deploy automático).
+  - **Validação:** `node --check` no script inline (sintaxe OK) + navegador no ar: **234 produtos**, **369 imagens do catálogo, 0 quebradas**, **0 erro de console**, e os 4 anúncios novos com foto + vídeo presentes.
+- **Kit Completo unificado:** a entrada no array `PRODUTOS` passou a usar a mesma foto (`thumbs/Par Aliança Kit Completo Com Solitário e Aparador_449,99.png`) e o mesmo vídeo da coleção "Aliança de casamento" — antes usava a foto antiga (`produto-23-kit-completo---...webp`) e virava produto duplicado.
+- **Produto de prata renomeado** (nome pedido pelo dono): "Par de Aliança Chanfrada Escovada com Anel Solitário" → **"Par de Aliança Chanfrada Cor Prata Escovada com Anel Solitário"**, na coleção "Aliança pra namoro".
+- **`AGENTS.md`:** nova seção **"Regra de ouro: valide o JavaScript antes de publicar"** (`node --check` no script inline + conferência no navegador, e as 3 armadilhas que derrubam o catálogo inteiro).
+
 ## 2026-11-24
 - **Aprendizado de hoje documentado dentro do projeto** (para que qualquer IA que pegar este site saiba o caminho do sucesso):
   - `AGENTS.md` — nova seção **"Regra de ouro das fotos"**: os dois tipos de foto de produto (recorte de catálogo x foto de cenário), por que a regra antiga virava borrão preto no relógio, e os 4 passos obrigatórios (nunca subir foto já processada, sempre pelo script, conferir contra o original, conserto na mesma chave do R2), com o caminho dos originais.

@@ -58,6 +58,32 @@ Existem **dois tipos de foto de produto**, e eles se comportam diferente:
 
 Detalhes e histórico: `APRENDIZADOS.md` (23/11/2026) e `COMO-COLOCAR-PRODUTO-NO-SITE.md`.
 
+## Regra de ouro: valide o JavaScript antes de publicar (25/11/2026)
+
+O `index.html` é um HTML único com ~4.000 linhas de JavaScript inline (arrays
+`PRODUTOS` e `COLECOES` + o site inteiro). **Um único erro de sintaxe nesse
+script derruba o catálogo todo**: a página abre, o banner e o menu funcionam,
+mas **nenhum produto e nenhuma foto aparecem** — o `#catalogo` fica vazio.
+Em 25/11/2026 dois commits publicaram o site exatamente assim; só o console do
+navegador denunciou (`SyntaxError: Unexpected token '}'`).
+
+**Antes de todo `git commit` que mexer no `index.html`:**
+
+1. Validar a sintaxe do script inline com o Node:
+
+   ```bash
+   node --check <arquivo com o script inline extraído do index.html>
+   ```
+
+2. Testar no navegador (o site local ou o ar): **zero erro no console** e
+   `document.querySelectorAll('#catalogo article').length` **> 0**.
+
+**Armadilhas que quebram o catálogo (já aconteceram):**
+- apagar a linha `],` que fecha a lista `itens` de uma coleção;
+- esquecer a vírgula entre dois itens (o último item da lista precisa terminar com `,`);
+- editar o `index.html` com regex gulosa sobre o arquivo inteiro (já apagou
+  3.363 linhas uma vez) — editar por **linha/índice** e conferir `git diff --stat`.
+
 ## Indexação no Google (Search Console) — STATUS E PENDÊNCIAS
 **O site está verificado e configurado no Google Search Console desde 2026-10-23**
 (propriedade `https://noivajoiasmt.vercel.app/`, metatag `google-site-verification`
