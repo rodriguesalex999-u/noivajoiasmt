@@ -25,6 +25,7 @@
   - Copiar o **formato**, nunca a marca, o nome ou os dados deles
 
 ## Regras de processo
+- **Aprendizado que serve para QUALQUER site (26/11/2026, pedido do Alex):** registrar no `APRENDIZADOS.md` deste site **e** na base geral `G:\Meu Drive\GERAL\BASE-CONHECIMENTO-SITES.md` (seção certa, com data). Vídeo/foto: também `GERAL\REGRAS-VIDEOS-E-FOTOS-NOS-SITES.md`. Uma tarefa agendada semanal do Claude também traz para a base geral o que entrar aqui.
 - Toda mudança de comportamento visível → uma linha no `CHANGELOG.md`
 - `AGENTS.md` deste projeto é o padrão canônico (identidade, tokens, checklist, regras)
 - Não duplicar informação no AGENTS.md global

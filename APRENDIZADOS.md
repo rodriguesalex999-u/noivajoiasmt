@@ -2,6 +2,8 @@
 
 Problemas reais já resolvidos. Valem para a próxima vez que algo similar acontecer.
 
+> **O que servir para outros sites vai também para `G:\Meu Drive\GERAL\BASE-CONHECIMENTO-SITES.md`** (base de conhecimento de todos os sites do Alex, 26/11/2026).
+
 ## 2026-11-23 — Coleção nova = 3 arquivos, não 1 (rotas)
 - **Sintoma:** a coleção "Relógio masculino" existia no site, mas não tinha **página própria** (`/relogiomasculino`). O Alex não tinha link para mandar ao cliente, diferente de `/moedaantiga`, `/prata` etc.
 - **Não basta mexer no `index.html`.** Uma rota nova precisa de **3 lugares**, senão dá errado de um jeito diferente em cada um:
