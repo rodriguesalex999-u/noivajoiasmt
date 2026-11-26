@@ -686,8 +686,8 @@ h1 em{font-style:italic;display:block;font-weight:600}
 .lbx-video[hidden]{display:none}
 .lbx-img[hidden]{display:none}
 .lbx-play{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
-  display:flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;
+  position:absolute;left:12px;bottom:12px;z-index:3;
+  display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;
   border:1px solid rgba(201,167,91,.6);background:rgba(10,8,7,.74);color:var(--cream);
   font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;
   transition:background .18s,border-color .18s;
@@ -701,8 +701,11 @@ h1 em{font-style:italic;display:block;font-weight:600}
   font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
   transition:background .18s,border-color .18s;
 }
-.lbx-som{left:50%;top:50%;transform:translate(-50%,-50%)}
-.lbx-fotos{left:50%;bottom:16px;transform:translateX(-50%)}
+.lbx-som,.lbx-fotos{padding:8px 13px;font-size:.6rem;background:rgba(10,8,7,.62)}
+.lbx-som{left:12px;bottom:12px}
+.lbx-fotos{right:12px;bottom:12px}
+/* 26/11/2026: tocar no próprio vídeo liga/desliga o som (padrão AliExpress) */
+.lbx-video{cursor:pointer}
 .lbx-som:hover,.lbx-fotos:hover{background:rgba(201,167,91,.26);border-color:rgba(201,167,91,.85)}
 .lbx-som[hidden],.lbx-fotos[hidden]{display:none}
 .mi-video-btn{
@@ -1248,7 +1251,7 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
   <div class="vsl" id="vsl">
     <div class="vsl-player" id="vslPlayer">
       <div class="vsl-frame" id="vslFrame" data-state="preview">
-        <video id="vslVideo" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes.mp4" poster="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen" width="720" height="720" aria-label="Vídeo do Sr. Fernandes explicando como escolher e receber sua aliança na Noiva Joias MT"></video>
+        <video id="vslVideo" src="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes.mp4?v=3" poster="https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/vsl-noiva-fernandes-poster.jpg" muted autoplay loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen" width="720" height="720" aria-label="Vídeo do Sr. Fernandes explicando como escolher e receber sua aliança na Noiva Joias MT"></video>
         <button type="button" class="vsl-unmute" id="vslUnmute" aria-label="Assistir o vídeo com som desde o começo">
           <span class="vsl-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
           <span class="vsl-unmute-txt"><strong>Seu vídeo já começou</strong><span>Toque aqui para ouvir com som</span></span>
@@ -1481,14 +1484,14 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
     </button>
     <div class="lbx-stage" id="lbxStage">
       <img class="lbx-img" id="lbxImg" alt="">
-      <video class="lbx-video" id="lbxVideo" muted autoplay loop playsinline preload="metadata" hidden></video>
+      <video class="lbx-video" id="lbxVideo" muted autoplay loop playsinline webkit-playsinline preload="metadata" disablepictureinpicture hidden></video>
       <button class="lbx-play" type="button" id="lbxPlay" hidden>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
         Ver vídeo
       </button>
       <button class="lbx-som" type="button" id="lbxSom" hidden aria-label="Ouvir o vídeo do relógio com som">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
-        Ouvir com som
+        Ouvir
       </button>
       <button class="lbx-fotos" type="button" id="lbxBtnFotos" hidden>Ver as fotos</button>
       <button class="lbx-nav lbx-prev" type="button" id="lbxPrev" aria-label="Foto anterior">
@@ -1726,7 +1729,7 @@ const PRODUTOS = [
     preco: 299.99,
     parcelas: 2,
     imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-17-par-de-alian-as-cl-ssica-8mm-grossa---banhada-a-ou.webp',
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par de Alianças Clássica 8mm Grossa - Banhada a Ouro.mp4',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par de Alianças Clássica 8mm Grossa - Banhada a Ouro.mp4?v=3',
     selo: 'Clássica',
     desconto: null,
     descricao: 'Par de alianças clássicas grossas 8mm, banhadas a ouro.',
@@ -1737,7 +1740,7 @@ const PRODUTOS = [
     preco: 299.99,
     parcelas: 2,
     imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-18-par-de-alian-as-cl-ssica-tradicional-6mm---banhado.webp',
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par de Alianças Clássica Tradicional 6mm - Banhado a Ouro.mp4',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par de Alianças Clássica Tradicional 6mm - Banhado a Ouro.mp4?v=3',
     selo: 'Clássica',
     desconto: null,
     descricao: 'Par de alianças clássicas tradicionais 6mm, banhadas a ouro.',
@@ -1780,7 +1783,7 @@ const PRODUTOS = [
     preco: 549.99,
     parcelas: 2,
     imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/produto-22-kit-alian-a-chanfrada-6mm-com-anel-solit-rio---ban.webp',
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Kit Aliança Chanfrada 6mm com Anel Solitário - Banhado a Ouro 18k.mp4',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Kit Aliança Chanfrada 6mm com Anel Solitário - Banhado a Ouro 18k.mp4?v=3',
     selo: 'Kit',
     desconto: null,
     descricao: 'Kit aliança chanfrada 6mm com anel solitário, banhado a ouro 18k.',
@@ -2151,7 +2154,7 @@ const COLECOES = [
         preco: 399.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/thumbs/Par Aliança Chanfrada 6mm Com Anel Solitário_399,99.webp',
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par Aliança Chanfrada 6mm Com Anel Solitário.mp4',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/aliancas-banhadas/videos/Par Aliança Chanfrada 6mm Com Anel Solitário.mp4?v=3',
         descricao: 'Par de aliança chanfrada 6mm com anel solitário, banhada a ouro 18k.',
         tags: ['Chanfrada', 'Solitário', 'Banhado a Ouro']
       },
@@ -3516,7 +3519,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-fun-binbond-data.mp4?v=3',
         descricao: 'Relógio Fun. Binbond Data, com data e hora em destaque.',
         tags: ['Masculino', 'Binbond', 'Data']
       },
@@ -3543,7 +3546,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-3.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data-4.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-alfa-funcao-data.mp4?v=3',
         descricao: 'Relógio masculino Alfa Função Data, com data e acabamento clássico.',
         tags: ['Masculino', 'Alfa', 'Data']
       },
@@ -3589,7 +3592,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-4.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027-5.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-blue-2027.mp4?v=3',
         descricao: 'Relógio masculino Poedagar Blue 2027, com mostrador azul e detalhes dourados.',
         tags: ['Masculino', 'Poedagar', 'Azul']
       },
@@ -3642,7 +3645,7 @@ const COLECOES = [
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-olevs-premium-1.webp',
         descricao: 'Relógio automático mecânico Olevs Premium, com mostrador vazado que mostra o mecanismo em movimento.',
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-olevs-premium.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-automatico-mecanico-olevs-premium.mp4?v=3',
         tags: ['Masculino', 'Automático', 'Olevs']
       },
       {
@@ -3655,7 +3658,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-chronos-noir.mp4?v=3',
         descricao: 'Relógio Chronos Noir, em tons escuros, para usar no dia a dia e à noite.',
         tags: ['Masculino', 'Chronos', 'Preto']
       },
@@ -3751,7 +3754,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond-2.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-imperium-chrono-binbond.mp4?v=3',
         descricao: 'Relógio Imperium Chrono da Binbond, cronógrafo com acabamento sofisticado.',
         tags: ['Masculino', 'Cronógrafo', 'Binbond']
       },
@@ -3808,7 +3811,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-monarch-slim-binbond.mp4?v=3',
         descricao: 'Relógio Monarch Slim da Binbond, fino e discreto no pulso.',
         tags: ['Masculino', 'Slim', 'Binbond']
       },
@@ -3821,7 +3824,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time-2.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-poedagar-velvet-time.mp4?v=3',
         descricao: 'Relógio Poedagar Velvet Time, com mostrador azul e pulseira em tecido.',
         tags: ['Masculino', 'Poedagar', 'Azul']
       },
@@ -3866,7 +3869,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-sovereign-gold.mp4?v=3',
         descricao: 'Relógio Sovereign Gold, todo em dourado, com presença marcante.',
         tags: ['Masculino', 'Dourado', 'Sovereign']
       },
@@ -3879,7 +3882,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige-1.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige-2.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-masculino-relogio-masculino-vanguard-prestige.mp4?v=3',
         descricao: 'Relógio Vanguard Prestige, de estilo clássico e acabamento caprichado.',
         tags: ['Masculino', 'Vanguard', 'Clássico']
       },
@@ -3932,7 +3935,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-binbond-blue-elity.mp4?v=3',
         descricao: 'Relógio feminino Binbond Blue Elity, com pulseira metálica e detalhe azul no mostrador.',
         tags: ['Feminino', 'Binbond', 'Azul']
       },
@@ -3946,7 +3949,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-excutivy-poedagar.mp4?v=3',
         descricao: 'Relógio feminino Excutivy Poedagar, com acabamento de luxo e brilho discreto.',
         tags: ['Feminino', 'Poedagar', 'Luxo']
       },
@@ -3960,7 +3963,7 @@ const COLECOES = [
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-2.webp',
           'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan-3.webp',
         ],
-        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan.mp4?v=2',
+        video: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/relogio-feminino-relogio-feminino-fran-green-rhuan.mp4?v=3',
         descricao: 'Relógio Fran Green Rhuan, com mostrador verde e design sofisticado.',
         tags: ['Feminino', 'Fran', 'Verde']
       },
@@ -4908,8 +4911,8 @@ const itemCard = (p) => {
   const lbxPlay = document.getElementById('lbxPlay');
   const lbxSom = document.getElementById('lbxSom');
   const lbxBtnFotos = document.getElementById('lbxBtnFotos');
-  const SOM_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg> Ouvir com som';
-  const MUDO_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="m17 9 5 6m0-6-5 6"/></svg> Tirar o som';
+  const SOM_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="m17 9 5 6m0-6-5 6"/></svg> Ouvir';
+  const MUDO_LB = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg> Silenciar';
 
   let lbxFotos = [];
   let lbxIdx = 0;
@@ -4942,7 +4945,7 @@ const itemCard = (p) => {
     lbxPrev.hidden = true;
     lbxNext.hidden = true;
     lbxCount.hidden = true;
-    lbxVideo.src = lbxVideoUrl;
+    if (lbxVideo.getAttribute('src') !== lbxVideoUrl) lbxVideo.src = lbxVideoUrl;
     lbxVideo.hidden = false;
     lbxVideo.muted = true;
     lbxVideo.setAttribute('muted', '');
@@ -4964,12 +4967,9 @@ const itemCard = (p) => {
     lbxVideo.muted = false;
     lbxVideo.removeAttribute('muted');
     lbxVideo.volume = 1;
-    lbxVideo.loop = false;
-    // reinicia do começo, mas só quando já tem mídia carregada
-    // (senão o navegador aborta o download e recarrega o arquivo)
-    try {
-      if (lbxVideo.readyState > 0) lbxVideo.currentTime = 0;
-    } catch (e) {}
+    // 26/11/2026 (pedido do dono): o som entra SEM reiniciar o vídeo e ele
+    // continua rodando em loop, como no AliExpress.
+    lbxVideo.loop = true;
     const p = lbxVideo.play();
     if (p && p.catch) p.catch(function () {});
     if (lbxSom) {
@@ -5022,7 +5022,7 @@ const itemCard = (p) => {
       abrirLightbox(produto, 0);
       // O cliente tocou no "Vídeo": o vídeo abre e o som entra junto.
       // (no fundo dos cards o vídeo é sempre mudo — ver criarGaleria)
-      if (lbxVideoUrl) { tocarVideoLbx(); ligarSomLbx(); }
+      if (lbxVideoUrl) { if (lbxVideo.hidden) tocarVideoLbx(); ligarSomLbx(); }
     });
     return b;
   }
@@ -5074,6 +5074,9 @@ const itemCard = (p) => {
     lbxBuy.setAttribute('aria-label', 'Comprar ' + produto.nome + ' com frete grátis');
 
     lbxMostrarFoto();
+    // 26/11/2026: produto com vídeo abre JÁ no vídeo, mudo e em loop
+    // (o cliente toca no vídeo ou no botão "Ouvir" para o som).
+    if (lbxVideoUrl && lbxIdx === 0) tocarVideoLbx();
 
     /* trava a rolagem do fundo sem desfazer a trava do catálogo por cima */
     lbxTravou = document.documentElement.classList.contains('lock');
@@ -5109,9 +5112,13 @@ const itemCard = (p) => {
 
   if (lbx) {
     lbxWa.innerHTML = ICON_WA + '<span>Falar com o atendente</span>';
-    if (lbxPlay) lbxPlay.addEventListener('click', function () { tocarVideoLbx(); ligarSomLbx(); });
+    if (lbxPlay) lbxPlay.addEventListener('click', function () { tocarVideoLbx(); });
     if (lbxSom) lbxSom.addEventListener('click', function () {
       if (lbxVideo && lbxVideo.muted) ligarSomLbx(); else tirarSomLbx();
+    });
+    // tocar no próprio vídeo também liga/desliga o som
+    if (lbxVideo) lbxVideo.addEventListener('click', function () {
+      if (lbxVideo.muted) ligarSomLbx(); else tirarSomLbx();
     });
     if (lbxBtnFotos) lbxBtnFotos.addEventListener('click', voltarParaFotos);
     if (lbxVideo) lbxVideo.addEventListener('ended', function () { lbxMostrarFoto(); });
