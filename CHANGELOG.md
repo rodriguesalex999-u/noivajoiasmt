@@ -1,6 +1,8 @@
 # Changelog - Noiva Joias MT
 
 ## 2026-11-25
+- **Video do Kit Completo estava no ar com 14,80 MB (o original, sem compressao).** Substituido pelo arquivo comprimido (0,80 MB) **no mesmo link do R2**, e o index.html passou a usar `...Aparador.mp4?v=2` para invalidar o cache de quem ja tinha baixado a versao pesada. Conferido no ar: HTTP 200, `video/mp4`, 0,80 MB, e o video tocando no card (14 s, 608x1081, `readyState 4`, zero erro).
+- **Conferencia item a item dos 11 videos do lote:** cada arquivo da pasta `CURTOS_SUBIR_NOIVA_JOIAS` esta no anuncio de **mesmo nome** (parser do proprio index.html, sem regex). Pesos no ar: 0,43 MB a 1,79 MB.
 - **Catálogo quebrado no ar — CORRIGIDO (era isto que fazia "as fotos dos produtos não aparecerem").** Causa real: **erro de sintaxe JavaScript** no script inline do `index.html` (duas linhas quebradas em commits do mesmo dia: faltava o `],` que fecha a lista `itens` da coleção "Aliança pra namoro" e faltava a vírgula entre dois itens da coleção "Aliança de casamento"). Com o erro, **o script inteiro não executa**: a página abre, banner/menu/carrinho funcionam, mas `#catalogo` fica **vazio** — nenhum produto, nenhuma foto. Não era cache de navegador.
   - **Correção:** commit `ed87acd` (push na `main` → deploy automático).
   - **Validação:** `node --check` no script inline (sintaxe OK) + navegador no ar: **234 produtos**, **369 imagens do catálogo, 0 quebradas**, **0 erro de console**, e os 4 anúncios novos com foto + vídeo presentes.
