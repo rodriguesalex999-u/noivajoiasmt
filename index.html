@@ -16,20 +16,24 @@
 <meta property="og:title" content="Noiva Joias MT — Alianças que marcam histórias">
 <meta property="og:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop. Fale agora no WhatsApp.">
 <meta property="og:url" content="https://noivajoiasmt.vercel.app/">
-<meta property="og:image" content="https://noivajoiasmt.vercel.app/og.png">
+<meta property="og:image" content="https://noivajoiasmt.vercel.app/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Noiva Joias MT — alianças que marcam histórias">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Noiva Joias MT — Alianças que marcam histórias">
 <meta name="twitter:description" content="Entrega hoje e pagamento só na entrega em Cuiabá, Rondonópolis e Sinop.">
-<meta name="twitter:image" content="https://noivajoiasmt.vercel.app/og.png">
+<meta name="twitter:image" content="https://noivajoiasmt.vercel.app/og.jpg">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0907'/%3E%3Cg fill='none' stroke='%23C9A75B' stroke-width='3.4'%3E%3Ccircle cx='24' cy='40' r='14'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3Cpath d='M32 6l7 8-7 8-7-8z' fill='%23F0DCA4'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- 27/11/2026: fonte carrega sem travar a primeira pintura da página -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
 
 <script type="application/ld+json">
 {
@@ -41,7 +45,7 @@
   "description": "Alianças e semijoias com entrega hoje e pagamento na entrega em Cuiabá, Rondonópolis e Sinop, Mato Grosso.",
   "url": "https://noivajoiasmt.vercel.app/",
   "telephone": "+556592942810",
-  "image": "https://noivajoiasmt.vercel.app/og.png",
+  "image": "https://noivajoiasmt.vercel.app/og.jpg",
   "priceRange": "$$$",
   "currenciesAccepted": "BRL",
   "paymentAccepted": "Pix, Cartão de crédito, Cartão de débito, Dinheiro na entrega",
@@ -1030,6 +1034,182 @@ html.lock body{position:fixed;left:0;right:0;width:100%;top:var(--lock-top,0);ov
 .nj-medida{display:flex;gap:12px;align-items:flex-start;margin:16px 0 4px;padding:14px 16px;border:1px solid rgba(212,175,55,.45);border-radius:14px;background:rgba(212,175,55,.07);color:#efe6d6;font-size:.86rem;line-height:1.5}
 .nj-medida b{color:var(--gold-light,#e9cf87)}.nj-medida .nj-ico{font-size:1.25rem;line-height:1}
 @media(max-width:600px){.nj-medida{font-size:.8rem;padding:12px 13px}}
+/* ============================================================
+   CAMADA PREMIUM — 27/11/2026
+   Só aparência e organização. Nenhum preço, link, regra de
+   entrega, métrica ou Pixel mudou.
+   • vitrine compacta: 2 colunas no celular, 3 no tablet, 4 no computador
+     (a página ficou ~4x mais curta e o cliente vê muito mais modelos por tela)
+   • card limpo: nome em 2 linhas, preço em destaque, WhatsApp + carrinho
+     lado a lado e "Comprar online" discreto embaixo
+   • "Como funciona" logo depois das categorias
+   • no computador o botão do WhatsApp flutua no canto (não cobre a vitrine)
+   ============================================================ */
+
+/* ---------- foco visível para quem navega pelo teclado ---------- */
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--gold-light);outline-offset:2px;border-radius:8px
+}
+
+/* ---------- topo: categorias centralizadas no computador ---------- */
+@media(min-width:1024px){
+  .shop-nav{flex-wrap:wrap;justify-content:center;overflow:visible;gap:4px 6px;padding-bottom:10px}
+  .shop-nav button{font-size:.74rem;letter-spacing:.01em}
+  .shop-nav button:hover{background:rgba(201,167,91,.08)}
+}
+.topbar{border-bottom:1px solid rgba(201,167,91,.14);box-shadow:0 10px 30px -22px rgba(0,0,0,.9)}
+
+/* ---------- hero: garantias em lista ---------- */
+.vsl-checks{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:9px}
+.vsl-checks li{position:relative;padding-left:28px;font-size:.92rem;line-height:1.45;color:#e9e0cf}
+.vsl-checks li::before{
+  content:"";position:absolute;left:0;top:1px;width:19px;height:19px;border-radius:50%;
+  background:rgba(30,166,90,.16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2337c871' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat;
+  box-shadow:inset 0 0 0 1px rgba(55,200,113,.35)
+}
+.vsl{background:radial-gradient(90% 120% at 100% 0%,rgba(201,167,91,.10),transparent 60%),#17120e}
+.vsl-copy h1{text-wrap:balance}
+@media(max-width:760px){.vsl-checks{margin-top:14px;gap:7px}.vsl-checks li{font-size:.86rem}}
+
+/* faixa de confiança mais limpa */
+.trust-strip{justify-content:center;gap:10px 28px}
+@media(max-width:600px){.trust-strip{display:grid;grid-template-columns:1fr;gap:8px;padding:14px 2px;font-size:.78rem}}
+
+/* ---------- Como funciona (compacto, perto do topo) ---------- */
+.nj-passos{margin:34px 0 4px}
+.nj-passos-t{font-family:var(--font-display);font-size:1.8rem;font-weight:500;margin:0 0 14px}
+.nj-passos .steps{list-style:none;margin:0;padding:0;gap:10px}
+.nj-passos .step{text-align:left;padding:18px 18px 16px 70px;min-height:96px;background:linear-gradient(160deg,rgba(28,23,19,.9),rgba(16,13,11,.9))}
+.nj-passos .step::before{position:absolute;left:18px;top:18px;margin:0;font-size:1.9rem;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nj-passos .step-t{font-size:1.14rem;margin-bottom:4px}
+.nj-passos .step-p{font-size:.82rem;line-height:1.6}
+.nj-passos .step-p b{color:var(--cream);font-weight:500}
+@media(min-width:640px){.nj-passos .steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* ---------- cards de categoria: foto maior e toque mais claro ---------- */
+.cat-card-shell .prod.cat-card{transition:border-color .25s,transform .25s var(--ease),box-shadow .25s}
+.cat-card-shell .prod.cat-card:hover{transform:translateY(-3px);border-color:rgba(201,167,91,.55)}
+.cat-card-shell .prod-name{color:#f3ead9}
+.category-start{font-weight:500}
+
+/* ---------- VITRINE: grade compacta ---------- */
+.cat{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:700px){.cat{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(min-width:1024px){.cat{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}}
+
+.modal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:700px){.modal-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(min-width:1024px){.modal-box{max-width:1120px}.modal-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:600px){.modal-body{padding-left:12px;padding-right:12px}}
+
+.cat .prod,.modal-grid .mi{
+  border-radius:14px;border:1px solid rgba(201,167,91,.16);min-width:0;
+  background:linear-gradient(180deg,#18130f 0%,#100d0b 100%);
+}
+.cat .prod:hover,.modal-grid .mi:hover{
+  transform:translateY(-3px);border-color:rgba(201,167,91,.5);
+  box-shadow:0 22px 44px -26px rgba(0,0,0,.95),0 0 0 1px rgba(201,167,91,.1)
+}
+.cat .prod-media::after{box-shadow:inset 0 0 0 1px rgba(201,167,91,.1)}
+.cat .prod-body,.modal-grid .mi-body{padding:12px 12px 12px}
+
+.cat .prod-name,.modal-grid .mi-name{
+  font-family:var(--font-body);font-size:.88rem;font-weight:500;line-height:1.38;letter-spacing:0;color:#f0e8da;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:2.76em;margin-bottom:6px;cursor:pointer
+}
+.cat .prod-name:hover,.modal-grid .mi-name:hover{color:var(--gold-light)}
+.cat .prod-desc,.modal-grid .mi-desc{
+  font-size:.75rem;line-height:1.5;margin-bottom:8px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
+}
+.cat .prod-note,.modal-grid .mi-note,.cat .prod-price-label{display:none}
+
+.cat .prod-price,.modal-grid .mi-price{margin-top:auto;padding-top:8px;border-top:1px solid rgba(201,167,91,.12)}
+.cat .prod-price-val,.modal-grid .mi-price-val{font-size:1.42rem;line-height:1.1;margin-top:0}
+.cat .prod-installments,.modal-grid .mi-installments{font-size:.72rem;margin-top:2px;line-height:1.4}
+.cat .prod-installments small,.modal-grid .mi-installments small{display:none}
+
+/* botões: WhatsApp em cima (largura toda); embaixo carrinho (ícone) + comprar online */
+.prod-actions{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-areas:"wa wa" "cart buy";gap:6px;margin-top:10px}
+.prod-actions .cta-wa{grid-area:wa}.prod-actions .cart-add-ico{grid-area:cart}.prod-actions .cta-buy{grid-area:buy}
+.prod-actions .prod-cta,.prod-actions .mi-cta{
+  margin:0!important;min-height:44px;padding:0 10px;border-radius:10px;gap:7px;
+  font-size:.78rem!important;letter-spacing:.01em!important;text-transform:none;font-weight:600;
+  box-shadow:0 10px 22px -14px rgba(30,166,90,.9),inset 0 1px 0 rgba(255,255,255,.18)
+}
+.prod-actions .prod-cta span,.prod-actions .mi-cta span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-actions .cart-add{margin:0;min-height:44px;width:44px;padding:0;border-radius:10px}
+.prod-actions .cart-add span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.prod-actions .cart-add svg{width:20px;height:20px}
+
+/* comprar online (Mercado Pago, frete grátis): visível, mas secundário */
+a.cta-buy{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin:0!important;min-height:44px;padding:0 8px;border-radius:10px;min-width:0;
+  background:transparent!important;box-shadow:none!important;
+  border:1px solid rgba(0,158,227,.45);color:#8fd3f5;
+  font-size:.74rem!important;letter-spacing:.01em!important;text-transform:none;font-weight:500
+}
+a.cta-buy small{font-size:.68rem;color:#c5bbac;font-weight:400}
+a.cta-buy small::before{content:"· ";color:#6f8796}
+a.cta-buy:hover{background:rgba(0,158,227,.1)!important;filter:none;transform:none}
+
+/* galeria dentro do card pequeno: some com as setas no celular (fica o arrasto e as bolinhas) */
+@media(max-width:699px){
+  .cat .mi-gallery-btn,.modal-grid .mi-gallery-btn{display:none}
+  .cat .prod-desc,.modal-grid .mi-desc{display:none}
+  .cat .prod-badge,.modal-grid .prod-badge{top:8px;left:8px;font-size:.52rem;letter-spacing:.12em;padding:5px 8px}
+  .cat .mi-zoom,.modal-grid .mi-zoom{min-width:34px;min-height:34px;width:34px;height:34px}
+  .cat .prod-name,.modal-grid .mi-name{font-size:.84rem}
+  .cat .prod-price-val,.modal-grid .mi-price-val{font-size:1.3rem}
+}
+@media(max-width:699px){
+  .prod-actions .cta-extra{display:none}
+  a.cta-buy{flex-direction:column;gap:0;line-height:1.15}
+  a.cta-buy small::before{content:none}
+}
+@media(max-width:360px){
+  .prod-actions{grid-template-columns:40px minmax(0,1fr);gap:5px}
+  .prod-actions .cart-add{width:40px}
+}
+
+/* títulos do catálogo */
+.sec-h{text-wrap:balance}
+.catalog-tools{background:linear-gradient(160deg,#17130f,#110e0c)}
+@media(max-width:600px){
+  .catalog-tools{padding:12px}
+  .catalog-controls{grid-template-columns:1fr 1fr;gap:8px}
+  .catalog-controls label:first-child{grid-column:1/-1}
+}
+
+/* ---------- blocos de confiança ---------- */
+.card,.step,.faq details{transition:border-color .25s}
+.card:hover{border-color:var(--line-strong)}
+.promo,.final{box-shadow:0 30px 70px -45px rgba(0,0,0,.9)}
+
+/* ---------- rodapé mais organizado ---------- */
+.footer-name{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.footer-ia{max-width:620px;font-size:.66rem;color:#8a8275}
+.footer-cities{color:#aea494}.footer-rights{color:#958c7e}.footer-addr,.footer-legal{color:#b3a999}
+.vsl-btn-wa{background:linear-gradient(135deg,#179450 0%,var(--green-deep) 100%)}
+
+/* ---------- computador: WhatsApp flutuando no canto ---------- */
+/* desempenho: o navegador só desenha os cards que estão perto da tela */
+.cat .prod{content-visibility:auto;contain-intrinsic-size:auto 420px}
+
+/* visor ampliado: WhatsApp primeiro (é por onde a loja mais vende), depois carrinho e compra online */
+.lbx-ctas .lbx-cta-wa{order:1}.lbx-ctas .cart-add{order:2}.lbx-ctas .lbx-cta-buy{order:3}
+
+@media(min-width:1024px){
+  .dock{left:auto;right:24px;bottom:24px;padding:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .dock-in{flex-direction:row!important;align-items:center;gap:10px;max-width:none}
+  .dock-btn{width:auto!important;max-width:none!important;min-height:56px;padding:0 24px;border-radius:999px;
+    box-shadow:0 16px 36px -12px rgba(30,166,90,.75),0 0 0 1px rgba(255,255,255,.06) inset}
+  .dock-cart{min-height:56px;border-radius:999px;background:rgba(23,18,15,.92);backdrop-filter:blur(10px);padding:8px 18px}
+  .vsl-frame.is-mini{bottom:100px;right:24px}
+}
+
 </style>
 
 <!-- Meta Pixel — Noiva Joias MT (senior config) -->
@@ -1270,6 +1450,11 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
       <span class="feature-kicker">Noiva Joias MT · alianças e semijoias</span>
       <h1>Alianças que marcam <em class="gold-text">histórias</em></h1>
       <p>O Sr. Fernandes explica, em poucos minutos, como escolher o seu par com segurança e receber em casa. <strong class="vsl-hint">Toque no vídeo para ouvir.</strong></p>
+      <ul class="vsl-checks">
+        <li>Entrega hoje em Cuiabá, Rondonópolis e Sinop</li>
+        <li>Você prova os tamanhos e só paga ao receber</li>
+        <li>Envio pelos Correios para todo o Brasil</li>
+      </ul>
       <div class="vsl-actions">
         <a class="vsl-btn vsl-btn-wa" href="https://wa.me/556592942810?text=Ol%C3%A1%21%20Assisti%20o%20v%C3%ADdeo%20do%20site%20e%20quero%20escolher%20minha%20alian%C3%A7a." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3Z"/></svg> Falar no WhatsApp</a>
         <button type="button" class="vsl-btn vsl-btn-ghost" data-banner-category="Aliança de casamento">Ver alianças <span aria-hidden="true">→</span></button>
@@ -1280,6 +1465,25 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
   <div class="nj-medida" id="njMedida" role="note"><span class="nj-ico" aria-hidden="true">💍</span><span><b>Não precisa saber a medida do dedo.</b> <span id="njMedidaTxt">Em Cuiabá, Rondonópolis e Sinop o entregador leva vários tamanhos até você. Para as outras cidades, enviamos cerca de 6 alianças do mesmo modelo: você prova em casa, fica com o par certo e devolve as outras pelos Correios.</span></span></div>
   <div class="category-intro" id="colecoes"><h2>Encontre por categoria</h2><p>Abra uma coleção e veja todos os modelos e preços.</p></div>
   <div class="hero-cat"><div class="cat-card-shell" id="heroCat"></div></div>
+
+  <!-- 27/11/2026: "Como funciona" subiu para cá (antes ficava depois dos 234 produtos e quase ninguém via) -->
+  <div class="nj-passos" id="como-funciona" aria-labelledby="comoFuncionaT">
+    <h2 class="nj-passos-t" id="comoFuncionaT">Como funciona</h2>
+    <ol class="steps">
+      <li class="step">
+        <p class="step-t">Escolha o modelo</p>
+        <p class="step-p">Veja fotos, vídeos e preços. Toque em <b>Quero este modelo</b> ou junte vários no carrinho.</p>
+      </li>
+      <li class="step">
+        <p class="step-t">Fale no WhatsApp</p>
+        <p class="step-p">A mensagem já vai pronta. Não precisa saber a medida: você prova vários tamanhos antes de ficar com o seu par.</p>
+      </li>
+      <li class="step">
+        <p class="step-t">Receba e pague</p>
+        <p class="step-p">Em Cuiabá, Rondonópolis e Sinop a entrega é no mesmo dia e você paga ao receber. Outras cidades: Correios para todo o Brasil.</p>
+      </li>
+    </ol>
+  </div>
 </section>
 
     <div class="rule" aria-hidden="true"></div>
@@ -1339,24 +1543,6 @@ src="https://www.facebook.com/tr?id=1186922223282687&ev=PageView&noscript=1"
        class="ghost masculino-btn" aria-label="Abrir catálogo de correntes e pulseiras masculinas 18K em nova aba">
         <span>Correntes e pulseiras masculinas 18K</span>
       </a>
-    </div>
-
-    <!-- ============ como funciona ============ -->
-    <h2 class="sec-title reveal">Como funciona</h2>
-    <h3 class="sec-h reveal d1">Três passos e pronto</h3>
-    <div class="steps" style="margin-top:26px">
-      <div class="step reveal d1">
-        <p class="step-t">Escolha o modelo</p>
-        <p class="step-p">Veja as fotos, escolha o modelo e adicione ao carrinho. Você também pode pedir um produto diretamente pelo WhatsApp.</p>
-      </div>
-      <div class="step reveal d2">
-        <p class="step-t">Fale no WhatsApp</p>
-        <p class="step-p">Envie sua seleção com a mensagem pronta. Não precisa saber a medida: você prova vários tamanhos antes de ficar com o seu par.</p>
-      </div>
-      <div class="step reveal d3">
-        <p class="step-t">Receba e pague</p>
-        <p class="step-p">Nas três cidades, combine a entrega e pague ao receber. Em outras localidades, escolha as opções de envio e pagamento disponíveis.</p>
-      </div>
     </div>
 
     <!-- ============ benefícios ============ -->
@@ -1928,7 +2114,7 @@ const COLECOES = [
         tags: ['Prata', 'Friso', '6mm', 'Namoro']
       },
       {
-        nome: 'par-alianca-francesa-4mm-299.99',
+        nome: 'Par de Aliança Francesa 4mm',
         preco: 299.99,
         parcelas: 2,
         imagem: 'https://pub-30377154a86f42f9be74defe556d3deb.r2.dev/par-alianca-francesa-4mm-299.99.webp',
@@ -4413,6 +4599,53 @@ const COLECOES = [
 
   const ICON_CHEVRON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 
+  /* 27/11/2026 — nome bonito: alguns produtos vieram do fornecedor TODO EM
+     MAIÚSCULAS ("PAR ALIANÇA COM PEDRA E SOLITÁRIO"). Só na TELA o nome vira
+     "Par Aliança com Pedra e Solitário". O nome original (p.nome) continua
+     igual em tudo o que importa: carrinho, checkout, preço do servidor,
+     WhatsApp e Pixel. */
+  const NOME_MINUSC = new Set(['de','da','do','das','dos','e','com','em','a','o','as','os','para','no','na','nos','nas','sem','ou','por']);
+  const nomeBonito = (nome) => {
+    const n = String(nome || '');
+    const letras = n.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ]/g, '');
+    if (letras.length < 6) return n;
+    const maiusc = letras.replace(/[^A-ZÀ-ÖØ-Þ]/g, '').length;
+    if (maiusc / letras.length < 0.7) return n;
+    let i = 0;
+    return n.split(/(\s+)/).map((w) => {
+      if (!w || /^\s+$/.test(w)) return w;
+      const pos = i++;
+      if (/^\d+mm$/i.test(w)) return w.toLowerCase();
+      if (/\d/.test(w) || w === 'MT') return w;
+      if (/^c\/$/i.test(w)) return 'c/';
+      const low = w.toLocaleLowerCase('pt-BR');
+      if (pos > 0 && NOME_MINUSC.has(low)) return low;
+      return low.charAt(0).toLocaleUpperCase('pt-BR') + low.slice(1);
+    }).join('');
+  };
+  window.nomeBonito = nomeBonito;
+
+  /* 27/11/2026 — botões do card: WhatsApp (principal) + carrinho (ícone) lado a lado,
+     e o "Comprar online" (Mercado Pago, frete grátis) logo abaixo, mais discreto. */
+  const acoesDoCard = (p, ctaWa, ctaComprar) => {
+    const linha = el('div', 'prod-actions');
+    ctaWa.classList.add('cta-wa');
+    const rotulo = ctaWa.querySelector('span');
+    if (rotulo) rotulo.innerHTML = 'Quero este<span class="cta-extra"> modelo</span>';
+    ctaWa.setAttribute('aria-label', 'Quero este modelo: ' + p.nome + ' (abre o WhatsApp)');
+    linha.appendChild(ctaWa);
+    const carrinhoBtn = botaoCarrinho(p);
+    carrinhoBtn.classList.add('cart-add-ico');
+    carrinhoBtn.title = 'Adicionar ao carrinho';
+    linha.appendChild(carrinhoBtn);
+    ctaComprar.classList.add('cta-buy');
+    ctaComprar.removeAttribute('style');
+    ctaComprar.innerHTML = '<span>Comprar online</span><small>frete grátis</small>';
+    ctaComprar.setAttribute('aria-label', 'Comprar online, frete grátis: ' + p.nome);
+    linha.appendChild(ctaComprar);
+    return [linha];
+  };
+
   /* foto com rede de segurança: se o arquivo não existir, cai no placeholder */
   const foto = (src, alt, eager, cls) => {
     const img = el('img', cls);
@@ -4525,7 +4758,12 @@ const COLECOES = [
 
     /* corpo */
     const body = el('div', 'prod-body');
-    body.appendChild(el('h4', 'prod-name', p.nome));
+    const nomeEl = el('h4', 'prod-name');
+    nomeEl.textContent = nomeBonito(p.nome);
+    nomeEl.title = nomeBonito(p.nome);
+    /* tocar no nome também abre o produto grande (antes só a foto abria) */
+    nomeEl.addEventListener('click', () => abrirLightbox(p, galeriaCard ? parseInt(galeriaCard.dataset.fotoAtual || '0', 10) : 0));
+    body.appendChild(nomeEl);
     if (p.descricao) body.appendChild(el('p', 'prod-desc', p.descricao));
     if (p.nota) body.appendChild(el('p', 'prod-note', p.nota));
 
@@ -4552,8 +4790,6 @@ const COLECOES = [
     cta.target = '_blank';
     cta.rel = 'noopener noreferrer';
     cta.setAttribute('aria-label', 'Pedir ' + p.nome + ' pelo WhatsApp');
-    body.appendChild(botaoCarrinho(p));
-    body.appendChild(cta);
 
     /* botão de checkout (Mercado Pago) — frete grátis */
     const checkoutLink = 'checkout.html?nome=' + encodeURIComponent(p.nome) +
@@ -4563,11 +4799,8 @@ const COLECOES = [
     const ctaCheckout = el('a', 'prod-cta',
       '<span style="font-weight:600;">Comprar — Frete Grátis</span>');
     ctaCheckout.href = checkoutLink;
-    ctaCheckout.style.background = 'linear-gradient(135deg,#009ee3 0%,#007bb4 100%)';
-    ctaCheckout.style.marginTop = '8px';
-    ctaCheckout.style.fontSize = '.68rem';
-    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' com frete grátis');
-    body.appendChild(ctaCheckout);
+    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' online com frete grátis');
+    acoesDoCard(p, cta, ctaCheckout).forEach((n) => body.appendChild(n));
 
     card.appendChild(body);
     catalogo.appendChild(card);
@@ -4851,7 +5084,11 @@ const itemCard = (p) => {
     li.appendChild(media);
 
     const body = el('div', 'mi-body');
-    body.appendChild(el('h5', 'mi-name', p.nome));
+    const nomeMi = el('h5', 'mi-name');
+    nomeMi.textContent = nomeBonito(p.nome);
+    nomeMi.title = nomeBonito(p.nome);
+    nomeMi.addEventListener('click', () => abrirLightbox(p, galeria ? parseInt(galeria.dataset.fotoAtual || '0', 10) : 0));
+    body.appendChild(nomeMi);
     if (p.descricao) body.appendChild(el('p', 'mi-desc', p.descricao));
 
     const price = el('div', 'mi-price');
@@ -4874,8 +5111,6 @@ const itemCard = (p) => {
     cta.target = '_blank';
     cta.rel = 'noopener noreferrer';
     cta.setAttribute('aria-label', 'Pedir ' + p.nome + ' pelo WhatsApp');
-    body.appendChild(botaoCarrinho(p));
-    body.appendChild(cta);
 
     /* botão de checkout (Mercado Pago) — frete grátis */
     const checkoutLink = 'checkout.html?nome=' + encodeURIComponent(p.nome) +
@@ -4885,11 +5120,9 @@ const itemCard = (p) => {
     const ctaCheckout = el('a', 'mi-cta',
       '<span style="font-weight:600;">Comprar — Frete Grátis</span>');
     ctaCheckout.href = checkoutLink;
-    ctaCheckout.style.background = 'linear-gradient(135deg,#009ee3 0%,#007bb4 100%)';
-    ctaCheckout.style.marginTop = '8px';
-    ctaCheckout.style.fontSize = '.68rem';
-    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' com frete grátis');
-    body.appendChild(ctaCheckout);    li.appendChild(body);
+    ctaCheckout.setAttribute('aria-label', 'Comprar ' + p.nome + ' online com frete grátis');
+    acoesDoCard(p, cta, ctaCheckout).forEach((n) => body.appendChild(n));
+    li.appendChild(body);
     return li;
   };
 
@@ -5062,7 +5295,7 @@ const itemCard = (p) => {
     lbxIdx = Math.max(0, Math.min(indice || 0, lbxFotos.length - 1));
     lbxFoco = document.activeElement;
 
-    lbxNome.textContent = produto.nome || '';
+    lbxNome.textContent = nomeBonito(produto.nome || '');
     lbxPreco.textContent = brl.format(produto.preco || 0);
     const parc = produto.parcelas || 1;
     const valorParcela = Math.floor((produto.preco || 0) / parc * 100) / 100;
