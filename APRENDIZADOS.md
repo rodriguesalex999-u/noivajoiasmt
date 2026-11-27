@@ -2,6 +2,14 @@
 
 Problemas reais já resolvidos. Valem para a próxima vez que algo similar acontecer.
 
+## 2026-11-27 — Repaginação do site: 5 lições
+- **Catálogo de preços do servidor desatualizado = produto que não vende online.** Três produtos renomeados no `index.html` nunca entraram em `api/_lib/catalogo-precos.json`; o `/api/checkout` devolvia 400 e ninguém percebeu. **Sempre** rodar `node scripts/gerar_catalogo_precos.js` depois de mexer em nome/preço e ler a linha `- saíram:` — se sair um nome que ainda existe no site, é bug.
+- **Google Ads precisa de `https://ad.doubleclick.net` na CSP** (`connect-src` e `img-src`): o `ccm/collect` de conversão/remarketing era bloqueado (console: "violates Content Security Policy").
+- **Conferir links quebrados do R2 com `curl -I`, não com Python `urllib`:** o R2 devolve 403 para o user-agent do urllib (falso alarme). Com curl, 17 fotos do `/masculino` deram 404 de verdade (`...-1.webp` em vez de `...-1-v3.webp`).
+- **Vitrine longa no celular:** 1 card por tela = página de ~197 mil px e "Como funciona"/FAQ invisíveis. Grade de 2 colunas + card compacto (detalhes no visor) reduziu para ~56 mil px. `content-visibility:auto` nos cards poupa desenho do que está fora da tela.
+- **Imagem de prévia (og:image) leve:** o WhatsApp falha com imagem grande; `og.jpg` de 110 KB no lugar do `og.png` de 1 MB (o PNG fica no repositório para links antigos).
+- **Mudança visual grande = camada CSS no fim do `<style>`** ("CAMADA PREMIUM — 27/11/2026") + trocas exatas com conferência de 1 ocorrência (script), nunca regex no arquivo inteiro. Nome só de exibição (`nomeBonito`) não muda `p.nome`, que é a chave do carrinho/checkout.
+
 > **O que servir para outros sites vai também para `G:\Meu Drive\GERAL\BASE-CONHECIMENTO-SITES.md`** (base de conhecimento de todos os sites do Alex, 26/11/2026).
 
 ## 2026-11-23 — Coleção nova = 3 arquivos, não 1 (rotas)
