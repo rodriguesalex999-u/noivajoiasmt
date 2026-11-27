@@ -1,5 +1,8 @@
 # Changelog - Noiva Joias MT
 
+## 2026-11-27
+- **Video do Relogio Feminino Poedagar Luxo Extreme (pedido do dono):** original do fornecedor (E:\TUDO RELOGIOS\RELOGIO-NOIVA-JOIAS-MT\VIDEOS RELOGIOS FEMININOS, 58,7 s, 8,0 MB, HEVC 720x720) editado: removidas as 5 cartelas brancas com texto em ingles ("Waterproof", "Hardlex", "Scratch And Wear Resistant", "Ultra-thin", "Stainless steel strap"/"Clasp", detectadas quadro a quadro), o trecho final com outras cores de mostrador (verde/prata/preto — o site vende so o vermelho rose) e a vinheta da loja chinesa; musica original trocada por "Smooth Like Jazz" (Mixkit, licenca livre, pasta MUSICAS_LONGAS_SEM _DIREITOS_AUTORIAS). Final: 31,6 s, 540x540, 24 fps, H.264 2 passagens 380k + AAC 64k, `+faststart` = **1,75 MB** (SSIM 0,957 vs. a edicao sem compressao; 0 cartelas restantes). R2: `relogio-feminino-relogio-feminino-poedagar-luxo-extreme.mp4?v=1`; ligado no item da colecao "Relogio feminino" (unico lugar onde o produto existe).
+
 ## 2026-11-26
 - **Videos nao apareciam em /aliancabanhadas (o dono viu):** os 7 videos do lote estavam ligados so no array `PRODUTOS` (vitrine da home); os itens de mesmo nome dentro de `COLECOES` > "Aliança de casamento" nao tinham o campo `video`. Campo copiado para os 7 itens. Agora a categoria tem 10 videos tocando no card.
 - **Google Analytics bloqueado pela CSP:** `analytics.google.com`, `*.google-analytics.com` e `stats.g.doubleclick.net` nao estavam no `connect-src` do `vercel.json` (console: "violates Content Security Policy") — o GA4 nao registrava nada. Liberados.
